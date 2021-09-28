@@ -1,10 +1,12 @@
 <template lang="">
-    <div class="bg-white h-12 px-4 flex items-center">
+    <div
+        class="bg-white h-16 px-4 flex items-center border-b border-gray-200 shadow"
+    >
         <div class="w-1/3">
             <div class="flex">
                 <router-link to="/">
                     <svg
-                        class="fill-current w-8 h-8"
+                        class="fill-current w-10 h-10"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                     >
@@ -17,7 +19,7 @@
                     <div class="absolute text-gray-600">
                         <svg
                             viewBox="0 0 24 24"
-                            class="fill-current w-5 h-5 mt-2 ml-2"
+                            class="fill-current w-6 h-6 mt-3 ml-2"
                         >
                             <path
                                 fill-rule="evenodd"
@@ -29,7 +31,7 @@
                     <input
                         type="text"
                         name="search"
-                        class="rounded-full w-56 pl-8 bg-gray-200 h-8 focus:outline-none focus:shadow-outline text-sm "
+                        class="rounded-full w-56 pl-8 bg-gray-200 h-10 focus:outline-none focus:shadow-outline text-sm "
                         placeholder="Search Facebook"
                     />
                 </div>
@@ -43,14 +45,14 @@
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    class="fill-current w-5 h-5"
+                    class="fill-current w-6 h-6"
                 >
                     <path
                         d="M22.6 11l-9.9-9c-.4-.4-1.1-.4-1.5 0l-9.9 9c-.3.3-.5.8-.3 1.2.2.5.6.8 1.1.8h1.6v9c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-5.5h3.2V22c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-9h1.6c.5 0 .9-.3 1.1-.7.3-.5.2-1-.2-1.3zm-2.5-8h-4.3l5 4.5V3.6c0-.3-.3-.6-.7-.6z"
                     /></svg
             ></router-link>
             <router-link
-                to="/"
+                :to="'/users/' + authUser.data.user_id"
                 class="px-6 h-full border-white flex items-center"
             >
                 <img
@@ -66,7 +68,7 @@
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    class="fill-current w-5 h-5"
+                    class="fill-current w-6 h-6"
                 >
                     <path
                         d="M.5 11.6c0 3.4 1.7 6.3 4.3 8.3V24l3.9-2.1c1 .3 2.2.4 3.3.4 6.4 0 11.5-4.8 11.5-10.7C23.5 5.8 18.3 1 12 1S.5 5.8.5 11.6zm10.3-2.9l3 3.1 5.6-3.1-6.3 6.7-2.9-3.1-5.7 3.1 6.3-6.7z"
@@ -78,7 +80,7 @@
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                class="fill-current w-5 h-5"
+                class="fill-current w-6 h-6"
             >
                 <path
                     d="M22.9 10.1c-.1-.1-.2-.2-.3-.2L20 9.5c-.1-.5-.3-.9-.6-1.4.2-.2.4-.6.8-1 .3-.4.6-.8.7-1 .1 0 .1-.2.1-.3 0-.1 0-.2-.1-.3-.3-.5-1.1-1.3-2.4-2.4-.1-.1-.2-.1-.4-.1-.1 0-.3 0-.3.1l-2 1.5c-.4-.2-.8-.4-1.3-.5l-.4-2.6c0-.1-.1-.2-.2-.3-.1-.2-.2-.2-.3-.2h-3.2c-.3 0-.4.1-.5.4-.1.5-.3 1.4-.4 2.7-.5.1-.9.3-1.3.5l-2-1.5c-.1-.1-.3-.2-.4-.2-.2 0-.7.3-1.4 1-.6.7-1.1 1.3-1.4 1.6-.1.1-.1.2-.1.3 0 .1 0 .2.1.3.6.8 1.2 1.4 1.5 2-.2.5-.3.9-.5 1.4l-2.6.4c-.1 0-.2.1-.3.2-.1.1-.1.2-.1.3v3.2c0 .1 0 .2.1.3.1.1.2.2.3.2l2.6.4c.1.5.3.9.6 1.4-.2.2-.4.6-.8 1-.3.4-.6.8-.7 1-.1.1-.1.2-.1.3 0 .1 0 .2.1.3.4.5 1.2 1.3 2.4 2.4.1.1.2.2.4.2.1 0 .3 0 .4-.1l2-1.5c.3.1.7.3 1.2.5l.4 2.6c0 .1.1.2.2.3.1.1.2.1.4.1h3.2c.3 0 .4-.1.5-.4.1-.5.3-1.4.4-2.7.4-.1.9-.3 1.3-.5l2 1.5c.1.1.3.1.4.1.2 0 .7-.3 1.3-1 .7-.7 1.2-1.2 1.4-1.5.1-.1.1-.2.1-.3 0-.1 0-.2-.1-.4-.7-.8-1.2-1.5-1.5-2 .2-.4.4-.8.6-1.3l2.7-.4c.1 0 .2-.1.3-.2.1-.1.1-.2.1-.3v-3.2c-.2-.1-.2-.2-.3-.3zm-8.3 4.5c-.7.7-1.6 1.1-2.6 1.1s-1.9-.4-2.6-1.1c-.7-.7-1.1-1.6-1.1-2.6s.4-1.9 1.1-2.6c.7-.7 1.6-1.1 2.6-1.1s1.9.4 2.6 1.1c.7.7 1.1 1.6 1.1 2.6s-.4 1.9-1.1 2.6z"
@@ -89,7 +91,17 @@
 </template>
 
 <script>
-export default {};
+import {mapGetters} from 'vuex';
+export default {
+    Name: "Nav",
+     computed:{
+         ...mapGetters({
+             authUser:'authUser'
+         })
+     }
+
+
+};
 </script>
 
 <style lang=""></style>
