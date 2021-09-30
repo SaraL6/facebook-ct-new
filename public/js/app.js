@@ -1923,9 +1923,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1935,11 +1932,14 @@ __webpack_require__.r(__webpack_exports__);
     Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   mounted: function mounted() {
-    this.$store.dispatch('fetchAuthUser');
+    this.$store.dispatch("fetchAuthUser");
+  },
+  created: function created() {
+    this.$store.dispatch("setPageTitle", this.$route.meta.title);
   },
   watch: {
     $route: function $route(to, from) {
-      this.$store.dispatch('setPageTitle', to.meta.title);
+      this.$store.dispatch("setPageTitle", to.meta.title);
     }
   }
 });
@@ -2058,7 +2058,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "Nav",
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    authUser: 'authUser'
+    authUser: "authUser"
   }))
 });
 
@@ -55511,14 +55511,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "home",
     component: _views_NewsFeed__WEBPACK_IMPORTED_MODULE_2__["default"],
     meta: {
-      title: 'News Feed'
+      title: "News Feed"
     }
   }, {
     path: "/users/:userId",
     name: "user.show",
     component: _views_Users_Show__WEBPACK_IMPORTED_MODULE_3__["default"],
     meta: {
-      title: 'Profile'
+      title: "Profile"
     }
   }]
 }));
@@ -55563,7 +55563,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  title: "Welcome"
+  title: 'Welcome'
 };
 var getters = {
   pageTitle: function pageTitle(state) {
@@ -55574,12 +55574,12 @@ var actions = {
   setPageTitle: function setPageTitle(_ref, title) {
     var commit = _ref.commit,
         state = _ref.state;
-    commit("setTitle", title);
+    commit('setTitle', title);
   }
 };
 var mutations = {
-  setPageTitle: function setPageTitle(state, title) {
-    state.title = title + " | Facebook";
+  setTitle: function setTitle(state, title) {
+    state.title = title + ' | Facebook';
     document.title = state.title;
   }
 };
@@ -55606,22 +55606,24 @@ var state = {
   userStatus: null
 };
 var getters = {
+  //After we set the user in the mutation we're send it to the front end with this
   authUser: function authUser(state) {
     return state.user;
   }
 };
 var actions = {
+  //this action is goint to be dispatched in App.vue
   fetchAuthUser: function fetchAuthUser(_ref) {
     var commit = _ref.commit,
         state = _ref.state;
-    axios.get("/api/auth-user").then(function (res) {
-      commit('setAuthUser', res.data);
-    }) // we pass the user through res.data to user parameter in the setAuthUser commit below in mutations so res.data=> user
-    ["catch"](function (error) {
-      console.log("Unable to fetch auth user");
+    axios.get('/api/auth-user').then(function (res) {
+      commit('setAuthUser', res.data); //res.data is gonna be what we pass to the user in setAuthUser mutation
+    })["catch"](function (error) {
+      console.log('Unable to fetch auth user');
     });
   }
-};
+}; //mutations are how u can change the state declared in const state
+
 var mutations = {
   setAuthUser: function setAuthUser(state, user) {
     state.user = user;

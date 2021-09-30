@@ -91,16 +91,14 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 export default {
     Name: "Nav",
-     computed:{
-         ...mapGetters({
-             authUser:'authUser'
-         })
-     }
-
-
+    computed: {
+        ...mapGetters({
+            authUser: "authUser"
+        })
+    }
 };
 </script>
 
