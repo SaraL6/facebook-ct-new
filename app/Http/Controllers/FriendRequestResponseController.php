@@ -13,8 +13,8 @@ class FriendRequestResponseController extends Controller
     public function store() {
 
         $data = request()->validate([
-            'user_id' => '',
-            'status' => '',
+            'user_id' => 'required',
+            'status' => 'required',
         ]);
         //we try to find the friend request that we're trying to update
         try{
@@ -23,6 +23,7 @@ class FriendRequestResponseController extends Controller
             ->firstOrFail();
         }catch (ModelNotFoundException $e) {
             throw new FriendRequestNotFoundException();
+
         }
 
 
@@ -32,5 +33,25 @@ class FriendRequestResponseController extends Controller
         ]));
 
         return new FriendResource($friendRequest);
+    }
+
+    public function destroy()
+    {
+            $data = request()->validate([
+                'user_id'=>'required',
+            ]);
+            try {
+                 Friend::where('user_id',$data['user_id'])
+                    ->where('friend_id',auth()->user()->id)
+                    ->firstOrFail()
+                    ->delete();
+             }catch (ModelNotFoundException $e) {
+
+                throw new FriendRequestNotFoundException();
+
+            }
+
+
+        return response()->json([],204);
     }
 }

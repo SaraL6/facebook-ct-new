@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class FriendRequestNotFoundException extends Exception
+class ValidationErrorException extends Exception
 {
     /**
      * Render the exception as an HTTP response.
@@ -16,11 +16,11 @@ class FriendRequestNotFoundException extends Exception
     {
         return response()->json([
             'errors' => [
-                'code'=>404,
-                'title'=>'Friend request Not Found',
-                'detail' => 'Unable to locate the friend request with the given information'
+                'code'=>422,
+                'title'=>'Validation Error',
+                'detail' => 'Your request is malformed or missing fields',
+                'meta'=> json_decode($this->getMessage())
             ]
-            ],404);
+            ],422);
     }
-  
 }

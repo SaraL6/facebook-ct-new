@@ -9,4 +9,24 @@ class Friend extends Model
     protected $guarded= [];
 
     protected $dates= ['confirmed_at'];
+
+    //this is the id of the user that the authenticated user is supposed to be friends with
+    public static function friendship ($userId)
+    {
+        return (new static())
+        ->where(function($query) use($userId){
+            return $query->where('user_id', auth()->user()->id)
+                ->where('friend_id',$userId);
+
+
+        })
+        //inverse
+        ->orWhere(function($query) use($userId){
+            return $query->where('friend_id', auth()->user()->id)
+                ->where('user_id',$userId);
+
+
+        })
+        ->first();
+    }
 }

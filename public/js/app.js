@@ -2325,6 +2325,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Show",
@@ -38633,7 +38637,9 @@ var render = function() {
               )
             ])
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm._m(2)
       ]),
       _vm._v(" "),
       _vm.postLoading
@@ -38680,6 +38686,23 @@ var staticRenderFns = [
         }
       })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "absolute  flex items-center bottom-0 right-0 mb-4 mr-12 z-20"
+      },
+      [
+        _c("button", { staticClass: "py-1 px-3 bg-gray-400 rounded" }, [
+          _vm._v("Add Friend")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -55539,6 +55562,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/user */ "./resources/js/store/modules/user.js");
 /* harmony import */ var _modules_title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/title */ "./resources/js/store/modules/title.js");
+/* harmony import */ var _modules_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/profile */ "./resources/js/store/modules/profile.js");
+
 
 
 
@@ -55547,9 +55572,58 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     User: _modules_user__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/profile.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/modules/profile.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  user: null,
+  userStatus: null
+};
+var getters = {
+  //After we set the user in the mutation we're send it to the front end with this
+  user: function user(state) {
+    return state.user;
+  }
+};
+var actions = {
+  //this action is goint to be dispatched in App.vue
+  //we get user from the frontend
+  fetchUser: function fetchUser(_ref) {
+    var commit = _ref.commit,
+        state = _ref.state,
+        user = _ref.user;
+    axios.get('/api/auth-user').then(function (res) {
+      commit('setAuthUser', res.data); //res.data is gonna be what we pass to the user in setAuthUser mutation
+    })["catch"](function (error) {
+      console.log('Unable to fetch auth user');
+    });
+  }
+}; //mutations are how u can change the state declared in const state
+
+var mutations = {
+  setAuthUser: function setAuthUser(state, user) {
+    state.user = user;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
