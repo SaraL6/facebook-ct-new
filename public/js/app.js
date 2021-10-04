@@ -2288,6 +2288,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Post_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Post.vue */ "./resources/js/components/Post.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2329,6 +2336,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Show",
@@ -2337,22 +2349,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      user: null,
       posts: null,
-      userLoading: true,
       postLoading: true
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/users/" + this.$route.params.userId).then(function (res) {
-      _this.user = res.data;
-      _this.userLoading = false;
-    })["catch"](function (error) {
-      console.log("Unable to fetch the user from the server");
-      _this.userLoading = false;
-    });
+    this.$store.dispatch('fetchUser', this.$route.params.userId);
     axios.get("/api/users/" + this.$route.params.userId + "/posts").then(function (res) {
       _this.posts = res.data;
       _this.postLoading = false;
@@ -2360,7 +2364,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.postLoading = false;
       console.log("Unable to fetch posts");
     });
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    user: 'user',
+    friendButtonText: 'friendButtonText'
+  }))
 });
 
 /***/ }),
@@ -38041,7 +38049,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "overflow-x-hidden w-2/3" },
-            [_c("router-view")],
+            [_c("router-view", { key: _vm.$route.fullPath })],
             1
           )
         ],
@@ -38639,7 +38647,38 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(2)
+        _c(
+          "div",
+          {
+            staticClass:
+              "absolute  flex items-center bottom-0 right-0 mb-4 mr-12 z-20"
+          },
+          [
+            _vm.friendButtonText
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "py-1 px-3 bg-gray-400 rounded",
+                    on: {
+                      click: function($event) {
+                        return _vm.$store.dispatch(
+                          "sendFriendRequest",
+                          _vm.$route.params.userId
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.friendButtonText) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]
+        )
       ]),
       _vm._v(" "),
       _vm.postLoading
@@ -38686,23 +38725,6 @@ var staticRenderFns = [
         }
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "absolute  flex items-center bottom-0 right-0 mb-4 mr-12 z-20"
-      },
-      [
-        _c("button", { staticClass: "py-1 px-3 bg-gray-400 rounded" }, [
-          _vm._v("Add Friend")
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -55593,29 +55615,65 @@ var state = {
   userStatus: null
 };
 var getters = {
-  //After we set the user in the mutation we're send it to the front end with this
+  //After we set the user in the mutation we send it to the front end with this
   user: function user(state) {
     return state.user;
+  },
+  //we can access user.js with rootState
+  friendButtonText: function friendButtonText(state, getters, rootState) {
+    if (getters.friendship === null) {
+      return "Add Friend"; //confirmed_at is set to null when a request is pending
+    } else if (getters.friendship.data.attributes.confirmed_at === null) {
+      return "Pending Friend Request";
+    }
+  },
+  friendship: function friendship(state) {
+    return state.user.data.attributes.friendship;
   }
 };
 var actions = {
   //this action is goint to be dispatched in App.vue
-  //we get user from the frontend
-  fetchUser: function fetchUser(_ref) {
+  //we get user from the frontend in the dispatch in Show.vue
+  fetchUser: function fetchUser(_ref, userId) {
     var commit = _ref.commit,
-        state = _ref.state,
-        user = _ref.user;
-    axios.get('/api/auth-user').then(function (res) {
-      commit('setAuthUser', res.data); //res.data is gonna be what we pass to the user in setAuthUser mutation
+        dispatch = _ref.dispatch;
+    //  we set the initial useeStatus to loading
+    commit("setUserStatus", "loading"); //we use axios to get our user
+
+    axios.get("/api/users/" + userId).then(function (res) {
+      //we set our data/state equal to the results of the response
+      commit("setUser", res.data); //we set the status to success
+
+      commit("setUserStatus", "success");
     })["catch"](function (error) {
-      console.log('Unable to fetch auth user');
+      commit("setUserStatus", "error");
     });
+  },
+  sendFriendRequest: function sendFriendRequest(_ref2, friendId) {
+    var commit = _ref2.commit,
+        state = _ref2.state;
+    commit("setButtonText", "Loading");
+    axios.post("/api/friend-request", {
+      friend_id: friendId
+    }).then(function (res) {
+      commit("setUserFriendship", res.data);
+    })["catch"](function (error) {});
   }
-}; //mutations are how u can change the state declared in const state
+}; //mutations are how u can change the state declared in const state to
 
 var mutations = {
-  setAuthUser: function setAuthUser(state, user) {
+  setUser: function setUser(state, user) {
+    //we get user from res.data in the commit setUser
     state.user = user;
+  },
+  setUserFriendship: function setUserFriendship(state, friendship) {
+    state.user.data.attributes.friendship = friendship;
+  },
+  setUserStatus: function setUserStatus(state, status) {
+    state.UserStatus = status;
+  },
+  setButtonText: function setButtonText(state, text) {
+    state.friendButtonText = text;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -55675,10 +55733,12 @@ var mutations = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//state is data
 var state = {
   user: null,
   userStatus: null
-};
+}; //getters are computed properties
+
 var getters = {
   //After we set the user in the mutation we're send it to the front end with this
   authUser: function authUser(state) {

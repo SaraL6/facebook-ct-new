@@ -1,8 +1,11 @@
+//state is data
+
 const state = {
     user: null,
     userStatus: null,
 };
 
+//getters are computed properties
 const getters = {
     //After we set the user in the mutation we're send it to the front end with this
     authUser: state => {

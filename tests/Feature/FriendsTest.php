@@ -98,6 +98,8 @@ class FriendsTest extends TestCase
                 'attributes' =>[
                     //we define confirmed_at
                     'confirmed_at' => $friendRequest->confirmed_at->diffForHumans(),
+                    'friend_id' => $friendRequest->friend_id,
+                    'user_id' => $friendRequest->user_id,
                 ]
                 ],
                 'links' =>[
@@ -319,7 +321,7 @@ class FriendsTest extends TestCase
 
                 ->delete('/api/friend-request-response/delete',[
                     'user_id'=> '',
-                   
+
                 ])->assertStatus(422);
 
                 $responseString = json_decode($response->getContent(),true);
