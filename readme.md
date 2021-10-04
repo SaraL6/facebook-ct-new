@@ -1,2 +1,2 @@
 # Facebook-clone
- Facebook clone with Laraven and Vue.js
+ Facebook clone with Laravel and Vue.js
