@@ -34,7 +34,7 @@ class FriendRequestController extends Controller
     //   //  we're using findOrFail so that we throw an exception before we use the friends relationship in case the friend id is invalid/not found
        try{
            User::findOrFail($data['friend_id'])
-         ->friends()->attach(auth()->user());
+         ->friends()->syncWithoutDetaching(auth()->user());
     //     //we find the new friend then we use the friends relationship to attach it to the authenticated user
 
        }catch(ModelNotFoundException $e){

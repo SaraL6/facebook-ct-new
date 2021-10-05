@@ -21,7 +21,10 @@ const getters = {
     },
     //we can access user.js with rootState
     friendButtonText: (state, getters, rootState) => {
-        if (getters.friendship === null) {
+       // if the auth user == user id we dont show the add friend btn
+        if (rootState.User.user.data.user_id === state.user.data.user_id) {
+            return "";
+        } else if (getters.friendship === null) {
             return "Add Friend";
             //confirmed_at is set to null when a request is pending
         } else if (
@@ -76,7 +79,11 @@ const actions = {
                 commit("setPostsStatus", "error");
             });
     },
-    sendFriendRequest({ commit, state }, friendId) {
+    sendFriendRequest({ commit, getters }, friendId) {
+        if (getters.friendButtonText !== "Add Friend") {
+            return;
+        }
+
         axios
             .post("/api/friend-request", { friend_id: friendId })
             .then(res => {

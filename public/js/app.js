@@ -55701,7 +55701,10 @@ var getters = {
   },
   //we can access user.js with rootState
   friendButtonText: function friendButtonText(state, getters, rootState) {
-    if (getters.friendship === null) {
+    // if the auth user == user id we dont show the add friend btn
+    if (rootState.User.user.data.user_id === state.user.data.user_id) {
+      return "";
+    } else if (getters.friendship === null) {
       return "Add Friend"; //confirmed_at is set to null when a request is pending
     } else if (getters.friendship.data.attributes.confirmed_at === null && //and if the friend request belongs to the authenticated user, and the friend id != auth user id
     //if the below condition were the opposite, tnat would mean the friend request belongs to the authenticated use
@@ -55750,7 +55753,12 @@ var actions = {
   },
   sendFriendRequest: function sendFriendRequest(_ref3, friendId) {
     var commit = _ref3.commit,
-        state = _ref3.state;
+        getters = _ref3.getters;
+
+    if (getters.friendButtonText !== "Add Friend") {
+      return;
+    }
+
     axios.post("/api/friend-request", {
       friend_id: friendId
     }).then(function (res) {
