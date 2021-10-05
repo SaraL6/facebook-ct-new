@@ -13,9 +13,20 @@ const getters = {
         if (getters.friendship === null) {
             return "Add Friend";
             //confirmed_at is set to null when a request is pending
-        } else if (getters.friendship.data.attributes.confirmed_at === null) {
+        } else if (
+            getters.friendship.data.attributes.confirmed_at === null &&
+            //and if the friend request belongs to the authenticated user, and the friend id != auth user id
+            //if the below condition were the opposite, tnat would mean the friend request belongs to the authenticated use
+            //rootstate.user.user accesses the user data inside the user.js module
+            getters.friendship.data.attributes.friend_id !==
+                rootState.User.user.data.user_id
+        ) {
             return "Pending Friend Request";
+        } else if (getters.friendship.data.attributes.confirmed_at !== null) {
+            return "";
         }
+        //the auth user = the friend id and  is the one that receives the friend request
+        return "Accept";
     },
     friendship: state => {
         return state.user.data.attributes.friendship;
@@ -43,15 +54,33 @@ const actions = {
             });
     },
     sendFriendRequest({ commit, state }, friendId) {
-        commit("setButtonText", "Loading");
         axios
             .post("/api/friend-request", { friend_id: friendId })
             .then(res => {
                 commit("setUserFriendship", res.data);
             })
-            .catch(error => {
-
-            });
+            .catch(error => {});
+    },
+    acceptFriendRequest({ commit, state }, userId) {
+        axios
+            .post("/api/friend-request-response", {
+                user_id: userId,
+                status: 1
+            })
+            .then(res => {
+                commit("setUserFriendship", res.data);
+            })
+            .catch(error => {});
+    },
+    ignoreFriendRequest({ commit, state }, userId) {
+        axios
+            .delete("/api/friend-request-response/delete", {
+                data: { user_id: userId }
+            })
+            .then(res => {
+                commit("setUserFriendship", null);
+            })
+            .catch(error => {});
     }
 };
 //mutations are how u can change the state declared in const state to
@@ -60,14 +89,11 @@ const mutations = {
         //we get user from res.data in the commit setUser
         state.user = user;
     },
-    setUserFriendship(state,friendship){
-        state.user.data.attributes.friendship =friendship;
+    setUserFriendship(state, friendship) {
+        state.user.data.attributes.friendship = friendship;
     },
     setUserStatus(state, status) {
         state.UserStatus = status;
-    },
-    setButtonText(state, text) {
-        state.friendButtonText = text;
     }
 };
 
