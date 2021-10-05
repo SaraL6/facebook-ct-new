@@ -1,12 +1,23 @@
 const state = {
     user: null,
-    userStatus: null
+    userStatus: null,
+    posts: null,
+    postsStatus: null
 };
 
 const getters = {
     //After we set the user in the mutation we send it to the front end with this
     user: state => {
         return state.user;
+    },
+    posts: state => {
+        return state.posts;
+    },
+    status: state => {
+        return {
+            user: state.userStatus,
+            posts: state.postsStatus
+        };
     },
     //we can access user.js with rootState
     friendButtonText: (state, getters, rootState) => {
@@ -53,6 +64,18 @@ const actions = {
                 commit("setUserStatus", "error");
             });
     },
+    fetchUserPosts({ commit, dispatch }, userId) {
+        commit("setPostsStatus", "loading");
+        axios
+            .get("/api/users/" + userId + "/posts")
+            .then(res => {
+                commit("setPosts", res.data);
+                commit("setPostsStatus", "success");
+            })
+            .catch(error => {
+                commit("setPostsStatus", "error");
+            });
+    },
     sendFriendRequest({ commit, state }, friendId) {
         axios
             .post("/api/friend-request", { friend_id: friendId })
@@ -89,11 +112,18 @@ const mutations = {
         //we get user from res.data in the commit setUser
         state.user = user;
     },
+    setPosts(state, posts) {
+        //we get user from res.data in the commit setUser
+        state.posts = posts;
+    },
     setUserFriendship(state, friendship) {
         state.user.data.attributes.friendship = friendship;
     },
     setUserStatus(state, status) {
-        state.UserStatus = status;
+        state.userStatus = status;
+    },
+    setPostsStatus(state, status) {
+        state.postsStatus = status;
     }
 };
 
