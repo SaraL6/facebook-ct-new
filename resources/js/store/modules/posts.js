@@ -8,7 +8,7 @@ const state = {
 
 //getters are computed properties
 const getters = {
-    //After we set the user in the mutation we're send it to the front end with this
+    //After we set the user in the mutation we send it to the front end with this
     newsPosts: state => {
         return state.newsPosts;
     },
@@ -36,6 +36,7 @@ const actions = {
                 commit("setPostsStatus", "error");
             });
     },
+    //this action will post to the db
     postMessage({ commit, state }) {
         commit("setPostsStatus", "loading");
         axios
@@ -43,6 +44,14 @@ const actions = {
             .then(res => {
                 commit("pushPost", res.data);
                 commit("updateMessage", "");
+            })
+            .catch(error => {});
+    },
+    likePost({ commit, state }, data) {
+        axios
+            .post("/api/posts/" + data.postId + "/like")
+            .then(res => {
+                commit("pushLikes", { likes: res.data, postKey: data.postKey });
             })
             .catch(error => {});
     }
@@ -55,11 +64,15 @@ const mutations = {
     setPostsStatus(state, status) {
         state.newsPostsStatus = status;
     },
+    //message = postMessage in the get computed property in NewPost.vue
     updateMessage(state, message) {
         state.postMessage = message;
     },
     pushPost(state, post) {
         state.newsPosts.data.unshift(post);
+    },
+    pushLikes(state, data) {
+        state.newsPosts.data[data.postKey].data.attributes.likes = data.likes;
     }
 };
 

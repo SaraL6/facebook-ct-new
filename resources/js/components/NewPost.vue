@@ -22,8 +22,8 @@
                 <transition name="fade">
                     <button
                         v-if="postMessage"
-                        @click="postHandler"
-                        class="bg-gray-200 ml-2 px-3 py-1 rounded-full"
+                        @click="$store.dispatch('postMessage')"
+                        class="bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none"
                     >
                         Post
                     </button>
@@ -54,6 +54,8 @@ export default {
     name: "NewPost",
     computed: {
         postMessage: {
+
+            //we get  the getter postMessage in post.js, then we set it to postMessage that's in the setter
             get() {
                 return this.$store.getters.postMessage;
             },

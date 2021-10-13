@@ -2141,6 +2141,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "NewPost",
   computed: {
     postMessage: {
+      //we get  the getter postMessage in post.js, then we set it to postMessage that's in the setter
       get: function get() {
         return this.$store.getters.postMessage;
       },
@@ -2240,9 +2241,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Post",
-  props: ['post']
+  props: ["post"]
 });
 
 /***/ }),
@@ -39018,8 +39036,13 @@ var render = function() {
               ? _c(
                   "button",
                   {
-                    staticClass: "bg-gray-200 ml-2 px-3 py-1 rounded-full",
-                    on: { click: _vm.postHandler }
+                    staticClass:
+                      "bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none",
+                    on: {
+                      click: function($event) {
+                        return _vm.$store.dispatch("postMessage")
+                      }
+                    }
                   },
                   [_vm._v("\n                    Post\n                ")]
                 )
@@ -39112,12 +39135,20 @@ var render = function() {
           _c("div", { staticClass: "ml-4" }, [
             _c("div", { staticClass: "text-sm font-bold" }, [
               _vm._v(
-                _vm._s(_vm.post.data.attributes.posted_by.data.attributes.name)
+                "\n                    " +
+                  _vm._s(
+                    _vm.post.data.attributes.posted_by.data.attributes.name
+                  ) +
+                  "\n                "
               )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "text-sm text-gray-600" }, [
-              _vm._v(_vm._s(_vm.post.data.attributes.posted_at))
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.post.data.attributes.posted_at) +
+                  "\n                "
+              )
             ])
           ])
         ]),
@@ -39160,7 +39191,11 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("p", [_vm._v("Jane Smith and 137 others")])
+            _c("p", [
+              _vm._v(
+                _vm._s(_vm.post.data.attributes.likes.like_count) + " likes"
+              )
+            ])
           ]),
           _vm._v(" "),
           _vm._m(1)
@@ -39175,7 +39210,20 @@ var render = function() {
             "button",
             {
               staticClass:
-                "flex  justify-center py-2 rounded-lg text-sm text-gray-700 font-medium w-full hover:bg-gray-200"
+                "flex  justify-center py-2 rounded-lg text-sm font-medium w-full focus:outline-none",
+              class: [
+                _vm.post.data.attributes.likes.user_likes_post
+                  ? "bg-blue-600 text-white"
+                  : ""
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.$store.dispatch("likePost", {
+                    postId: _vm.post.data.post_id,
+                    postKey: _vm.$vnode.key
+                  })
+                }
+              }
             },
             [
               _c(
@@ -39324,8 +39372,8 @@ var render = function() {
       _vm._v(" "),
       _vm.newsStatus.postsStaus === "loading"
         ? _c("p", [_vm._v("Loading posts...")])
-        : _vm._l(_vm.posts.data, function(post) {
-            return _c("Post", { key: post.data.post_id, attrs: { post: post } })
+        : _vm._l(_vm.posts.data, function(post, postKey) {
+            return _c("Post", { key: postKey, attrs: { post: post } })
           })
     ],
     2
@@ -56410,7 +56458,7 @@ var state = {
 }; //getters are computed properties
 
 var getters = {
-  //After we set the user in the mutation we're send it to the front end with this
+  //After we set the user in the mutation we send it to the front end with this
   newsPosts: function newsPosts(state) {
     return state.newsPosts;
   },
@@ -56436,6 +56484,7 @@ var actions = {
       commit("setPostsStatus", "error");
     });
   },
+  //this action will post to the db
   postMessage: function postMessage(_ref2) {
     var commit = _ref2.commit,
         state = _ref2.state;
@@ -56445,6 +56494,16 @@ var actions = {
     }).then(function (res) {
       commit("pushPost", res.data);
       commit("updateMessage", "");
+    })["catch"](function (error) {});
+  },
+  likePost: function likePost(_ref3, data) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
+    axios.post("/api/posts/" + data.postId + "/like").then(function (res) {
+      commit("pushLikes", {
+        likes: res.data,
+        postKey: data.postKey
+      });
     })["catch"](function (error) {});
   }
 }; //mutations are how u can change the state declared in const state
@@ -56456,11 +56515,15 @@ var mutations = {
   setPostsStatus: function setPostsStatus(state, status) {
     state.newsPostsStatus = status;
   },
+  //message = postMessage in the get computed property in NewPost.vue
   updateMessage: function updateMessage(state, message) {
     state.postMessage = message;
   },
   pushPost: function pushPost(state, post) {
     state.newsPosts.data.unshift(post);
+  },
+  pushLikes: function pushLikes(state, data) {
+    state.newsPosts.data[data.postKey].data.attributes.likes = data.likes;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
