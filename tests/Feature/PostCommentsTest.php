@@ -61,6 +61,7 @@ class PostCommentsTest extends TestCase
     /** @test */
     public function a_body_is_required_to_leave_a_comment_on_a_post()
     {
+
         $this->actingAs($user = factory(User::class)->create(), 'api');
         $post = factory(Post::class)->create(['id' => 123]);
 
@@ -88,17 +89,20 @@ class PostCommentsTest extends TestCase
             ->assertJson([
                 'data' => [
                     [
+                        //collection of posts
                         'data' => [
                             'type' => 'posts',
                             'attributes' => [
                                 'comments' => [
                                     'data' => [
                                         [
+                                            //collection of comments
                                             'data' => [
                                                 'type' => 'comments',
                                                 'comment_id' => 1,
                                                 'attributes' => [
                                                     'commented_by' => [
+                                                        //collection of users
                                                         'data' => [
                                                             'user_id' => $user->id,
                                                             'attributes' => [

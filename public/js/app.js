@@ -2258,9 +2258,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Post",
-  props: ["post"]
+  props: ["post"],
+  data: function data() {
+    return {
+      comments: false,
+      commentBody: ""
+    };
+  }
 });
 
 /***/ }),
@@ -2328,7 +2396,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch("fetchNewsPosts");
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    posts: "newsPosts",
+    posts: "posts",
     newsStatus: "newsStatus"
   }))
 });
@@ -2352,6 +2420,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39198,7 +39271,15 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", [
+            _c("p", [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.post.data.attributes.comments.comment_count) +
+                  " comments\n            "
+              )
+            ])
+          ])
         ]
       ),
       _vm._v(" "),
@@ -39253,7 +39334,12 @@ var render = function() {
             "button",
             {
               staticClass:
-                "flex justify-center py-2 rounded-lg text-sm text-gray-700 font-medium w-full hover:bg-gray-200"
+                "flex justify-center py-2 rounded-lg text-sm text-gray-700 font-medium w-full focus:outline-none",
+              on: {
+                click: function($event) {
+                  _vm.comments = !_vm.comments
+                }
+              }
             },
             [
               _c(
@@ -39279,7 +39365,116 @@ var render = function() {
             ]
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _vm.comments
+        ? _c(
+            "div",
+            { staticClass: "border-t border-gray-400 p-4 pt-2" },
+            [
+              _c("div", { staticClass: "flex" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.commentBody,
+                      expression: "commentBody"
+                    }
+                  ],
+                  staticClass:
+                    "w-full pl-4 h-8 bg-gray-200 rounded-lg focus:outline-none",
+                  attrs: {
+                    type: "text",
+                    name: "comment",
+                    placeholder: "Write your comment"
+                  },
+                  domProps: { value: _vm.commentBody },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.commentBody = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.commentBody
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "bg-gray-200 ml-2 px-2 py-1 rounded focus:outline-none",
+                        on: {
+                          click: function($event) {
+                            _vm.$store.dispatch("commentPost", {
+                              body: _vm.commentBody,
+                              postId: _vm.post.data.post_id,
+                              postKey: _vm.$vnode.key
+                            })
+                            _vm.commentBody = ""
+                          }
+                        }
+                      },
+                      [_vm._v("\n                Post\n            ")]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.post.data.attributes.comments.data, function(comment) {
+                return _c("div", { staticClass: "flex my-4 items-center" }, [
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ml-4 flex-1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "bg-gray-200 rounded-lg p-2 text-sm" },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "font-bold text-blue-700",
+                            attrs: {
+                              href:
+                                "/users/" +
+                                comment.data.attributes.commented_by.data
+                                  .user_id
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  comment.data.attributes.commented_by.data
+                                    .attributes.name
+                                )
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "inline" }, [
+                          _vm._v(_vm._s(comment.data.attributes.body))
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("p", { staticClass: "text-xs pl-2" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(comment.data.attributes.commented_at) +
+                            "\n                    "
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        : _vm._e()
     ]
   )
 }
@@ -39303,8 +39498,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("p", [_vm._v("\n                123 comments\n            ")])
+    return _c("div", { staticClass: "w-8" }, [
+      _c("img", {
+        attrs: {
+          src:
+            "https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80",
+          alt: "profile image for user"
+        }
+      })
     ])
   }
 ]
@@ -39501,12 +39702,9 @@ var render = function() {
           _vm.status.posts === "loading"
             ? _c("div", [_vm._v("Loading posts...")])
             : _vm.posts.length < 1
-            ? _c("div", [_vm._v(" No posts found. Get started...")])
-            : _vm._l(_vm.posts.data, function(post) {
-                return _c("Post", {
-                  key: post.data.post_id,
-                  attrs: { post: post }
-                })
+            ? _c("div", [_vm._v("No posts found. Get started...")])
+            : _vm._l(_vm.posts.data, function(post, postKey) {
+                return _c("Post", { key: postKey, attrs: { post: post } })
               })
         ],
         2
@@ -56452,19 +56650,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 __webpack_require__.r(__webpack_exports__);
 //state is data
 var state = {
-  newsPosts: null,
-  newsPostsStatus: null,
+  posts: null,
+  postsStatus: null,
   postMessage: ""
 }; //getters are computed properties
 
 var getters = {
   //After we set the user in the mutation we send it to the front end with this
-  newsPosts: function newsPosts(state) {
-    return state.newsPosts;
+  posts: function posts(state) {
+    return state.posts;
   },
   newsStatus: function newsStatus(state) {
     return {
-      newsPostsStatus: state.newsPostsStatus
+      postsStatus: state.postsStatus
     };
   },
   postMessage: function postMessage(state) {
@@ -56484,10 +56682,21 @@ var actions = {
       commit("setPostsStatus", "error");
     });
   },
-  //this action will post to the db
-  postMessage: function postMessage(_ref2) {
+  fetchUserPosts: function fetchUserPosts(_ref2, userId) {
     var commit = _ref2.commit,
-        state = _ref2.state;
+        dispatch = _ref2.dispatch;
+    commit("setPostsStatus", "loading");
+    axios.get("/api/users/" + userId + "/posts").then(function (res) {
+      commit("setPosts", res.data);
+      commit("setPostsStatus", "success");
+    })["catch"](function (error) {
+      commit("setPostsStatus", "error");
+    });
+  },
+  //this action will post to the db
+  postMessage: function postMessage(_ref3) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
     commit("setPostsStatus", "loading");
     axios.post("/api/posts", {
       body: state.postMessage
@@ -56496,12 +56705,24 @@ var actions = {
       commit("updateMessage", "");
     })["catch"](function (error) {});
   },
-  likePost: function likePost(_ref3, data) {
-    var commit = _ref3.commit,
-        state = _ref3.state;
+  likePost: function likePost(_ref4, data) {
+    var commit = _ref4.commit,
+        state = _ref4.state;
     axios.post("/api/posts/" + data.postId + "/like").then(function (res) {
       commit("pushLikes", {
         likes: res.data,
+        postKey: data.postKey
+      });
+    })["catch"](function (error) {});
+  },
+  commentPost: function commentPost(_ref5, data) {
+    var commit = _ref5.commit,
+        state = _ref5.state;
+    axios.post("/api/posts/" + data.postId + "/comment", {
+      body: data.body
+    }).then(function (res) {
+      commit("pushComments", {
+        comments: res.data,
         postKey: data.postKey
       });
     })["catch"](function (error) {});
@@ -56510,20 +56731,23 @@ var actions = {
 
 var mutations = {
   setPosts: function setPosts(state, posts) {
-    state.newsPosts = posts;
+    state.posts = posts;
   },
   setPostsStatus: function setPostsStatus(state, status) {
-    state.newsPostsStatus = status;
+    state.postsStatus = status;
   },
   //message = postMessage in the get computed property in NewPost.vue
   updateMessage: function updateMessage(state, message) {
     state.postMessage = message;
   },
   pushPost: function pushPost(state, post) {
-    state.newsPosts.data.unshift(post);
+    state.posts.data.unshift(post);
   },
   pushLikes: function pushLikes(state, data) {
-    state.newsPosts.data[data.postKey].data.attributes.likes = data.likes;
+    state.posts.data[data.postKey].data.attributes.likes = data.likes;
+  },
+  pushComments: function pushComments(state, data) {
+    state.posts.data[data.postKey].data.attributes.comments = data.comments;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56546,23 +56770,21 @@ var mutations = {
 __webpack_require__.r(__webpack_exports__);
 var state = {
   user: null,
-  userStatus: null,
-  posts: null,
-  postsStatus: null
+  userStatus: null
 };
 var getters = {
   //After we set the user in the mutation we send it to the front end with this
   user: function user(state) {
     return state.user;
   },
-  posts: function posts(state) {
-    return state.posts;
-  },
   status: function status(state) {
     return {
       user: state.userStatus,
       posts: state.postsStatus
     };
+  },
+  friendship: function friendship(state) {
+    return state.user.data.attributes.friendship;
   },
   //we can access user.js with rootState
   friendButtonText: function friendButtonText(state, getters, rootState) {
@@ -56582,9 +56804,6 @@ var getters = {
 
 
     return "Accept";
-  },
-  friendship: function friendship(state) {
-    return state.user.data.attributes.friendship;
   }
 };
 var actions = {
@@ -56605,20 +56824,9 @@ var actions = {
       commit("setUserStatus", "error");
     });
   },
-  fetchUserPosts: function fetchUserPosts(_ref2, userId) {
+  sendFriendRequest: function sendFriendRequest(_ref2, friendId) {
     var commit = _ref2.commit,
-        dispatch = _ref2.dispatch;
-    commit("setPostsStatus", "loading");
-    axios.get("/api/users/" + userId + "/posts").then(function (res) {
-      commit("setPosts", res.data);
-      commit("setPostsStatus", "success");
-    })["catch"](function (error) {
-      commit("setPostsStatus", "error");
-    });
-  },
-  sendFriendRequest: function sendFriendRequest(_ref3, friendId) {
-    var commit = _ref3.commit,
-        getters = _ref3.getters;
+        getters = _ref2.getters;
 
     if (getters.friendButtonText !== "Add Friend") {
       return;
@@ -56630,9 +56838,9 @@ var actions = {
       commit("setUserFriendship", res.data);
     })["catch"](function (error) {});
   },
-  acceptFriendRequest: function acceptFriendRequest(_ref4, userId) {
-    var commit = _ref4.commit,
-        state = _ref4.state;
+  acceptFriendRequest: function acceptFriendRequest(_ref3, userId) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
     axios.post("/api/friend-request-response", {
       user_id: userId,
       status: 1
@@ -56640,9 +56848,9 @@ var actions = {
       commit("setUserFriendship", res.data);
     })["catch"](function (error) {});
   },
-  ignoreFriendRequest: function ignoreFriendRequest(_ref5, userId) {
-    var commit = _ref5.commit,
-        state = _ref5.state;
+  ignoreFriendRequest: function ignoreFriendRequest(_ref4, userId) {
+    var commit = _ref4.commit,
+        state = _ref4.state;
     axios["delete"]("/api/friend-request-response/delete", {
       data: {
         user_id: userId
@@ -56658,18 +56866,11 @@ var mutations = {
     //we get user from res.data in the commit setUser
     state.user = user;
   },
-  setPosts: function setPosts(state, posts) {
-    //we get user from res.data in the commit setUser
-    state.posts = posts;
-  },
   setUserFriendship: function setUserFriendship(state, friendship) {
     state.user.data.attributes.friendship = friendship;
   },
   setUserStatus: function setUserStatus(state, status) {
     state.userStatus = status;
-  },
-  setPostsStatus: function setPostsStatus(state, status) {
-    state.postsStatus = status;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

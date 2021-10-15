@@ -1,8 +1,7 @@
 const state = {
     user: null,
     userStatus: null,
-    posts: null,
-    postsStatus: null
+
 };
 
 const getters = {
@@ -10,14 +9,14 @@ const getters = {
     user: state => {
         return state.user;
     },
-    posts: state => {
-        return state.posts;
-    },
     status: state => {
         return {
             user: state.userStatus,
             posts: state.postsStatus
         };
+    },
+    friendship: state => {
+        return state.user.data.attributes.friendship;
     },
     //we can access user.js with rootState
     friendButtonText: (state, getters, rootState) => {
@@ -41,9 +40,6 @@ const getters = {
         }
         //the auth user = the friend id and  is the one that receives the friend request
         return "Accept";
-    },
-    friendship: state => {
-        return state.user.data.attributes.friendship;
     }
 };
 
@@ -65,18 +61,6 @@ const actions = {
 
             .catch(error => {
                 commit("setUserStatus", "error");
-            });
-    },
-    fetchUserPosts({ commit, dispatch }, userId) {
-        commit("setPostsStatus", "loading");
-        axios
-            .get("/api/users/" + userId + "/posts")
-            .then(res => {
-                commit("setPosts", res.data);
-                commit("setPostsStatus", "success");
-            })
-            .catch(error => {
-                commit("setPostsStatus", "error");
             });
     },
     sendFriendRequest({ commit, getters }, friendId) {
@@ -119,19 +103,13 @@ const mutations = {
         //we get user from res.data in the commit setUser
         state.user = user;
     },
-    setPosts(state, posts) {
-        //we get user from res.data in the commit setUser
-        state.posts = posts;
-    },
     setUserFriendship(state, friendship) {
         state.user.data.attributes.friendship = friendship;
     },
     setUserStatus(state, status) {
         state.userStatus = status;
-    },
-    setPostsStatus(state, status) {
-        state.postsStatus = status;
     }
+
 };
 
 export default {

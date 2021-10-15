@@ -46,7 +46,7 @@
             </div>
             <div>
                 <p>
-                    123 comments
+                    {{ post.data.attributes.comments.comment_count }} comments
                 </p>
             </div>
         </div>
@@ -77,7 +77,8 @@
                 <p class="ml-2">Like</p>
             </button>
             <button
-                class="flex justify-center py-2 rounded-lg text-sm text-gray-700 font-medium w-full hover:bg-gray-200"
+                class="flex justify-center py-2 rounded-lg text-sm text-gray-700 font-medium w-full focus:outline-none"
+                @click="comments = !comments"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -91,12 +92,79 @@
                 <p class="ml-2">Comment</p>
             </button>
         </div>
+
+        <div v-if="comments" class="border-t border-gray-400 p-4 pt-2">
+            <div class="flex">
+                <input
+                    v-model="commentBody"
+                    type="text"
+                    name="comment"
+                    placeholder="Write your comment"
+                    class="w-full pl-4 h-8 bg-gray-200 rounded-lg focus:outline-none"
+                />
+                <button
+                    v-if="commentBody"
+                    class="bg-gray-200 ml-2 px-2 py-1 rounded focus:outline-none"
+                    @click="
+                        $store.dispatch('commentPost', {
+                            body: commentBody,
+                            postId: post.data.post_id,
+                            postKey: $vnode.key
+                        });
+                        commentBody = '';
+                    "
+                >
+                    Post
+                </button>
+            </div>
+
+            <div
+                class="flex my-4 items-center"
+                v-for="comment in post.data.attributes.comments.data"
+            >
+                <div class="w-8">
+                    <img
+                        src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
+                        alt="profile image for user"
+                    />
+                </div>
+                <div class="ml-4 flex-1">
+                    <div class="bg-gray-200 rounded-lg p-2 text-sm">
+                        <a
+                            class="font-bold text-blue-700"
+                            :href="
+                                '/users/' +
+                                    comment.data.attributes.commented_by.data
+                                        .user_id
+                            "
+                        >
+                            {{
+                                comment.data.attributes.commented_by.data
+                                    .attributes.name
+                            }}</a
+                        >
+                        <p class="inline">{{ comment.data.attributes.body }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs pl-2">
+                            {{ comment.data.attributes.commented_at }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
 export default {
     name: "Post",
-    props: ["post"]
+    props: ["post"],
+    data: () => {
+        return {
+            comments: false,
+            commentBody: ""
+        };
+    }
 };
 </script>
 <style lang=""></style>

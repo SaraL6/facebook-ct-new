@@ -1,20 +1,20 @@
 //state is data
 
 const state = {
-    newsPosts: null,
-    newsPostsStatus: null,
+    posts: null,
+    postsStatus: null,
     postMessage: ""
 };
 
 //getters are computed properties
 const getters = {
     //After we set the user in the mutation we send it to the front end with this
-    newsPosts: state => {
-        return state.newsPosts;
+    posts: state => {
+        return state.posts;
     },
     newsStatus: state => {
         return {
-            newsPostsStatus: state.newsPostsStatus
+            postsStatus: state.postsStatus
         };
     },
     postMessage: state => {
@@ -28,6 +28,18 @@ const actions = {
         commit("setPostsStatus", "loading");
         axios
             .get("/api/posts")
+            .then(res => {
+                commit("setPosts", res.data);
+                commit("setPostsStatus", "success");
+            })
+            .catch(error => {
+                commit("setPostsStatus", "error");
+            });
+    },
+    fetchUserPosts({ commit, dispatch }, userId) {
+        commit("setPostsStatus", "loading");
+        axios
+            .get("/api/users/" + userId + "/posts")
             .then(res => {
                 commit("setPosts", res.data);
                 commit("setPostsStatus", "success");
@@ -54,25 +66,38 @@ const actions = {
                 commit("pushLikes", { likes: res.data, postKey: data.postKey });
             })
             .catch(error => {});
+
+    },
+    commentPost({ commit, state }, data) {
+        axios
+            .post("/api/posts/" + data.postId + "/comment" ,{body:data.body})
+            .then(res => {
+                commit("pushComments", { comments: res.data, postKey: data.postKey });
+            })
+            .catch(error => {});
     }
 };
 //mutations are how u can change the state declared in const state
 const mutations = {
     setPosts(state, posts) {
-        state.newsPosts = posts;
+        state.posts = posts;
     },
     setPostsStatus(state, status) {
-        state.newsPostsStatus = status;
+        state.postsStatus = status;
     },
     //message = postMessage in the get computed property in NewPost.vue
     updateMessage(state, message) {
         state.postMessage = message;
     },
     pushPost(state, post) {
-        state.newsPosts.data.unshift(post);
+        state.posts.data.unshift(post);
     },
     pushLikes(state, data) {
-        state.newsPosts.data[data.postKey].data.attributes.likes = data.likes;
+        state.posts.data[data.postKey].data.attributes.likes = data.likes;
+
+    },
+    pushComments(state, data) {
+        state.posts.data[data.postKey].data.attributes.comments = data.comments;
     }
 };
 
