@@ -38,6 +38,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function images()
+    {
+        return $this->hasMany(UserImage::class);
+    }
+    public function coverImage()
+    {
+        return $this->hasOne(UserImage::class)
+        //we're returning the latest image added
+        ->orderByDesc('id')
+        ->where('location','cover');
+    }
+    public function profileImage()
+    {
+        return $this->hasOne(UserImage::class)
+        //we're returning the latest image added
+        ->orderByDesc('id')
+        ->where('location','profile');
+    }
+
     public function likedPosts()
     {
         return $this->belongsToMany(Post::class,'likes','user_id','post_id');
