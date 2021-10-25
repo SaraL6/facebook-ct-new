@@ -4,7 +4,7 @@
             <div>
                 <div class="w-10">
                     <img
-                        src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
+                        :src="authUser.data.attributes.profile_image.data.attributes.path"
                         alt="profile image for user"
                         class="w-10 h-10 object-cover rounded-full"
                     />
@@ -50,9 +50,13 @@
 </template>
 <script>
 import _ from "lodash";
+import {mapGetters} from 'vuex'
 export default {
     name: "NewPost",
     computed: {
+        ...mapGetters({
+            authUser:'authUser'
+        }),
         postMessage: {
 
             //we get  the getter postMessage in post.js, then we set it to postMessage that's in the setter
