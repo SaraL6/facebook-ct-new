@@ -4,7 +4,10 @@
             <div class="flex items-center">
                 <div class="w-10">
                     <img
-                        :src="post.data.attributes.posted_by.data.attributes.profile_image.data.attributes.path"
+                        :src="
+                            post.data.attributes.posted_by.data.attributes
+                                .profile_image.data.attributes.path
+                        "
                         alt="profile image for user"
                         class="w-10 h-10 object-cover rounded-full"
                     />
@@ -52,16 +55,16 @@
         </div>
         <div class="flex justify-between border-1 border-gray-400 m-4">
             <button
-                class="flex  justify-center py-2 rounded-lg text-sm font-medium w-full focus:outline-none"
+                class="flex justify-center py-2 rounded-lg text-sm font-medium w-full focus:outline-none"
                 :class="[
                     post.data.attributes.likes.user_likes_post
                         ? 'bg-blue-600 text-white'
-                        : ''
+                        : '',
                 ]"
                 @click="
                     $store.dispatch('likePost', {
                         postId: post.data.post_id,
-                        postKey: $vnode.key
+                        postKey: $vnode.key,
                     })
                 "
             >
@@ -109,7 +112,7 @@
                         $store.dispatch('commentPost', {
                             body: commentBody,
                             postId: post.data.post_id,
-                            postKey: $vnode.key
+                            postKey: $vnode.key,
                         });
                         commentBody = '';
                     "
@@ -124,8 +127,11 @@
             >
                 <div class="w-8">
                     <img
-                        src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
-                        alt="profile image for user"
+                        :src="
+                            comment.data.attributes.commented_by.data.attributes
+                                .profile_image.data.attributes.path
+                        "
+                        alt="profile image for user" class="w-8 h-8 object-cover rounded-full"
                     />
                 </div>
                 <div class="ml-4 flex-1">
@@ -134,11 +140,10 @@
                             class="font-bold text-blue-700"
                             :href="
                                 '/users/' +
-                                    comment.data.attributes.commented_by.data
-                                        .user_id
+                                comment.data.attributes.commented_by.data
+                                    .user_id
                             "
-                        >
-                            {{
+                            >{{
                                 comment.data.attributes.commented_by.data
                                     .attributes.name
                             }}</a
@@ -162,9 +167,9 @@ export default {
     data: () => {
         return {
             comments: false,
-            commentBody: ""
+            commentBody: "",
         };
-    }
+    },
 };
 </script>
 <style lang=""></style>
