@@ -18,21 +18,21 @@ class PostToTimelineTest extends TestCase
     public function a_user_can_post_a_text_post()
     {
         $this->withoutExceptionHandling();
-            $this->actingAs($user = factory(User::class)->create(), 'api');
-            $response = $this->post('/api/posts',[
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $response = $this->post('/api/posts', [
 
                     'body' => 'Testing Body',
 
 
             ]);
 
-            $post = Post::first();
-            $this->assertCount(1, Post::all());
-            $this->assertEquals($user->id, $post->user_id);
+        $post = Post::first();
+        $this->assertCount(1, Post::all());
+        $this->assertEquals($user->id, $post->user_id);
 
-            $this->assertEquals('Testing Body', $post->body);
+        $this->assertEquals('Testing Body', $post->body);
 
-            $response->assertStatus(201)
+        $response->assertStatus(201)
                 ->assertJson([
                     'data' => [
                         'type' => 'posts',
@@ -52,31 +52,28 @@ class PostToTimelineTest extends TestCase
                             'self' => url('/posts/'.$post->id),
                     ]
                 ]);
-
-
-
     }
 
-      /** @test */
-      public function a_user_can_post_a_text_post_with_an_image()
-      {
-          $this->withoutExceptionHandling();
-          $this->actingAs($user = factory(User::class)->create(), 'api');
+    /** @test */
+    public function a_user_can_post_a_text_post_with_an_image()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($user = factory(User::class)->create(), 'api');
 
-          $file = UploadedFile::fake()->image('user-post.jpg');
+        $file = UploadedFile::fake()->image('user-post.jpg');
 
-          $response = $this->post('/api/posts', [
+        $response = $this->post('/api/posts', [
               'body' => 'Testing Body',
               'image' => $file,
               'width' => 100,
               'height' => 100,
           ]);
 
-          Storage::disk('public')->assertExists('post-images/'.$file->hashName());
-        
+        Storage::disk('public')->assertExists('post-images/'.$file->hashName());
 
 
-          $response->assertStatus(201)
+
+        $response->assertStatus(201)
               ->assertJson([
                   'data' => [
                       'attributes' => [
@@ -85,5 +82,5 @@ class PostToTimelineTest extends TestCase
                       ]
                   ],
               ]);
-      }
+    }
 }

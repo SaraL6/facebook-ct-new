@@ -3,23 +3,23 @@
 const state = {
     posts: null,
     postsStatus: null,
-    postMessage: ""
+    postMessage: "",
 };
 
 //getters are computed properties
 const getters = {
     //After we set the user in the mutation we send it to the front end with this
-    posts: state => {
+    posts: (state) => {
         return state.posts;
     },
-    newsStatus: state => {
+    newsStatus: (state) => {
         return {
-            postsStatus: state.postsStatus
+            postsStatus: state.postsStatus,
         };
     },
-    postMessage: state => {
+    postMessage: (state) => {
         return state.postMessage;
-    }
+    },
 };
 
 const actions = {
@@ -28,11 +28,11 @@ const actions = {
         commit("setPostsStatus", "loading");
         axios
             .get("/api/posts")
-            .then(res => {
+            .then((res) => {
                 commit("setPosts", res.data);
                 commit("setPostsStatus", "success");
             })
-            .catch(error => {
+            .catch((error) => {
                 commit("setPostsStatus", "error");
             });
     },
@@ -40,11 +40,11 @@ const actions = {
         commit("setPostsStatus", "loading");
         axios
             .get("/api/users/" + userId + "/posts")
-            .then(res => {
+            .then((res) => {
                 commit("setPosts", res.data);
                 commit("setPostsStatus", "success");
             })
-            .catch(error => {
+            .catch((error) => {
                 commit("setPostsStatus", "error");
             });
     },
@@ -53,29 +53,32 @@ const actions = {
         commit("setPostsStatus", "loading");
         axios
             .post("/api/posts", { body: state.postMessage })
-            .then(res => {
+            .then((res) => {
                 commit("pushPost", res.data);
+                commit("setPostsStatus", "success");
                 commit("updateMessage", "");
             })
-            .catch(error => {});
+            .catch((error) => {});
     },
     likePost({ commit, state }, data) {
         axios
             .post("/api/posts/" + data.postId + "/like")
-            .then(res => {
+            .then((res) => {
                 commit("pushLikes", { likes: res.data, postKey: data.postKey });
             })
-            .catch(error => {});
-
+            .catch((error) => {});
     },
     commentPost({ commit, state }, data) {
         axios
-            .post("/api/posts/" + data.postId + "/comment" ,{body:data.body})
-            .then(res => {
-                commit("pushComments", { comments: res.data, postKey: data.postKey });
+            .post("/api/posts/" + data.postId + "/comment", { body: data.body })
+            .then((res) => {
+                commit("pushComments", {
+                    comments: res.data,
+                    postKey: data.postKey,
+                });
             })
-            .catch(error => {});
-    }
+            .catch((error) => {});
+    },
 };
 //mutations are how u can change the state declared in const state
 const mutations = {
@@ -94,16 +97,15 @@ const mutations = {
     },
     pushLikes(state, data) {
         state.posts.data[data.postKey].data.attributes.likes = data.likes;
-
     },
     pushComments(state, data) {
         state.posts.data[data.postKey].data.attributes.comments = data.comments;
-    }
+    },
 };
 
 export default {
     state,
     getters,
     actions,
-    mutations
+    mutations,
 };

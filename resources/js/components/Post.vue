@@ -27,7 +27,13 @@
                 <p>{{ post.data.attributes.body }}</p>
             </div>
         </div>
-        <div class="w-full" v-if="post.data.attributes.image">
+        <div
+            class="w-full"
+
+            v-if="post.data.attributes.image.length > 29"
+            :load="log(post.data.attributes.image.length)"
+        >
+        
             <img
                 :src="post.data.attributes.image"
                 alt="post image"
@@ -131,7 +137,8 @@
                             comment.data.attributes.commented_by.data.attributes
                                 .profile_image.data.attributes.path
                         "
-                        alt="profile image for user" class="w-8 h-8 object-cover rounded-full"
+                        alt="profile image for user"
+                        class="w-8 h-8 object-cover rounded-full"
                     />
                 </div>
                 <div class="ml-4 flex-1">
@@ -169,6 +176,11 @@ export default {
             comments: false,
             commentBody: "",
         };
+    },
+    methods: {
+        log(item) {
+            console.log(item);
+        },
     },
 };
 </script>
