@@ -6,8 +6,8 @@
         <div class="relative mb-8">
             <div class="w-100 h-64 overflow-hidden z-10">
                 <UploadableImage
-                    image-width="1500"
-                    image-height="300"
+                    image-width="1200"
+                    image-height="500"
                     location="cover"
                     :user-image="user.data.attributes.cover_image"
                     classes="object-cover w-full"
@@ -19,15 +19,13 @@
             >
                 <div class="w-32">
                     <UploadableImage
-                        image-width="1500"
-                        image-height="300"
+                        image-width="750"
+                        image-height="750"
                         location="profile"
                         :user-image="user.data.attributes.profile_image"
                         classes="object-cover w-32 h-32 border-4 border-gray-200 rounded-full shadow-lg"
                         alt="user profile image"
                     />
-
-
                 </div>
                 <p class="text-2xl text-gray-100 ml-4">
                     {{ user.data.attributes.name }}

@@ -5,7 +5,8 @@ namespace Tests\Feature;
 use App\Post;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PostToTimelineTest extends TestCase
@@ -55,4 +56,34 @@ class PostToTimelineTest extends TestCase
 
 
     }
+
+      /** @test */
+      public function a_user_can_post_a_text_post_with_an_image()
+      {
+          $this->withoutExceptionHandling();
+          $this->actingAs($user = factory(User::class)->create(), 'api');
+
+          $file = UploadedFile::fake()->image('user-post.jpg');
+
+          $response = $this->post('/api/posts', [
+              'body' => 'Testing Body',
+              'image' => $file,
+              'width' => 100,
+              'height' => 100,
+          ]);
+
+          Storage::disk('public')->assertExists('post-images/'.$file->hashName());
+        
+
+
+          $response->assertStatus(201)
+              ->assertJson([
+                  'data' => [
+                      'attributes' => [
+                          'body' => 'Testing Body',
+                          'image' => url('post-images/'.$file->hashName()),
+                      ]
+                  ],
+              ]);
+      }
 }

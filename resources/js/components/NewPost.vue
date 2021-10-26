@@ -22,7 +22,7 @@
                 <transition name="fade">
                     <button
                         v-if="postMessage"
-                        @click="$store.dispatch('postMessage')"
+                        @click="postHandler"
                         class="bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none"
                     >
                         Post
@@ -67,7 +67,14 @@ export default {
                 this.$store.commit("updateMessage", postMessage);
             }, 300)
         }
-    }
+    },
+    methods: {
+        postHandler(){
+            this.$store.dispatch('postMessage');
+        }
+    },
+
+
 };
 </script>
 <style scoped>

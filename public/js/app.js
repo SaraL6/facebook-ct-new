@@ -2159,7 +2159,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$store.commit("updateMessage", postMessage);
       }, 300)
     }
-  })
+  }),
+  methods: {
+    postHandler: function postHandler() {
+      this.$store.dispatch('postMessage');
+    }
+  }
 });
 
 /***/ }),
@@ -2512,8 +2517,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -42768,11 +42771,7 @@ var render = function() {
                   {
                     staticClass:
                       "bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none",
-                    on: {
-                      click: function($event) {
-                        return _vm.$store.dispatch("postMessage")
-                      }
-                    }
+                    on: { click: _vm.postHandler }
                   },
                   [_vm._v("\n                    Post\n                ")]
                 )
@@ -43272,8 +43271,8 @@ var render = function() {
               [
                 _c("UploadableImage", {
                   attrs: {
-                    "image-width": "1500",
-                    "image-height": "300",
+                    "image-width": "1200",
+                    "image-height": "500",
                     location: "cover",
                     "user-image": _vm.user.data.attributes.cover_image,
                     classes: "object-cover w-full",
@@ -43297,8 +43296,8 @@ var render = function() {
                   [
                     _c("UploadableImage", {
                       attrs: {
-                        "image-width": "1500",
-                        "image-height": "300",
+                        "image-width": "750",
+                        "image-height": "750",
                         location: "profile",
                         "user-image": _vm.user.data.attributes.profile_image,
                         classes:
