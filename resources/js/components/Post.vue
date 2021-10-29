@@ -33,7 +33,7 @@
             v-if="post.data.attributes.image.length > 29"
             :load="log(post.data.attributes.image.length)"
         >
-        
+
             <img
                 :src="post.data.attributes.image"
                 alt="post image"
@@ -178,8 +178,9 @@ export default {
         };
     },
     methods: {
+       // 29 is the length when there is no image in the post so if the lenght is >29 then the image is not null
         log(item) {
-            console.log(item);
+          //  console.log(item);
         },
     },
 };
