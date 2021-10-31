@@ -45,7 +45,7 @@
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    class="fill-current w-6 h-6"
+                    class="middle-icons w-6 h-6"
                 >
                     <path
                         d="M22.6 11l-9.9-9c-.4-.4-1.1-.4-1.5 0l-9.9 9c-.3.3-.5.8-.3 1.2.2.5.6.8 1.1.8h1.6v9c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-5.5h3.2V22c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-9h1.6c.5 0 .9-.3 1.1-.7.3-.5.2-1-.2-1.3zm-2.5-8h-4.3l5 4.5V3.6c0-.3-.3-.6-.7-.6z"
@@ -80,21 +80,44 @@
             </router-link>
         </div>
         <div class="w-1/3 flex justify-end">
-            <Menu />
+            <Friends
+                v-on:show-hide="toggleFriends($event)"
+                :showFriends="showFriends"
+            />
+            <Menu v-on:show-hide="toggleMenu($event)" :showMenu="showMenu" />
         </div>
     </div>
 </template>
 
 <script>
-import Menu from "../views/Users/Menu.vue";
+import Menu from "./Menu.vue";
+import Friends from "./Friends.vue";
 import Logout from ".././views/Users/Logout";
 import { mapGetters } from "vuex";
 export default {
     Name: "Nav",
-
+    data: () => {
+        return {
+            showMenu: false,
+            showFriends: false,
+        };
+    },
+    methods: {
+        toggleMenu(value) {
+            this.showMenu = value;
+            this.showFriends = false;
+            console.log(this.showMenu);
+        },
+        toggleFriends(value) {
+            this.showFriends = value;
+            this.showMenu = false;
+            console.log(this.showFriends);
+        },
+    },
     components: {
         Logout,
         Menu,
+        Friends,
     },
     computed: {
         ...mapGetters({

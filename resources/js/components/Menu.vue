@@ -9,9 +9,10 @@
                                 <!-- Header Navigation Menu Icons -->
                                 <button
                                     class="header--button"
-                                    v-if="show"
+                                    v-if="showMenu"
                                     key="on"
-                                    @click="show = false"
+
+                                      v-on:click="$emit('show-hide', false)"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -29,7 +30,8 @@
                                     class="header--button"
                                     v-else
                                     key="off"
-                                    @click="show = true"
+                                     v-on:click="$emit('show-hide', true)"
+                                    :load="log(showMenu)"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -48,8 +50,9 @@
                         <transition name="dropdown">
                             <div
                                 class="dropdown__menu"
-                                v-bind:class="{ active: show }"
-                                v-if="show"
+                                v-bind:class="{ active: showMenu }"
+                                v-if="showMenu"
+                                :load="log(showMenu)"
                             >
                                 <ul class="dropdown__menu-nav">
                                     <li class="dropdown__menu-item">
@@ -221,13 +224,18 @@
     </div>
 </template>
 <script>
-import Logout from "./Logout.vue";
+import Logout from "../views/Users/Logout.vue";
 export default {
     Name: "Menu",
+    props: ["showMenu"],
     data: () => {
         return {
-            show: false,
         };
+    },
+    methods: {
+        log(item) {
+            console.log("Menu" + item);
+        },
     },
     components: {
         Logout,
