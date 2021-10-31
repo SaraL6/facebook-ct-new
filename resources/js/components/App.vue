@@ -1,5 +1,8 @@
 <template lang="">
-    <div class="flex flex-col flex-1 h-screen overflow-y-hidden" v-if="authUser">
+    <div
+        class="flex flex-col flex-1 h-screen overflow-y-hidden"
+        v-if="authUser"
+    >
         <Nav />
 
         <div class="flex overflow-y-hidden flex-1">
@@ -14,13 +17,13 @@
 <script>
 import Nav from "./Nav";
 import Sidebar from "./Sidebar";
-import {mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
     name: "App",
     components: {
         Nav,
-        Sidebar
+        Sidebar,
     },
     mounted() {
         this.$store.dispatch("fetchAuthUser");
@@ -30,14 +33,14 @@ export default {
     },
     computed: {
         ...mapGetters({
-            authUser:'authUser',
+            authUser: "authUser",
         }),
     },
     watch: {
         $route(to, from) {
             this.$store.dispatch("setPageTitle", to.meta.title);
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang=""></style>

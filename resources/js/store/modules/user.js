@@ -14,6 +14,7 @@ const getters = {
 };
 
 const actions = {
+
     //this action is goint to be dispatched in App.vue
     fetchAuthUser({commit, state}) {
         axios.get('/api/auth-user')

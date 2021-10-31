@@ -4,3 +4,17 @@
 .register-form {
     width: 432px;
 }
+.modal {
+    transition: opacity 0.25s ease;
+}
+.modal-active {
+    background-color:rgba(0, 0, 0, 0.5);
+}
+.ui-widget-overlay.modal-opened{
+    background: rgb(0, 0, 0);
+    opacity: 0.5;
+    filter: Alpha(Opacity=50);
+  }
+  /* Dropdown  */
+
+  
