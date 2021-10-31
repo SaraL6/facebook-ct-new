@@ -81,10 +81,10 @@
         </div>
         <div class="w-1/3 flex justify-end">
             <Friends
-                v-on:show-hide="toggleFriends($event)"
+                @showHide="toggleFriends($event)"
                 :showFriends="showFriends"
             />
-            <Menu v-on:show-hide="toggleMenu($event)" :showMenu="showMenu" />
+            <Menu @showHide="toggleMenu($event)" :showMenu="showMenu" />
         </div>
     </div>
 </template>

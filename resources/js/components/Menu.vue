@@ -11,8 +11,7 @@
                                     class="header--button"
                                     v-if="showMenu"
                                     key="on"
-
-                                      v-on:click="$emit('show-hide', false)"
+                                    @click="showHide(false)"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -30,7 +29,7 @@
                                     class="header--button"
                                     v-else
                                     key="off"
-                                     v-on:click="$emit('show-hide', true)"
+                                    @click="showHide(true)"
                                     :load="log(showMenu)"
                                 >
                                     <svg
@@ -228,13 +227,13 @@ import Logout from "../views/Users/Logout.vue";
 export default {
     Name: "Menu",
     props: ["showMenu"],
-    data: () => {
-        return {
-        };
-    },
+
     methods: {
         log(item) {
-            console.log("Menu" + item);
+            //  console.log("Menu" + item);
+        },
+        showHide(value) {
+            this.$emit("showHide", value);
         },
     },
     components: {

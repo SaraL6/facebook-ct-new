@@ -2195,10 +2195,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "Friends",
   props: ["showFriends"],
-  data: function data() {},
   methods: {
-    log: function log(item) {
-      console.log("Friends" + item);
+    log: function log(item) {//   console.log("Friends" + item);
+    },
+    showHide: function showHide(value) {
+      this.$emit("showHide", value);
     }
   }
 });
@@ -2439,17 +2440,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "Menu",
   props: ["showMenu"],
-  data: function data() {
-    return {};
-  },
   methods: {
-    log: function log(item) {
-      console.log("Menu" + item);
+    log: function log(item) {//  console.log("Menu" + item);
+    },
+    showHide: function showHide(value) {
+      this.$emit("showHide", value);
     }
   },
   components: {
@@ -43177,7 +43176,7 @@ var render = function() {
                             staticClass: "header--button",
                             on: {
                               click: function($event) {
-                                return _vm.$emit("show-hide", false)
+                                return _vm.showHide(false)
                               }
                             }
                           },
@@ -43214,7 +43213,7 @@ var render = function() {
                             attrs: { load: _vm.log(_vm.showFriends) },
                             on: {
                               click: function($event) {
-                                return _vm.$emit("show-hide", true)
+                                return _vm.showHide(true)
                               }
                             }
                           },
@@ -43644,7 +43643,7 @@ var render = function() {
                             staticClass: "header--button",
                             on: {
                               click: function($event) {
-                                return _vm.$emit("show-hide", false)
+                                return _vm.showHide(false)
                               }
                             }
                           },
@@ -43681,7 +43680,7 @@ var render = function() {
                             attrs: { load: _vm.log(_vm.showMenu) },
                             on: {
                               click: function($event) {
-                                return _vm.$emit("show-hide", true)
+                                return _vm.showHide(true)
                               }
                             }
                           },
@@ -44255,7 +44254,7 @@ var render = function() {
           _c("Friends", {
             attrs: { showFriends: _vm.showFriends },
             on: {
-              "show-hide": function($event) {
+              showHide: function($event) {
                 return _vm.toggleFriends($event)
               }
             }
@@ -44264,7 +44263,7 @@ var render = function() {
           _c("Menu", {
             attrs: { showMenu: _vm.showMenu },
             on: {
-              "show-hide": function($event) {
+              showHide: function($event) {
                 return _vm.toggleMenu($event)
               }
             }

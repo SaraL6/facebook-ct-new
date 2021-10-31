@@ -11,7 +11,7 @@
                                     class="header--button"
                                     v-if="showFriends"
                                     key="on"
-                                    v-on:click="$emit('show-hide', false)"
+                                    @click="showHide(false)"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -29,7 +29,7 @@
                                     class="header--button"
                                     v-else
                                     key="off"
-                                    v-on:click="$emit('show-hide', true)"
+                                    @click="showHide(true)"
                                     :load="log(showFriends)"
                                 >
                                     <svg
@@ -225,14 +225,14 @@
 export default {
     Name: "Friends",
     props: ["showFriends"],
-    data: () => {
 
-    },
     methods: {
         log(item) {
-            console.log("Friends" + item);
+            //   console.log("Friends" + item);
         },
-
+        showHide(value) {
+            this.$emit("showHide", value);
+        },
     },
 };
 </script>
