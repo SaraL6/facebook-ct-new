@@ -52,6 +52,7 @@ const actions = {
         //we use axios to get our user
         axios
             .get("/api/users/" + userId)
+            
             .then(res => {
                 //we set our data/state equal to the results of the response
                 commit("setUser", res.data);

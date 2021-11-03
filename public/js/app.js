@@ -1969,12 +1969,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "FriendRequest",
-  props: ["request"]
+  props: ["request"],
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    requestSender: "requestSender"
+  }))
 });
 
 /***/ }),
@@ -2137,6 +2148,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2156,9 +2178,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch("fetchFriendRequests");
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    user: "modaluser",
     authUser: "authUser",
-    requests: "requests",
-    requestsStatus: "requestsStatus"
+    friendship: "modalfriendship",
+    requests: "modalrequests",
+    requestsStatus: "lrequestsStatus",
+    status: "modalstatus",
+    friendButtonText: "modalfriendButtonText"
   }))
 });
 
@@ -3202,6 +3228,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.$store.dispatch("fetchUser", this.$route.params.userId);
     this.$store.dispatch("fetchUserPosts", this.$route.params.userId);
+    console.log('userId' + this.$route.params.userId);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     user: "user",
@@ -43111,9 +43138,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v("Request from " + _vm._s(_vm.request.data.attributes.sent_by.name))
-  ])
+  return _vm.requestSender
+    ? _c("div", [_vm._v("Request from " + _vm._s(_vm.requestSender))])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62035,26 +62062,46 @@ var state = {
   requestsStatus: null
 };
 var getters = {
-  requests: function requests(state) {
+  modalrequests: function modalrequests(state) {
     return state.requests;
   },
-  requestsStatus: function requestsStatus(state) {
+  lrequestsStatus: function lrequestsStatus(state) {
     return {
       requestsStatus: state.requestsStatus
     };
+  },
+  requestSender: function requestSender(state, getters, rootState) {
+    if (rootState.User.user.data.user_id === state.requests.data[0].data.attributes.user_id) {
+      return "";
+    } else if (rootState.User.user.data.user_id !== state.requests.data[0].data.attributes.user_id) {
+      return state.requests.data[0].data.attributes.sent_by.name;
+    }
+  },
+  modalfriendship: function modalfriendship(state) {
+    return state.requests.data[0].data.attributes.confirmed_at;
+  },
+  //we can access user.js with rootState
+  modalfriendButtonText: function modalfriendButtonText(state, getters, rootState) {
+    // if the auth user == user id we dont show the add friend btn
+    if (getters.modalfriendship !== null) {
+      return "";
+    } //the auth user = the friend id and  is the one that receives the friend request
+
+
+    return "Accept";
   }
 };
 var actions = {
   fetchFriendRequests: function fetchFriendRequests(_ref) {
     var commit = _ref.commit,
         state = _ref.state;
-    commit("setrequestsStatus", "loading");
+    commit("setRequestsStatus", "loading");
     axios.get("/api/friend-request").then(function (res) {
       commit("setRequests", res.data);
       console.log(res.data);
-      commit("setrequestsStatus", "success");
+      commit("setRequestsStatus", "success");
     })["catch"](function (error) {
-      commit("setrequestsStatus", "error");
+      commit("setRequestsStatus", "error");
     });
   },
   acceptFriendRequest: function acceptFriendRequest(_ref2, userId) {
@@ -62080,11 +62127,14 @@ var actions = {
   }
 };
 var mutations = {
-  setRequests: function setRequests(state, requests) {
-    state.requests = requests;
+  setRequests: function setRequests(state, modalrequests) {
+    state.requests = modalrequests;
   },
   setRequestsStatus: function setRequestsStatus(state, status) {
     state.requestsStatus = status;
+  },
+  setUserFriendship: function setUserFriendship(state, modalfriendship) {
+    state.requests.data.attributes.confirmed_at = modalfriendship;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
