@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CommentCollection extends ResourceCollection
+class FriendCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,9 +16,9 @@ class CommentCollection extends ResourceCollection
     {
         return [
             'data'=>$this->collection,
-            'comment_count' => $this->count(),
+            'friend_count' => $this->count(),
             'links'=> [
-                'self' =>url('/posts'),
+                'self' =>url('/friend-request'),
             ]
             ];
     }

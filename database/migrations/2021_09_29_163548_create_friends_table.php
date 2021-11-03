@@ -23,7 +23,6 @@ class CreateFriendsTable extends Migration
 
             //user id needs to be unique when paired up to friend id
             $table->unique(['user_id', 'friend_id']);
-
         });
     }
 

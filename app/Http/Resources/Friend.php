@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\User as UserResource;
 
 class Friend extends JsonResource
 {
@@ -21,7 +22,8 @@ class Friend extends JsonResource
                 'friend_request_id'=> $this->id,
                 'attributes' =>[
                     //we add optional because the field is null at first , so diffForHumans only happens when the field is a value
-                    'confirmed_at' =>optional( $this->confirmed_at)->diffForHumans(),
+                    'confirmed_at' =>optional($this->confirmed_at)->diffForHumans(),
+                    'sent_by' =>  $this->user,
                     'friend_id' => $this->friend_id,
                     'user_id' => $this->user_id,
                 ]

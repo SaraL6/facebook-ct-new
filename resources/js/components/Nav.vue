@@ -106,12 +106,10 @@ export default {
         toggleMenu(value) {
             this.showMenu = value;
             this.showFriends = false;
-            console.log(this.showMenu);
         },
         toggleFriends(value) {
             this.showFriends = value;
             this.showMenu = false;
-            console.log(this.showFriends);
         },
     },
     components: {
@@ -119,9 +117,11 @@ export default {
         Menu,
         Friends,
     },
+
     computed: {
         ...mapGetters({
             authUser: "authUser",
+
         }),
     },
 };

@@ -4,9 +4,8 @@
 
 
 
-Route::middleware('auth:api')->group(function (){
-
-    Route::get('auth-user','AuthUserController@show');
+Route::middleware('auth:api')->group(function () {
+    Route::get('auth-user', 'AuthUserController@show');
     Route::apiResources([
         '/posts' =>'PostController',
         '/posts/{post}/like' =>'PostLikeController',

@@ -4,7 +4,7 @@
         <p v-if="newsStatus.postsStaus === 'loading'">Loading posts...</p>
         <Post
             v-else
-            v-for="(post,postKey) in posts.data"
+            v-for="(post, postKey) in posts.data"
             :key="postKey"
             :post="post"
         />
@@ -19,7 +19,7 @@ export default {
 
     components: {
         NewPost,
-        Post
+        Post,
     },
 
     mounted() {
@@ -28,9 +28,9 @@ export default {
     computed: {
         ...mapGetters({
             posts: "posts",
-            newsStatus: "newsStatus"
-        })
-    }
+            newsStatus: "newsStatus",
+        }),
+    },
 };
 </script>
 <style lang=""></style>
