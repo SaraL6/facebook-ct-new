@@ -30,6 +30,7 @@ const actions = {
             .get("/api/posts")
             .then((res) => {
                 commit("setPosts", res.data);
+               // console.log(res.data);
                 commit("setPostsStatus", "success");
             })
             .catch((error) => {

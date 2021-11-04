@@ -1979,6 +1979,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "FriendRequest",
@@ -2157,8 +2172,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2174,17 +2187,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit("showHide", value);
     }
   },
-  mounted: function mounted() {
-    this.$store.dispatch("fetchFriendRequests");
+  mounted: function mounted() {//   this.$store.dispatch("fetchFriendRequests", 2);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    user: "modaluser",
     authUser: "authUser",
     friendship: "modalfriendship",
     requests: "modalrequests",
     requestsStatus: "lrequestsStatus",
-    status: "modalstatus",
-    friendButtonText: "modalfriendButtonText"
+    friendButtonText: "modalfriendButtonText",
+    requestSender: "requestSender"
   }))
 });
 
@@ -3228,7 +3239,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.$store.dispatch("fetchUser", this.$route.params.userId);
     this.$store.dispatch("fetchUserPosts", this.$route.params.userId);
-    console.log('userId' + this.$route.params.userId);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     user: "user",
@@ -43139,7 +43149,28 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.requestSender
-    ? _c("div", [_vm._v("Request from " + _vm._s(_vm.requestSender))])
+    ? _c("div", [
+        _vm._v("\n    Request from " + _vm._s(_vm.requestSender) + "\n\n    "),
+        _vm.requestSender !== "" && _vm.requestSender !== "No Friend Requests"
+          ? _c("div", [
+              _vm.requestSender
+                ? _c(
+                    "button",
+                    { staticClass: "mr-2 py-1 px-3 bg-blue-500 rounded" },
+                    [_vm._v("\n            Accept\n        ")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.requestSender
+                ? _c(
+                    "button",
+                    { staticClass: "py-1 px-3 bg-gray-400 rounded" },
+                    [_vm._v("\n            Ignore\n        ")]
+                  )
+                : _vm._e()
+            ])
+          : _vm._e()
+      ])
     : _vm._e()
 }
 var staticRenderFns = []
@@ -43309,16 +43340,21 @@ var render = function() {
                                     _vm.requestsStatus.requestsStatus ===
                                     "loading"
                                       ? _c("p")
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.requests.data, function(
-                                      request
-                                    ) {
-                                      return _c("FriendRequest", {
-                                        key: request.data.request_id,
-                                        attrs: { request: request }
-                                      })
-                                    })
+                                      : _vm.requests.length < 1
+                                      ? _c("div", [
+                                          _vm._v(
+                                            "\n                                                No requests found. Add new\n                                                friends!\n                                            "
+                                          )
+                                        ])
+                                      : _vm._l(_vm.requests.data, function(
+                                          request,
+                                          requestKey
+                                        ) {
+                                          return _c("FriendRequest", {
+                                            key: requestKey,
+                                            attrs: { request: request }
+                                          })
+                                        })
                                   ],
                                   2
                                 )
@@ -62071,7 +62107,9 @@ var getters = {
     };
   },
   requestSender: function requestSender(state, getters, rootState) {
-    if (rootState.User.user.data.user_id === state.requests.data[0].data.attributes.user_id) {
+    if (state.requests === "No Friend Requests") {
+      return "No Friend Requests";
+    } else if (rootState.User.user.data.user_id === state.requests.data[0].data.attributes.user_id) {
       return "";
     } else if (rootState.User.user.data.user_id !== state.requests.data[0].data.attributes.user_id) {
       return state.requests.data[0].data.attributes.sent_by.name;
@@ -62183,7 +62221,8 @@ var actions = {
         state = _ref.state;
     commit("setPostsStatus", "loading");
     axios.get("/api/posts").then(function (res) {
-      commit("setPosts", res.data);
+      commit("setPosts", res.data); // console.log(res.data);
+
       commit("setPostsStatus", "success");
     })["catch"](function (error) {
       commit("setPostsStatus", "error");

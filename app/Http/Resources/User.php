@@ -25,6 +25,7 @@ class User extends JsonResource
                 'attributes' => [
                     'name' => $this->name,
                     'friendship' => new FriendResource(Friend::friendship($this->id)),
+                    'friend_requests' => $this->friendRequests,
                     //Friend::friendship($this->id) is the id of the user's profile we're trying to get
                     'cover_image' => new UserImageResource($this->coverImage),
                     'profile_image' => new UserImageResource($this->profileImage),

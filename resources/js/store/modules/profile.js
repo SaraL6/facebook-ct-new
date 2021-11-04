@@ -1,26 +1,25 @@
 const state = {
     user: null,
     userStatus: null,
-
 };
 
 const getters = {
     //After we set the user in the mutation we send it to the front end with this
-    user: state => {
+    user: (state) => {
         return state.user;
     },
-    status: state => {
+    status: (state) => {
         return {
             user: state.userStatus,
-            posts: state.postsStatus
+            posts: state.postsStatus,
         };
     },
-    friendship: state => {
+    friendship: (state) => {
         return state.user.data.attributes.friendship;
     },
     //we can access user.js with rootState
     friendButtonText: (state, getters, rootState) => {
-       // if the auth user == user id we dont show the add friend btn
+        // if the auth user == user id we dont show the add friend btn
         if (rootState.User.user.data.user_id === state.user.data.user_id) {
             return "";
         } else if (getters.friendship === null) {
@@ -40,7 +39,7 @@ const getters = {
         }
         //the auth user = the friend id and  is the one that receives the friend request
         return "Accept";
-    }
+    },
 };
 
 const actions = {
@@ -52,15 +51,15 @@ const actions = {
         //we use axios to get our user
         axios
             .get("/api/users/" + userId)
-            
-            .then(res => {
+            .then((res) => {
                 //we set our data/state equal to the results of the response
                 commit("setUser", res.data);
+
                 //we set the status to success
                 commit("setUserStatus", "success");
             })
 
-            .catch(error => {
+            .catch((error) => {
                 commit("setUserStatus", "error");
             });
     },
@@ -71,32 +70,32 @@ const actions = {
 
         axios
             .post("/api/friend-request", { friend_id: friendId })
-            .then(res => {
+            .then((res) => {
                 commit("setUserFriendship", res.data);
             })
-            .catch(error => {});
+            .catch((error) => {});
     },
     acceptFriendRequest({ commit, state }, userId) {
         axios
             .post("/api/friend-request-response", {
                 user_id: userId,
-                status: 1
+                status: 1,
             })
-            .then(res => {
+            .then((res) => {
                 commit("setUserFriendship", res.data);
             })
-            .catch(error => {});
+            .catch((error) => {});
     },
     ignoreFriendRequest({ commit, state }, userId) {
         axios
             .delete("/api/friend-request-response/delete", {
-                data: { user_id: userId }
+                data: { user_id: userId },
             })
-            .then(res => {
+            .then((res) => {
                 commit("setUserFriendship", null);
             })
-            .catch(error => {});
-    }
+            .catch((error) => {});
+    },
 };
 //mutations are how u can change the state declared in const state to
 const mutations = {
@@ -109,13 +108,12 @@ const mutations = {
     },
     setUserStatus(state, status) {
         state.userStatus = status;
-    }
-
+    },
 };
 
 export default {
     state,
     getters,
     actions,
-    mutations
+    mutations,
 };

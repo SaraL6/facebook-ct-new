@@ -121,7 +121,6 @@ export default {
     computed: {
         ...mapGetters({
             authUser: "authUser",
-
         }),
     },
 };

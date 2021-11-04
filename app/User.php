@@ -48,7 +48,7 @@ class User extends Authenticatable
         return $this->hasOne(UserImage::class)
         //we're returning the latest image added
         ->orderByDesc('id')
-        ->where('location','cover')
+        ->where('location', 'cover')
         ->withDefault(function ($userImage) {
             $userImage->path = 'user-images/cover-default-image.png';
         });
@@ -59,7 +59,7 @@ class User extends Authenticatable
         return $this->hasOne(UserImage::class)
         //we're returning the latest image added
         ->orderByDesc('id')
-        ->where('location','profile')
+        ->where('location', 'profile')
 
         ->withDefault(function ($userImage) {
             $userImage->path = 'user-images/profile-default-image.jpeg';
@@ -68,11 +68,22 @@ class User extends Authenticatable
 
     public function likedPosts()
     {
-        return $this->belongsToMany(Post::class,'likes','user_id','post_id');
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
     }
+
+    //we create a pivot table called friends that belongs to friend_id and  is related to user_id
     public function friends()
     {
-        return $this->belongsToMany(User::class,'friends','friend_id','user_id');
+        return $this->belongsToMany(User::class, 'friends', 'friend_id', 'user_id');
+    }
+    public function friendRequests()
+    {
+        return $this->hasMany(Friend::class, 'friend_id')
+        ->whereNull('confirmed_at')
+        ->where(function ($query) {
+            return $query->where('user_id', auth()->user()->id)
+                ->orWhere('friend_id', auth()->user()->id);
+        });
     }
 
     public function posts()

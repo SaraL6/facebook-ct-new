@@ -13,7 +13,9 @@ const getters = {
         };
     },
     requestSender: (state, getters, rootState) => {
-        if (
+        if (state.requests === "No Friend Requests") {
+            return "No Friend Requests";
+        } else if (
             rootState.User.user.data.user_id ===
             state.requests.data[0].data.attributes.user_id
         ) {
@@ -47,7 +49,6 @@ const actions = {
             .get("/api/friend-request")
             .then((res) => {
                 commit("setRequests", res.data);
-
                 console.log(res.data);
                 commit("setRequestsStatus", "success");
             })

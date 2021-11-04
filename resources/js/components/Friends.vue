@@ -79,26 +79,24 @@
                                                         'loading'
                                                     "
                                                 ></p>
-                                                <FriendRequest
-                                                    v-for="request in requests.data"
-                                                    :key="
-                                                        request.data.request_id
+
+                                                <div
+                                                    v-else-if="
+                                                        requests.length < 1
                                                     "
+                                                >
+                                                    No requests found. Add new
+                                                    friends!
+                                                </div>
+                                                <FriendRequest
+                                                    v-else
+                                                    v-for="(request,
+                                                    requestKey) in requests.data"
+                                                    :key="requestKey"
                                                     :request="request"
                                                 />
                                             </div>
                                         </a>
-                                        <!-- <div>
-                                            <button
-                                                v-if="friendButtonText && friendButtonText == 'Accept'"
-                                                class="mr-2 py-1 px-3 bg-blue-500 rounded"
-                                                @click="$store.dispatch('acceptFriendRequest',$route.params.userId)">Accept</button>
-                                            <button
-                                                v-if="friendButtonText && friendButtonText == 'Accept'"
-                                                class="py-1 px-3 bg-gray-400 rounded"
-                                                @click="$store.dispatch('ignoreFriendRequest',$route.params.userId)">Ignore
-                                            </button>
-                                        </div> -->
                                     </li>
                                     <li class="dropdown__menu-item">
                                         <a
@@ -170,17 +168,16 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch("fetchFriendRequests");
+        //   this.$store.dispatch("fetchFriendRequests", 2);
     },
     computed: {
         ...mapGetters({
-            user: "modaluser",
             authUser: "authUser",
             friendship: "modalfriendship",
             requests: "modalrequests",
             requestsStatus: "lrequestsStatus",
-            status: "modalstatus",
             friendButtonText: "modalfriendButtonText",
+            requestSender: "requestSender",
         }),
     },
 };

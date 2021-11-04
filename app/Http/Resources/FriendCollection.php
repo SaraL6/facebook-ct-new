@@ -18,7 +18,7 @@ class FriendCollection extends ResourceCollection
             'data'=>$this->collection,
             'friend_count' => $this->count(),
             'links'=> [
-                'self' =>url('/friend-request'),
+                'self' =>url('/users'),
             ]
             ];
     }
