@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Friend as FriendResource;
+
 use App\Http\Resources\UserImage as UserImageResource;
 use App\Friend;
 

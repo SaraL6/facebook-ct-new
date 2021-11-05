@@ -52,9 +52,7 @@
                     @click="
                         $store.dispatch(
                             'acceptFriendRequest',
-                            $route.params.userId
-                        )
-                    "
+                            $route.params.userId)"
                 >
                     Accept
                 </button>
@@ -99,7 +97,6 @@ export default {
     mounted() {
         this.$store.dispatch("fetchUser", this.$route.params.userId);
         this.$store.dispatch("fetchUserPosts", this.$route.params.userId);
-
     },
     computed: {
         ...mapGetters({
@@ -108,7 +105,6 @@ export default {
             status: "status",
             friendButtonText: "friendButtonText",
         }),
-
     },
 };
 </script>

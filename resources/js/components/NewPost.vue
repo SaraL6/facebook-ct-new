@@ -88,7 +88,7 @@ export default {
             authUser: "authUser",
         }),
         postMessage: {
-            //we get  the getter postMessage in post.js, then we set it to postMessage that's in the setter
+            //we get  the getter postMessage in posts.js, then we set it to postMessage that's in the setter
             get() {
                 return this.$store.getters.postMessage;
             },

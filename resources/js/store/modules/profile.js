@@ -54,7 +54,7 @@ const actions = {
             .then((res) => {
                 //we set our data/state equal to the results of the response
                 commit("setUser", res.data);
-
+                
                 //we set the status to success
                 commit("setUserStatus", "success");
             })
@@ -75,6 +75,7 @@ const actions = {
             })
             .catch((error) => {});
     },
+
     acceptFriendRequest({ commit, state }, userId) {
         axios
             .post("/api/friend-request-response", {
@@ -83,6 +84,7 @@ const actions = {
             })
             .then((res) => {
                 commit("setUserFriendship", res.data);
+                console.log(res.data)
             })
             .catch((error) => {});
     },

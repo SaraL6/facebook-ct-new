@@ -73,28 +73,10 @@
                                                 </svg>
                                             </div>
                                             <div class="dropdown__menu-text">
-                                                <p
-                                                    v-if="
-                                                        requestsStatus.requestsStatus ===
-                                                        'loading'
-                                                    "
-                                                ></p>
 
-                                                <div
-                                                    v-else-if="
-                                                        requests.length < 1
-                                                    "
-                                                >
-                                                    No requests found. Add new
-                                                    friends!
-                                                </div>
-                                                <FriendRequest
-                                                    v-else
-                                                    v-for="(request,
-                                                    requestKey) in requests.data"
-                                                    :key="requestKey"
-                                                    :request="request"
-                                                />
+
+
+                                                <FriendRequest/>
                                             </div>
                                         </a>
                                     </li>
@@ -168,16 +150,12 @@ export default {
         },
     },
     mounted() {
-        //   this.$store.dispatch("fetchFriendRequests", 2);
+   
     },
     computed: {
         ...mapGetters({
-            authUser: "authUser",
-            friendship: "modalfriendship",
-            requests: "modalrequests",
-            requestsStatus: "lrequestsStatus",
-            friendButtonText: "modalfriendButtonText",
-            requestSender: "requestSender",
+           
+    
         }),
     },
 };

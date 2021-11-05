@@ -1994,13 +1994,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "FriendRequest",
-  props: ["request"],
+  props: ["friend_request"],
+  data: function data() {
+    return {};
+  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    requestSender: "requestSender"
-  }))
+    // requestSender: "requestSender",
+    authUser: "authUser",
+    user: "user"
+  })),
+  mounted: function mounted() {
+    reloadRequests();
+  },
+  methods: {
+    reloadRequests: function reloadRequests() {
+      this.$store.dispatch("fetchAuthUser");
+    }
+  }
 });
 
 /***/ }),
@@ -2154,24 +2172,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2187,16 +2187,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit("showHide", value);
     }
   },
-  mounted: function mounted() {//   this.$store.dispatch("fetchFriendRequests", 2);
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    authUser: "authUser",
-    friendship: "modalfriendship",
-    requests: "modalrequests",
-    requestsStatus: "lrequestsStatus",
-    friendButtonText: "modalfriendButtonText",
-    requestSender: "requestSender"
-  }))
+  mounted: function mounted() {},
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({}))
 });
 
 /***/ }),
@@ -2702,7 +2694,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     authUser: "authUser"
   })), {}, {
     postMessage: {
-      //we get  the getter postMessage in post.js, then we set it to postMessage that's in the setter
+      //we get  the getter postMessage in posts.js, then we set it to postMessage that's in the setter
       get: function get() {
         return this.$store.getters.postMessage;
       },
@@ -3142,8 +3134,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -43148,30 +43138,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.requestSender
-    ? _c("div", [
-        _vm._v("\n    Request from " + _vm._s(_vm.requestSender) + "\n\n    "),
-        _vm.requestSender !== "" && _vm.requestSender !== "No Friend Requests"
-          ? _c("div", [
-              _vm.requestSender
-                ? _c(
-                    "button",
-                    { staticClass: "mr-2 py-1 px-3 bg-blue-500 rounded" },
-                    [_vm._v("\n            Accept\n        ")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.requestSender
-                ? _c(
-                    "button",
-                    { staticClass: "py-1 px-3 bg-gray-400 rounded" },
-                    [_vm._v("\n            Ignore\n        ")]
-                  )
-                : _vm._e()
-            ])
-          : _vm._e()
+  return _c(
+    "div",
+    _vm._l(_vm.authUser.data.attributes.friend_requests, function(
+      friend_request
+    ) {
+      return _c("div", [
+        _c("p", [_vm._v(_vm._s(friend_request.user_id))]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "mr-2 py-1 px-3 bg-blue-500 rounded",
+            on: {
+              click: function($event) {
+                _vm.$store.dispatch(
+                  "acceptFriendRequest",
+                  friend_request.user_id
+                )
+                _vm.reloadRequests()
+              }
+            }
+          },
+          [_vm._v("\n            Accept\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "py-1 px-3 bg-gray-400 rounded",
+            on: {
+              click: function($event) {
+                _vm.$store.dispatch(
+                  "ignoreFriendRequest",
+                  friend_request.user_id
+                )
+                _vm.reloadRequests()
+              }
+            }
+          },
+          [_vm._v("\n            Ignore\n        ")]
+        )
       ])
-    : _vm._e()
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -43336,27 +43347,8 @@ var render = function() {
                                 _c(
                                   "div",
                                   { staticClass: "dropdown__menu-text" },
-                                  [
-                                    _vm.requestsStatus.requestsStatus ===
-                                    "loading"
-                                      ? _c("p")
-                                      : _vm.requests.length < 1
-                                      ? _c("div", [
-                                          _vm._v(
-                                            "\n                                                No requests found. Add new\n                                                friends!\n                                            "
-                                          )
-                                        ])
-                                      : _vm._l(_vm.requests.data, function(
-                                          request,
-                                          requestKey
-                                        ) {
-                                          return _c("FriendRequest", {
-                                            key: requestKey,
-                                            attrs: { request: request }
-                                          })
-                                        })
-                                  ],
-                                  2
+                                  [_c("FriendRequest")],
+                                  1
                                 )
                               ]
                             )
@@ -62076,7 +62068,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   modules: {
     User: _modules_user__WEBPACK_IMPORTED_MODULE_2__["default"],
     Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"],
+    profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"],
     Posts: _modules_posts__WEBPACK_IMPORTED_MODULE_5__["default"],
     Requests: _modules_friendRequests__WEBPACK_IMPORTED_MODULE_6__["default"]
   }
@@ -62093,88 +62085,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var state = {
-  requests: null,
-  requestsStatus: null
-};
-var getters = {
-  modalrequests: function modalrequests(state) {
-    return state.requests;
-  },
-  lrequestsStatus: function lrequestsStatus(state) {
-    return {
-      requestsStatus: state.requestsStatus
-    };
-  },
-  requestSender: function requestSender(state, getters, rootState) {
-    if (state.requests === "No Friend Requests") {
-      return "No Friend Requests";
-    } else if (rootState.User.user.data.user_id === state.requests.data[0].data.attributes.user_id) {
-      return "";
-    } else if (rootState.User.user.data.user_id !== state.requests.data[0].data.attributes.user_id) {
-      return state.requests.data[0].data.attributes.sent_by.name;
-    }
-  },
-  modalfriendship: function modalfriendship(state) {
-    return state.requests.data[0].data.attributes.confirmed_at;
-  },
-  //we can access user.js with rootState
-  modalfriendButtonText: function modalfriendButtonText(state, getters, rootState) {
-    // if the auth user == user id we dont show the add friend btn
-    if (getters.modalfriendship !== null) {
-      return "";
-    } //the auth user = the friend id and  is the one that receives the friend request
-
-
-    return "Accept";
-  }
-};
-var actions = {
-  fetchFriendRequests: function fetchFriendRequests(_ref) {
-    var commit = _ref.commit,
-        state = _ref.state;
-    commit("setRequestsStatus", "loading");
-    axios.get("/api/friend-request").then(function (res) {
-      commit("setRequests", res.data);
-      console.log(res.data);
-      commit("setRequestsStatus", "success");
-    })["catch"](function (error) {
-      commit("setRequestsStatus", "error");
-    });
-  },
-  acceptFriendRequest: function acceptFriendRequest(_ref2, userId) {
-    var commit = _ref2.commit,
-        state = _ref2.state;
-    axios.post("/api/friend-request-response", {
-      user_id: userId,
-      status: 1
-    }).then(function (res) {
-      commit("setUserFriendship", res.data);
-    })["catch"](function (error) {});
-  },
-  ignoreFriendRequest: function ignoreFriendRequest(_ref3, userId) {
-    var commit = _ref3.commit,
-        state = _ref3.state;
-    axios["delete"]("/api/friend-request-response/delete", {
-      data: {
-        user_id: userId
-      }
-    }).then(function (res) {
-      commit("setUserFriendship", null);
-    })["catch"](function (error) {});
-  }
-};
-var mutations = {
-  setRequests: function setRequests(state, modalrequests) {
-    state.requests = modalrequests;
-  },
-  setRequestsStatus: function setRequestsStatus(state, status) {
-    state.requestsStatus = status;
-  },
-  setUserFriendship: function setUserFriendship(state, modalfriendship) {
-    state.requests.data.attributes.confirmed_at = modalfriendship;
-  }
-};
+var state = {};
+var getters = {};
+var actions = {};
+var mutations = {};
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,
   getters: getters,
@@ -62393,6 +62307,7 @@ var actions = {
       status: 1
     }).then(function (res) {
       commit("setUserFriendship", res.data);
+      console.log(res.data);
     })["catch"](function (error) {});
   },
   ignoreFriendRequest: function ignoreFriendRequest(_ref4, userId) {

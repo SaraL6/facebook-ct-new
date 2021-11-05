@@ -12,7 +12,7 @@ export default new Vuex.Store({
     modules: {
         User,
         Title,
-        Profile,
+        profile:Profile,
         Posts,
         Requests,
     },
