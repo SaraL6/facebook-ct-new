@@ -34,17 +34,7 @@ class FriendRequestController extends Controller
                 'friend_id' => 'required',
 
             ]);
-        //         return response()->json([
-        //             'errors' => [
-        //                 'code'=>422,
-        //                 'title'=>'Validation Error',
-        //                 'detail' => 'Your request is malformed or missing fields',
-        //                 'meta'=> $e->errors()
-        //             ]
-        //             ],422);
-        //     }
-
-        //   //  we're using findOrFail so that we throw an exception before we use the friends relationship in case the friend id is invalid/not found
+      
         try {
             User::findOrFail($data['friend_id'])
          ->friends()->syncWithoutDetaching(auth()->user());

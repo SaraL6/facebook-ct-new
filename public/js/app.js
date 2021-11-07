@@ -1999,6 +1999,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "FriendRequest",
@@ -2040,22 +2061,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -43144,40 +43149,68 @@ var render = function() {
       friend_request
     ) {
       return _c("div", [
-        _c("p", [_vm._v(_vm._s(friend_request.user_id))]),
-        _vm._v(" "),
         _c(
-          "button",
+          "a",
           {
-            staticClass: "mr-2 py-1 px-3 bg-blue-500 rounded",
-            on: {
-              click: function($event) {
-                _vm.$store.dispatch(
-                  "acceptFriendRequest",
-                  friend_request.user_id
-                )
-                _vm.reloadRequests()
-              }
-            }
+            staticClass: "dropdown__menu-link",
+            attrs: { href: "#", title: "Account" }
           },
-          [_vm._v("\n            Accept\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "py-1 px-3 bg-gray-400 rounded",
-            on: {
-              click: function($event) {
-                _vm.$store.dispatch(
-                  "ignoreFriendRequest",
-                  friend_request.user_id
+          [
+            _c("div", { staticClass: "dropdown__menu-svg" }, [
+              _c("img", {
+                staticClass: "w-8 h-8 object-cover rounded-full",
+                attrs: {
+                  src:
+                    "http://127.0.0.1:8000/storage/" +
+                    friend_request.user.profile_image.path,
+                  alt: "profile image for user"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown__menu-text" }, [
+              _c("p", [
+                _vm._v(
+                  _vm._s(friend_request.user.name) +
+                    " sent you a friend request."
                 )
-                _vm.reloadRequests()
-              }
-            }
-          },
-          [_vm._v("\n            Ignore\n        ")]
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "mr-2 py-1 px-3 bg-blue-500 rounded",
+                  on: {
+                    click: function($event) {
+                      _vm.$store.dispatch(
+                        "acceptFriendRequest",
+                        friend_request.user_id
+                      )
+                      _vm.reloadRequests()
+                    }
+                  }
+                },
+                [_vm._v("\n            Accept\n        ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "py-1 px-3 bg-gray-400 rounded",
+                  on: {
+                    click: function($event) {
+                      _vm.$store.dispatch(
+                        "ignoreFriendRequest",
+                        friend_request.user_id
+                      )
+                      _vm.reloadRequests()
+                    }
+                  }
+                },
+                [_vm._v("\n            Ignore\n        ")]
+              )
+            ])
+          ]
         )
       ])
     }),
@@ -43316,43 +43349,13 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("ul", { staticClass: "dropdown__menu-nav" }, [
-                          _c("li", { staticClass: "dropdown__menu-item" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "dropdown__menu-link",
-                                attrs: { href: "#", title: "Account" }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "dropdown__menu-svg" },
-                                  [
-                                    _c(
-                                      "svg",
-                                      { attrs: { viewBox: "0 0 496 512" } },
-                                      [
-                                        _c("path", {
-                                          attrs: {
-                                            fill: "currentColor",
-                                            d:
-                                              "M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm128 421.6c-35.9 26.5-80.1 42.4-128 42.4s-92.1-15.9-128-42.4V416c0-35.3 28.7-64 64-64 11.1 0 27.5 11.4 64 11.4 36.6 0 52.8-11.4 64-11.4 35.3 0 64 28.7 64 64v13.6zm30.6-27.5c-6.8-46.4-46.3-82.1-94.6-82.1-20.5 0-30.4 11.4-64 11.4S204.6 320 184 320c-48.3 0-87.8 35.7-94.6 82.1C53.9 363.6 32 312.4 32 256c0-119.1 96.9-216 216-216s216 96.9 216 216c0 56.4-21.9 107.6-57.4 146.1zM248 120c-48.6 0-88 39.4-88 88s39.4 88 88 88 88-39.4 88-88-39.4-88-88-88zm0 144c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "dropdown__menu-text" },
-                                  [_c("FriendRequest")],
-                                  1
-                                )
-                              ]
-                            )
-                          ]),
+                          _c("li", { staticClass: "dropdown__menu-item" }),
+                          _c(
+                            "li",
+                            { staticClass: "dropdown__menu-item" },
+                            [_c("FriendRequest")],
+                            1
+                          ),
                           _vm._v(" "),
                           _c("li", { staticClass: "dropdown__menu-item" }, [
                             _c(
