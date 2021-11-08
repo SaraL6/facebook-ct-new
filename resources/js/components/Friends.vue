@@ -53,7 +53,7 @@
                                 :load="log(showFriends)"
                             >
                                 <div
-                                    class="dropdown__title px-4 text-lg font-medium"
+                                    class="dropdown__friends__title px-4 text-lg font-medium"
                                 >
                                     Friend Requests
                                 </div>

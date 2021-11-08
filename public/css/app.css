@@ -10074,8 +10074,7 @@ hr {
   right: 0;
   position: absolute;
   z-index: 10;
-  height: 25rem;
-  min-width: 300px;
+  min-width: 340px;
   margin-top: 1rem;
   overflow-y: auto;
   padding: 1rem 1rem 2rem 0rem;
@@ -10158,6 +10157,11 @@ hr {
 
 .dropdown__menu__friends-text {
   color: black;
+}
+
+.dropdown__friends__title {
+  font-family: var(--font-primary-bold) !important;
+  font-size: larger;
 }
 
 .slide-fade-enter-active,

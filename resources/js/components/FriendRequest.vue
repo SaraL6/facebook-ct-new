@@ -1,7 +1,10 @@
 <template lang="">
     <div>
-    
-      <div v-for="friend_request in authUser.data.attributes.friend_requests.data">
+      <div v-if="authUser.data.attributes.friend_requests.data.length < 1" class="mx-4 mt-4">
+        No friend Requests found. Expand your network !
+      </div>
+      
+      <div v-else v-for="friend_request in authUser.data.attributes.friend_requests.data">
             <a
               href="#"
                class="dropdown__menu__friends-link"
