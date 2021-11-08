@@ -16,17 +16,19 @@ class Friend extends JsonResource
      */
     public function toArray($request)
     {
+       
         return
         [
             'data' =>[
-                'type' => 'friend-request',
+                'type' => 'friend-requests',
                 'friend_request_id'=> $this->id,
                 'attributes' =>[
                     //we add optional because the field is null at first , so diffForHumans only happens when the field is a value
                     'confirmed_at' =>optional($this->confirmed_at)->diffForHumans(),
-                  //  'sender_name' =>  $this->user,
+                    'sent_at' =>  $this->created_at->diffForHumans(),
                     'friend_id' => $this->friend_id,
                     'user_id' => $this->user_id,
+                    'user' => $this->user,
                 ]
                 ],
                 'links' =>[

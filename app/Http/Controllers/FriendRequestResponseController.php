@@ -30,6 +30,7 @@ class FriendRequestResponseController extends Controller
         //we update and merge to the data that's above
         $friendRequest->update(array_merge($data,[
             'confirmed_at'=> now()
+            
         ]));
 
         return new FriendResource($friendRequest);

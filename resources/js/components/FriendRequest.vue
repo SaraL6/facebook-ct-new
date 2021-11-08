@@ -1,58 +1,72 @@
 <template lang="">
     <div>
     
-        <div v-for="friend_request in authUser.data.attributes.friend_requests">
+      <div v-for="friend_request in authUser.data.attributes.friend_requests.data">
             <a
               href="#"
-               class="dropdown__menu-link"
+               class="dropdown__menu__friends-link"
                title="Account"
                >
-            <div class="dropdown__menu-svg">
               
-                  <img
-                        :src="
-                             'http://127.0.0.1:8000/storage/'+friend_request.user.profile_image.path"
-                        alt="profile image for user"
-                        class="w-8 h-8 object-cover rounded-full"
-                    />
-            </div>
-            <div class="dropdown__menu-text">
+                <div>
+                  <div class="flex">
+                    <div class="dropdown__menu__friends-profileImg mr-2">              
+                      <img
+                            :src="
+                                'http://127.0.0.1:8000/storage/'+friend_request.data.attributes.user.profile_image.path"
+                            alt="profile image for user"
+                            class="object-cover rounded-full"
+                        />
+                    </div>
+                    <div class="dropdown__menu__friends-text">
+                     <strong>{{ friend_request.data.attributes.user.name}}</strong>  sent you a friend request.
+                     <div>
+                       <p class="text-xs pb-2">{{friend_request.data.attributes.sent_at}}</p>
+                     </div>
+                     
+                    </div>
+                  
+                  </div>
+                <div class="mx-2 flex justify-center accept__friend">
+                     <button
 
-            <p>{{ friend_request.user.name}} sent you a friend request.</p>
-            <button
+                        class="mr-2 py-1 px-4 bg-fb-blue rounded text-white text-base"
+                        @click="
+                            $store.dispatch('acceptFriendRequest',friend_request.data.attributes.user_id); reloadRequests()">
+                        Accept
+                    </button>
 
-                class="mr-2 py-1 px-3 bg-blue-500 rounded"
-                @click="
-                    $store.dispatch('acceptFriendRequest',friend_request.user_id); reloadRequests()">
-                Accept
-            </button>
-
-            <button
-           
-                class="py-1 px-3 bg-gray-400 rounded"
-                @click="$store.dispatch('ignoreFriendRequest',friend_request.user_id);reloadRequests()">
-                Ignore
-            </button>
-
-                                             
-                                            </div>
-                                        </a>
+                    <button
+                  
+                        class="py-1 px-4 bg-gray-400 rounded text-black text-base"
+                        @click="$store.dispatch('ignoreFriendRequest',friend_request.data.attributes.user_id);reloadRequests()">
+                        Ignore
+                    </button>  
+                </div>
+                                                     
+                </div>
+            </a>
          
-        </div>
+      </div>
         
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import moment from 'moment';
 export default {
   Name: "FriendRequest",
   props: ["friend_request"],
   data() {
     return {
+    
+   
+      
      
     }
   },
   computed: {
+    
     ...mapGetters({
       // requestSender: "requestSender",
       authUser: "authUser",
@@ -61,9 +75,8 @@ export default {
 
     }),
   },
-  mounted() {
-    
-     reloadRequests();
+  mounted() {  
+     this.reloadRequests();
    
   },
    methods: {

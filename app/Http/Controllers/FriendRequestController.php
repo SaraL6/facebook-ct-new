@@ -8,7 +8,8 @@ use App\Friend;
 use App\Http\Resources\Friend as FriendResource;
 use App\Http\Resources\FriendCollection;
 use App\User;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -32,8 +33,9 @@ class FriendRequestController extends Controller
     {
         $data= request()->validate([
                 'friend_id' => 'required',
-
+            
             ]);
+          
       
         try {
             User::findOrFail($data['friend_id'])
@@ -46,7 +48,6 @@ class FriendRequestController extends Controller
         return new FriendResource(
             Friend::where('user_id', auth()->user()->id)
             ->where('friend_id', $data['friend_id'])
-
             ->first()
         );
     }

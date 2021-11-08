@@ -19,14 +19,22 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
+        //dd($this);
+        $friendRequests=$this->friendrequests;
+        foreach ($friendRequests as $friendRequest) {
+            //  dd($friendRequest->getAttributes()['created_at']);
+          //  dd(strtotime($friendRequest->getAttributes()['created_at']));
+        };
         return [
+            
             'data' => [
                 'type' => 'users',
                 'user_id' => $this->id,
                 'attributes' => [
                     'name' => $this->name,
                     'friendship' => new FriendResource(Friend::friendship($this->id)),
-                    'friend_requests' => $this->friendrequests,
+                    //'friend_requests' => $friendRequests,
+                    'friend_requests' =>  new FriendCollection($this->friendrequests),
                     //Friend::friendship($this->id) is the id of the user's profile we're trying to get
                     'cover_image' => new UserImageResource($this->coverImage),
                     'profile_image' => new UserImageResource($this->profileImage),

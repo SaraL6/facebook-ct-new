@@ -16,6 +16,7 @@ class Comment extends JsonResource
      */
     public function toArray($request)
     {
+      
         return [
             'data' => [
                 'type' => 'comments',

@@ -3,6 +3,7 @@ module.exports = {
         extend: {
             colors: {
                 "fb-green": "#00a400",
+                "fb-blue":"#1877f2"
             },
         },
     },

@@ -15,6 +15,7 @@ class Post extends JsonResource
      */
     public function toArray($request)
     {
+        
         return [
             'data' => [
                 'type' => 'posts',
