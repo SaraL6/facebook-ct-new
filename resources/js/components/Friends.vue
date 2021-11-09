@@ -47,7 +47,7 @@
                         <!-- Dropdown Menu -->
                         <transition name="dropdown">
                             <div
-                                class="dropdown__menu shadow-md"
+                                class="dropdown__menu__friends shadow-md"
                                 v-bind:class="{ active: showFriends }"
                                 v-if="showFriends"
                                 :load="log(showFriends)"
