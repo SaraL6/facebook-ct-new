@@ -43169,143 +43169,150 @@ var render = function() {
                   attrs: { href: "#", title: "Account" }
                 },
                 [
-                  _c("div", [
-                    _c("div", { staticClass: "flex" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "dropdown__menu__friends-profileImg mr-2"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "object-cover rounded-full",
-                            attrs: {
-                              src:
-                                "http://127.0.0.1:8000/storage/" +
-                                friend_request.data.attributes.user
-                                  .profile_image.path,
-                              alt: "profile image for user"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "dropdown__menu__friends-text" },
-                        [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(friend_request.data.attributes.user.name)
-                            )
-                          ]),
-                          _vm._v(
-                            "  sent you a friend request.\n                    "
-                          ),
-                          _c("div", [
-                            _c(
-                              "p",
-                              { staticClass: "text-xs pb-2 text-gray-700" },
-                              [
-                                _vm._v(
-                                  _vm._s(friend_request.data.attributes.sent_at)
-                                )
-                              ]
-                            )
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.any
-                      ? _c(
+                  _c(
+                    "div",
+                    { staticClass: "flex-col dropdown__menu__friends-request" },
+                    [
+                      _c("div", { staticClass: "flex" }, [
+                        _c(
                           "div",
                           {
                             staticClass:
-                              "mx-2 flex justify-center accept__friend"
+                              "dropdown__menu__friends-profileImg mr-2"
                           },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "mr-2 py-1 px-4 bg-fb-blue rounded text-white text-base",
-                                on: {
-                                  click: function($event) {
-                                    _vm.$store.dispatch(
-                                      "acceptFriendRequest",
-                                      friend_request.data.attributes.user_id
-                                    )
-                                    _vm.reloadRequests()
-                                    _vm.showAccepted = true
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                      Confirm\n                  "
-                                )
-                              ]
+                            _c("img", {
+                              staticClass: "object-cover rounded-full",
+                              attrs: {
+                                src:
+                                  "http://127.0.0.1:8000/storage/" +
+                                  friend_request.data.attributes.user
+                                    .profile_image.path,
+                                alt: "profile image for user"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "dropdown__menu__friends-text" },
+                          [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(friend_request.data.attributes.user.name)
+                              )
+                            ]),
+                            _vm._v(
+                              "  sent you a friend request.\n                    "
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "py-1 px-4 bg-gray-400 rounded text-black text-base",
-                                on: {
-                                  click: function($event) {
-                                    _vm.$store.dispatch(
-                                      "ignoreFriendRequest",
-                                      friend_request.data.attributes.user_id
+                            _c("div", [
+                              _c(
+                                "p",
+                                { staticClass: "text-xs pb-2 text-gray-700" },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      friend_request.data.attributes.sent_at
                                     )
-                                    _vm.reloadRequests()
-                                    _vm.showIgnored = true
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm.any
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "mx-2 flex justify-center accept__friend"
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "mr-2 py-1 px-4 bg-fb-blue rounded text-white text-base",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.$store.dispatch(
+                                        "acceptFriendRequest",
+                                        friend_request.data.attributes.user_id
+                                      )
+                                      _vm.reloadRequests()
+                                      _vm.showAccepted = true
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                      Delete\n                  "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.showAccepted
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: " flex justify-center accept__friend"
-                          },
-                          [
-                            _c(
-                              "p",
-                              { staticClass: "text-gray-500 mr-2 py-1 " },
-                              [_vm._v("Request Accepted")]
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.showIgnored
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: " flex justify-center accept__friend"
-                          },
-                          [
-                            _c(
-                              "p",
-                              { staticClass: "text-gray-500 mr-2 py-1 " },
-                              [_vm._v("Request Ignored")]
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ])
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                      Confirm\n                  "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "py-1 px-4 bg-gray-400 rounded text-black text-base",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.$store.dispatch(
+                                        "ignoreFriendRequest",
+                                        friend_request.data.attributes.user_id
+                                      )
+                                      _vm.reloadRequests()
+                                      _vm.showIgnored = true
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                      Delete\n                  "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.showAccepted
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: " flex justify-center accept__friend"
+                            },
+                            [
+                              _c(
+                                "p",
+                                { staticClass: "text-gray-500 mr-2 py-1 " },
+                                [_vm._v("Request Accepted")]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.showIgnored
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: " flex justify-center accept__friend"
+                            },
+                            [
+                              _c(
+                                "p",
+                                { staticClass: "text-gray-500 mr-2 py-1 " },
+                                [_vm._v("Request Ignored")]
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  )
                 ]
               )
             ])

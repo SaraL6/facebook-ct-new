@@ -10129,18 +10129,19 @@ hr {
 }
 
 .dropdown__menu__friends-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
   color: rgba(0, 0, 0, 0.6);
-  padding: 0.8rem 0 0.8rem 0rem;
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
   border-radius: 5px;
 }
 
-.dropdown__menu__friends-link:hover {
+.dropdown__menu__friends-request {
+  text-decoration: none;
+  padding: 0.8rem 0 0.8rem 0.5rem;
+  color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+
+.dropdown__menu__friends-request:hover {
   color: black;
   background-color: #f2f2f2;
 }

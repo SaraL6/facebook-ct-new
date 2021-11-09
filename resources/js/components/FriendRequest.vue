@@ -14,7 +14,7 @@
                title="Account"
                >
               
-                <div>
+                <div class="flex-col dropdown__menu__friends-request">
                   <div class="flex">
                     <div class="dropdown__menu__friends-profileImg mr-2">              
                       <img

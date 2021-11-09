@@ -134,15 +134,16 @@ hr {
     border: 1px solid var(--color-gray);
     background-clip: padding-box;
     
-    &-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &-link {   
         text-decoration: none;
+        color: rgba(0, 0, 0, 0.6);   
+        border-radius:5px;
+     
+    }
+    &-request {
+        text-decoration: none;
+        padding: 0.8rem 0 0.8rem 0.5rem;
         color: rgba(0, 0, 0, 0.6);
-        padding: 0.8rem 0 0.8rem 0rem;
-        margin-top: 0.2rem;
-        margin-bottom: 0.2rem;
         border-radius:5px;
         &:hover {
             color: black;
