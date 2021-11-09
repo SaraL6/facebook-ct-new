@@ -26,14 +26,14 @@ export default {
         Sidebar,
     },
     mounted() {
-       this.$store.dispatch("fetchAuthUser");
+        this.$store.dispatch("fetchAuthUser");
     },
     created() {
         this.$store.dispatch("setPageTitle", this.$route.meta.title);
     },
     computed: {
         ...mapGetters({
-           authUser: "authUser",
+            authUser: "authUser",
         }),
     },
     watch: {

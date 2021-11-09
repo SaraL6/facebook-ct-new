@@ -1,27 +1,37 @@
 <template lang="">
     <div class="bg-white rounded shadow w-2/3 mt-6 overflow-hidden">
         <div class="flex flex-col p-4">
-            <div class="flex items-center">
-                <div class="w-10">
-                    <img
-                        :src="
-                            post.data.attributes.posted_by.data.attributes
-                                .profile_image.data.attributes.path
-                        "
-                        alt="profile image for user"
-                        class="w-10 h-10 object-cover rounded-full"
-                    />
-                </div>
-                <div class="ml-4">
-                    <div class="text-sm font-bold">
-                        {{
-                            post.data.attributes.posted_by.data.attributes.name
-                        }}
+            <div class="flex justify-between ">
+                <div class="flex items-center">
+                    <div class="w-10">
+                        <img
+                            :src="
+                                post.data.attributes.posted_by.data.attributes
+                                    .profile_image.data.attributes.path
+                            "
+                            alt="profile image for user"
+                            class="w-10 h-10 object-cover rounded-full"
+                        />
                     </div>
-                    <div class="text-sm text-gray-600">
-                        {{ post.data.attributes.posted_at }}
+                    <div class="ml-4">
+                        <div>
+                            <div class="text-sm font-bold">
+                            {{
+                                post.data.attributes.posted_by.data.attributes.name
+                            }}
+                                </div>
+                        <div class="text-sm text-gray-600">
+                            {{ post.data.attributes.posted_at }}
+                            </div>
+
+                        </div>
+                    
                     </div>
                 </div>
+                <div>
+                    <PostMenu :post="post"/>
+                </div>
+        
             </div>
             <div class="mt-4">
                 <p>{{ post.data.attributes.body }}</p>
@@ -168,9 +178,11 @@
     </div>
 </template>
 <script>
+import PostMenu from "./PostMenu.vue"
 export default {
     name: "Post",
     props: ["post"],
+   
     data: () => {
         return {
             comments: false,
@@ -182,6 +194,9 @@ export default {
         log(item) {
           //  console.log(item);
         },
+    },
+       components: {
+        PostMenu
     },
 };
 </script>

@@ -51,4 +51,21 @@ class PostController extends Controller
         ]);
         return new PostResource($post);
     }
+    public function show()
+    {
+    }
+    public function update()
+    {
+    }
+    public function destroy($id)
+    {
+        $data = request()->validate([
+            'id'=>'required',
+        ]);
+    
+        Post::where('id', $data['id'])
+                ->firstOrFail()
+                ->delete();
+        return response()->json([], 204);
+    }
 }

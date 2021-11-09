@@ -49,6 +49,20 @@ const actions = {
                 commit("setPostsStatus", "error");
             });
     },
+    deletePost({ commit, state }, postId) {
+        console.log(postId);
+        axios
+            .delete("/api/posts/delete", {
+                data: {id: postId },
+            })
+            .then((res) => {
+                commit("deletePost", res.data);
+                console.log(res.data);
+                commit("setPostsStatus", "success");
+          
+            })
+            .catch((error) => {});
+    },
     //this action will post to the db
     postMessage({ commit, state }) {
         commit("setPostsStatus", "loading");
@@ -95,6 +109,9 @@ const mutations = {
     },
     pushPost(state, post) {
         state.posts.data.unshift(post);
+    },
+    deletePost(state, post) {
+        state.posts.data.shift(post);
     },
     pushLikes(state, data) {
         state.posts.data[data.postKey].data.attributes.likes = data.likes;
