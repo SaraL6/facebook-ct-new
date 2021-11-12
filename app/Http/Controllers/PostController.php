@@ -51,13 +51,20 @@ class PostController extends Controller
         ]);
         return new PostResource($post);
     }
-    public function show()
+    public function show($id)
     {
+        $post = Post::find($id);
+        return response()->json($post);
     }
-    public function update()
+    public function update(Request $request,$id)
     {
+        $post = Post::find($id);
+
+        $post->update($request->all());
+
+        return response()->json($post);
     }
-    public function destroy($id)
+    public function destroy()
     {
         $data = request()->validate([
             'id'=>'required',

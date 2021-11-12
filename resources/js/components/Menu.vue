@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-        <div class="header">
+        <div class="header inset-0 z-50">
             <div class="header__nav">
                 <ul class="header__navbar">
                     <li class="header__item">

@@ -10072,7 +10072,7 @@ hr {
   top: 100%;
   right: 0;
   position: absolute;
-  z-index: 10;
+  z-index: 50;
   height: 25rem;
   min-width: 340px;
   margin-top: 1rem;
@@ -10117,7 +10117,7 @@ hr {
   top: 100%;
   right: 0;
   position: absolute;
-  z-index: 10;
+  z-index: 50;
   min-width: 340px;
   margin-top: 1rem;
   overflow-y: auto;
@@ -10236,7 +10236,7 @@ hr {
 .dropdown__menu__post {
   right: 0;
   position: absolute;
-  z-index: 10;
+  z-index: 50;
   min-width: 212px;
   margin-top: 0.2rem;
   overflow-y: auto;

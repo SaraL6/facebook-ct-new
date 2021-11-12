@@ -1,0 +1,55 @@
+{
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "breadcrumbs.enabled": false,
+  "explorer.confirmDragAndDrop": false,
+  "window.zoomLevel": 0,
+  "php.validate.executablePath": "",
+  "workbench.iconTheme": "material-icon-theme",
+  "files.associations": {
+    ".jsx": "javascriptreact",
+    ".js": "javascriptreact",
+    "*.js": "javascriptreact"
+  },
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "liveServer.settings.donotVerifyTags": true,
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "/css"
+    }
+  ],
+  "editor.formatOnSave": true,
+  "blade.format.enable": true,
+
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 3000,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.preferences": {},
+  "emmet.showAbbreviationSuggestions": true,
+  "emmet.showExpandedAbbreviation": "always",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html",
+    "vue": "html",
+    "razor": "html",
+    "plaintext": "jade"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "php-cs-fixer.executablePath": "${extensionPath}\\php-cs-fixer.phar",
+  "[php]": {
+    "editor.defaultFormatter": "junstyle.php-cs-fixer",
+    "editor.formatOnSave": true
+  },
+  "php-cs-fixer.rules": "@PSR2",
+  "php-cs-fixer.formatHtml": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.format.enable": true,
+  "prettier.printWidth": 120,
+
+ 
+
+}

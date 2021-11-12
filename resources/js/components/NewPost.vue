@@ -94,7 +94,7 @@ export default {
             },
             set: _.debounce(function (postMessage) {
                 this.$store.commit("updateMessage", postMessage);
-            }, 300),
+            }, 300)
         },
 
         settings() {

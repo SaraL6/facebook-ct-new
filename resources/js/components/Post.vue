@@ -1,7 +1,7 @@
 <template lang="">
-    <div class="bg-white rounded shadow-md w-2/3 mt-6 overflow-hidden" >
-        <div class="flex flex-col p-4">
-            <div class="flex justify-between ">
+    <div class="bg-white rounded shadow-md w-2/3 mt-6 overflow-hidden">
+        <div class="flex flex-col px-4">
+            <div class="flex justify-between">
                 <div class="flex items-center">
                     <div class="w-10">
                         <img
@@ -16,34 +16,30 @@
                     <div class="ml-4">
                         <div>
                             <div class="text-sm font-bold">
-                            {{
-                                post.data.attributes.posted_by.data.attributes.name
-                            }}
-                                </div>
-                        <div class="text-sm text-gray-600">
-                            {{ post.data.attributes.posted_at }}
+                                {{
+                                    post.data.attributes.posted_by.data
+                                        .attributes.name
+                                }}
                             </div>
-
+                            <div class="text-sm text-gray-600">
+                                {{ post.data.attributes.posted_at }}
+                            </div>
                         </div>
-                    
                     </div>
                 </div>
                 <div>
-                    <PostMenu :post="post"/>
+                    <PostMenu :post="post" />
                 </div>
-        
             </div>
-            <div class="mt-4">
+            <div class="">
                 <p>{{ post.data.attributes.body }}</p>
             </div>
         </div>
         <div
             class="w-full"
-
             v-if="post.data.attributes.image.length > 29"
             :load="log(post.data.attributes.image.length)"
         >
-
             <img
                 :src="post.data.attributes.image"
                 alt="post image"
@@ -178,11 +174,11 @@
     </div>
 </template>
 <script>
-import PostMenu from "./PostMenu.vue"
+import PostMenu from "./PostMenu.vue";
 export default {
     name: "Post",
     props: ["post"],
-   
+
     data: () => {
         return {
             comments: false,
@@ -190,13 +186,13 @@ export default {
         };
     },
     methods: {
-       // 29 is the length when there is no image in the post so if the lenght is >29 then the image is not null
+        // 29 is the length when there is no image in the post so if the lenght is >29 then the image is not null
         log(item) {
-          //  console.log(item);
+            //  console.log(item);
         },
     },
-       components: {
-        PostMenu
+    components: {
+        PostMenu,
     },
 };
 </script>

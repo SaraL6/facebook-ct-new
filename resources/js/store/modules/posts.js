@@ -2,7 +2,9 @@
 
 const state = {
     posts: null,
+    post:null,
     postsStatus: null,
+    postStatus: null,
     postMessage: "",
 };
 
@@ -11,6 +13,9 @@ const getters = {
     //After we set the user in the mutation we send it to the front end with this
     posts: (state) => {
         return state.posts;
+    },
+    post: (state) => {
+        return state.post;
     },
     newsStatus: (state) => {
         return {
@@ -50,7 +55,7 @@ const actions = {
             });
     },
     deletePost({ commit, state }, postId) {
-        console.log(postId);
+       // console.log(postId);
         axios
             .delete("/api/posts/delete", {
                 data: {id: postId },
@@ -63,6 +68,19 @@ const actions = {
             })
             .catch((error) => {});
     },
+    
+    editPostMessage({ commit, state }, postId) {
+        console.log(postId);
+        axios
+            .get("/api/posts/" + userId )
+                .then((res) => {
+                    commit("setPost", res.data);
+                    console.log(res.data);
+                    commit("setPostStatus", "success");          
+                })
+                .catch((error) => {});
+        },
+
     //this action will post to the db
     postMessage({ commit, state }) {
         commit("setPostsStatus", "loading");
@@ -75,6 +93,7 @@ const actions = {
             })
             .catch((error) => {});
     },
+
     likePost({ commit, state }, data) {
         axios
             .post("/api/posts/" + data.postId + "/like")
@@ -100,8 +119,14 @@ const mutations = {
     setPosts(state, posts) {
         state.posts = posts;
     },
+    setPost(state, post) {
+        state.post = post;
+    },
     setPostsStatus(state, status) {
         state.postsStatus = status;
+    },
+    setPostStatus(state, status) {
+        state.postStatus = status;
     },
     //message = postMessage in the get computed property in NewPost.vue
     updateMessage(state, message) {

@@ -34,13 +34,13 @@
                   </div>
                   <div class="mx-2 flex justify-center accept__friend" v-if="any">
                       <button
-                          class="mr-2 py-1 px-4 bg-fb-blue rounded text-white text-base"
+                          class="mr-2 py-1 px-4 bg-fb-blue rounded text-white text-base focus:outline-none"
                           @click="
                               $store.dispatch('acceptFriendRequest',friend_request.data.attributes.user_id); reloadRequests();showAccepted=true">
                           Confirm
                       </button>
                       <button                    
-                          class="py-1 px-4 bg-gray-400 rounded text-black text-base"
+                          class="py-1 px-4 bg-gray-400 rounded text-black text-base focus:outline-none"
                           @click="$store.dispatch('ignoreFriendRequest',friend_request.data.attributes.user_id);reloadRequests();showIgnored=true">
                           Delete
                       </button>  
@@ -68,7 +68,8 @@ export default {
   data() {
     return {
       showAccepted:false,
-       showIgnored:false
+       showIgnored:false,
+       
     }
   },
   computed: {
