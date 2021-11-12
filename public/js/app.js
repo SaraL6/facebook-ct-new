@@ -3089,14 +3089,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostEdit",
-  props: ["post"],
+  props: ["post", "postKey"],
   data: function data() {
     return {
       show: false,
-      showModal: false
+      showModal: false,
+      updatedPostMessage: this.post.data.attributes.body,
+      postkey: this.postKey
     };
   },
   methods: {
@@ -3107,8 +3112,7 @@ __webpack_require__.r(__webpack_exports__);
     reloadPosts: function reloadPosts() {
       this.$store.dispatch("fetchNewsPosts");
     }
-  },
-  computed: {}
+  }
 });
 
 /***/ }),
@@ -3296,7 +3300,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Name: "PostMenu",
-  props: ["post"],
+  props: ["post", "postKey"],
   components: {
     PostEdit: _PostEdit_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3306,7 +3310,6 @@ __webpack_require__.r(__webpack_exports__);
       showModal: false
     };
   },
-  computed: {},
   methods: {
     toggleModal: function toggleModal(value) {
       this.showModal = !this.showModal;
@@ -3448,6 +3451,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewsFeed",
+  props: ["postKey"],
   components: {
     NewPost: _components_NewPost__WEBPACK_IMPORTED_MODULE_1__["default"],
     Post: _components_Post__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -44724,7 +44728,15 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", [_c("PostMenu", { attrs: { post: _vm.post } })], 1)
+          _c(
+            "div",
+            [
+              _c("PostMenu", {
+                attrs: { post: _vm.post, postKey: _vm.$vnode.key }
+              })
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", {}, [
@@ -45133,22 +45145,18 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.post.data.attributes.body,
-                              expression: "post.data.attributes.body"
+                              value: _vm.updatedPostMessage,
+                              expression: "updatedPostMessage"
                             }
                           ],
                           attrs: { type: "text", id: "input" },
-                          domProps: { value: _vm.post.data.attributes.body },
+                          domProps: { value: _vm.updatedPostMessage },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.post.data.attributes,
-                                "body",
-                                $event.target.value
-                              )
+                              _vm.updatedPostMessage = $event.target.value
                             }
                           }
                         })
@@ -45218,7 +45226,8 @@ var render = function() {
                           _vm.toggleModal(false)
                           _vm.$store.dispatch("updatePostMessage", {
                             body: _vm.updatedPostMessage,
-                            postId: _vm.post.data.post_id
+                            postId: _vm.post.data.post_id,
+                            postKey: _vm.postkey
                           })
                         }
                       }
@@ -45586,7 +45595,7 @@ var render = function() {
       _vm._v(" "),
       _vm.showModal
         ? _c("PostEdit", {
-            attrs: { post: _vm.post },
+            attrs: { post: _vm.post, postKey: _vm.postKey },
             on: {
               toggleModal: function($event) {
                 return _vm.toggleModal($event)
@@ -63280,24 +63289,24 @@ var actions = {
         id: postId
       }
     }).then(function (res) {
-      commit("deletePost", res.data);
-      console.log(res.data);
+      commit("deletePost", res.data); // console.log(res.data);
+
       commit("setPostsStatus", "success");
     })["catch"](function (error) {});
   },
   updatePostMessage: function updatePostMessage(_ref4, emittedData) {
     var commit = _ref4.commit,
         state = _ref4.state;
-    //console.log(emittedData);
+    // console.log(emittedData);
     axios.put("/api/posts/" + emittedData.postId, {
       id: emittedData.postId,
       body: emittedData.body
     }).then(function (res) {
+      //  console.log('postkey'+emittedData.postKey);
       commit("setPost", {
         posts: res.data,
         postKey: emittedData.postKey
       });
-      console.log(res.data);
     })["catch"](function (error) {});
   },
   //this action will post to the db
@@ -63316,6 +63325,7 @@ var actions = {
   likePost: function likePost(_ref6, data) {
     var commit = _ref6.commit,
         state = _ref6.state;
+    // console.log(data);
     axios.post("/api/posts/" + data.postId + "/like").then(function (res) {
       commit("pushLikes", {
         likes: res.data,
@@ -63342,7 +63352,10 @@ var mutations = {
     state.posts = posts;
   },
   setPost: function setPost(state, data) {
-    state.posts.data[data.postKey].data.attributes.body = data.posts;
+    // console.log(state);
+    // console.log(state.posts.data[data.postKey].data.attributes.body);
+    state.posts.data[data.postKey].data.attributes.body = data.posts.body;
+    console.log(data.posts);
   },
   setPostsStatus: function setPostsStatus(state, status) {
     state.postsStatus = status;
