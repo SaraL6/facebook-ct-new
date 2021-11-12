@@ -59,25 +59,23 @@ const actions = {
             })
             .then((res) => {
                 commit("deletePost", res.data);
-                console.log(res.data);
+               // console.log(res.data);
                 commit("setPostsStatus", "success");
           
             })
             .catch((error) => {});
     },
     updatePostMessage({ commit, state },emittedData) {
-        //console.log(emittedData);
+       // console.log(emittedData);
         axios
-            .put("/api/posts/" + emittedData.postId, {
-              
+            .put("/api/posts/" + emittedData.postId, {             
                   id: emittedData.postId,
                   body:emittedData.body
-                })
-               
+                })               
                 .then((res) => {
-                    commit("setPost", {posts:res.data,postKey: emittedData.postKey});
-                    console.log(res.data);
-            
+                  //  console.log('postkey'+emittedData.postKey);
+                    commit("setPost", {posts:res.data, postKey: emittedData.postKey});
+                  
                 })
                 .catch((error) => {});
         },
@@ -97,10 +95,14 @@ const actions = {
     },
 
     likePost({ commit, state }, data) {
+       // console.log(data);
         axios
             .post("/api/posts/" + data.postId + "/like")
             .then((res) => {
+              
                 commit("pushLikes", { likes: res.data, postKey: data.postKey });
+            
+
             })
             .catch((error) => {});
     },
@@ -122,7 +124,10 @@ const mutations = {
         state.posts = posts;
     },
     setPost(state, data) {
-        state.posts.data[data.postKey].data.attributes.body = data.posts;
+        // console.log(state);
+        // console.log(state.posts.data[data.postKey].data.attributes.body);
+        state.posts.data[data.postKey].data.attributes.body = data.posts.body;
+       // console.log(data.posts);
     },
     setPostsStatus(state, status) {
         state.postsStatus = status;
@@ -141,7 +146,9 @@ const mutations = {
         state.posts.data.shift(post);
     },
     pushLikes(state, data) {
+       
         state.posts.data[data.postKey].data.attributes.likes = data.likes;
+       
     },
     pushComments(state, data) {
         state.posts.data[data.postKey].data.attributes.comments = data.comments;

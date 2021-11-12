@@ -155,7 +155,7 @@
                 </ul>
             </div>
         </div>
-      <PostEdit v-if="showModal" :post="post"
+      <PostEdit v-if="showModal" :post="post" :postKey="postKey"
        @toggleModal="toggleModal($event)"/>
           <div
             v-if="showModal"
@@ -169,7 +169,7 @@ import { mapGetters } from "vuex";
 import Dropzone from "dropzone";
 export default {
     Name: "PostMenu",
-    props: ["post"],
+    props: ["post","postKey"],
     components:{
         PostEdit
     },
@@ -177,20 +177,19 @@ export default {
         return {
             show: false,
             showModal: false,
+           
     
         };
     },
-    computed: {
     
-        
-    },
     methods: {
         toggleModal: function (value) {
             this.showModal = !this.showModal;
             this.show = !this.show;
         },
        
-    },
+    }
+    
 };
 </script>
 <style lang=""></style>

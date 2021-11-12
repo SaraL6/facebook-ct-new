@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div>
-                    <PostMenu :post="post" />
+                    <PostMenu :post="post" :postKey="$vnode.key" />
                 </div>
             </div>
             <div class="">
@@ -194,6 +194,7 @@ export default {
     components: {
         PostMenu,
     },
+  
 };
 </script>
 <style lang=""></style>

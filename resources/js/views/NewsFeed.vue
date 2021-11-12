@@ -16,6 +16,7 @@ import NewPost from "../components/NewPost";
 import Post from "../components/Post";
 export default {
     name: "NewsFeed",
+    props:["postKey"],
 
     components: {
         NewPost,

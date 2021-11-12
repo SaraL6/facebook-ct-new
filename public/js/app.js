@@ -63354,8 +63354,7 @@ var mutations = {
   setPost: function setPost(state, data) {
     // console.log(state);
     // console.log(state.posts.data[data.postKey].data.attributes.body);
-    state.posts.data[data.postKey].data.attributes.body = data.posts.body;
-    console.log(data.posts);
+    state.posts.data[data.postKey].data.attributes.body = data.posts.body; // console.log(data.posts);
   },
   setPostsStatus: function setPostsStatus(state, status) {
     state.postsStatus = status;
