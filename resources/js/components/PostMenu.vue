@@ -181,10 +181,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters({
-            posts: "posts",
-            status: "status",
-        }),
+    
         
     },
     methods: {

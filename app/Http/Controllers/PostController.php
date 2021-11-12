@@ -7,6 +7,7 @@ use App\Http\Resources\Post as PostResource;
 use App\Http\Resources\PostCollection;
 use App\Post;
 use Intervention\Image\Facades\Image;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -51,19 +52,26 @@ class PostController extends Controller
         ]);
         return new PostResource($post);
     }
+
     public function show($id)
     {
         $post = Post::find($id);
         return response()->json($post);
     }
-    public function update(Request $request,$id)
+    
+    public function update(Request $request, Post $post)
     {
-        $post = Post::find($id);
-
-        $post->update($request->all());
-
-        return response()->json($post);
+        $data = request()->validate([
+            'id'=> 'required',
+            'body' => 'required',
+        ]);
+        
+        Post::where('id', $data['id'])
+        ->update($request->all());
+      
+        return response()->json($request, 201);
     }
+    
     public function destroy()
     {
         $data = request()->validate([

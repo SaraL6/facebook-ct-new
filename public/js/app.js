@@ -2973,6 +2973,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -3088,6 +3089,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostEdit",
   props: ["post"],
@@ -3101,8 +3103,12 @@ __webpack_require__.r(__webpack_exports__);
     toggleModal: function toggleModal(value) {
       this.$emit("toggleModal", value);
       this.show = !this.show;
+    },
+    reloadPosts: function reloadPosts() {
+      this.$store.dispatch("fetchNewsPosts");
     }
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -3120,12 +3126,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.js");
 /* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dropzone__WEBPACK_IMPORTED_MODULE_2__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -3306,10 +3306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showModal: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    posts: "posts",
-    status: "status"
-  })),
+  computed: {},
   methods: {
     toggleModal: function toggleModal(value) {
       this.showModal = !this.showModal;
@@ -45131,7 +45128,30 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "mt-4" }, [
-                        _c("p", [_vm._v(_vm._s(_vm.post.data.attributes.body))])
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.post.data.attributes.body,
+                              expression: "post.data.attributes.body"
+                            }
+                          ],
+                          attrs: { type: "text", id: "input" },
+                          domProps: { value: _vm.post.data.attributes.body },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.post.data.attributes,
+                                "body",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
                       ])
                     ]),
                     _vm._v(" "),
@@ -45195,7 +45215,11 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.toggleModal(false)
+                          _vm.toggleModal(false)
+                          _vm.$store.dispatch("updatePostMessage", {
+                            body: _vm.updatedPostMessage,
+                            postId: _vm.post.data.post_id
+                          })
                         }
                       }
                     },
@@ -63204,8 +63228,6 @@ __webpack_require__.r(__webpack_exports__);
 //state is data
 var state = {
   posts: null,
-  post: null,
-  postsStatus: null,
   postStatus: null,
   postMessage: ""
 }; //getters are computed properties
@@ -63214,9 +63236,6 @@ var getters = {
   //After we set the user in the mutation we send it to the front end with this
   posts: function posts(state) {
     return state.posts;
-  },
-  post: function post(state) {
-    return state.post;
   },
   newsStatus: function newsStatus(state) {
     return {
@@ -63266,14 +63285,19 @@ var actions = {
       commit("setPostsStatus", "success");
     })["catch"](function (error) {});
   },
-  editPostMessage: function editPostMessage(_ref4, postId) {
+  updatePostMessage: function updatePostMessage(_ref4, emittedData) {
     var commit = _ref4.commit,
         state = _ref4.state;
-    console.log(postId);
-    axios.get("/api/posts/" + userId).then(function (res) {
-      commit("setPost", res.data);
+    //console.log(emittedData);
+    axios.put("/api/posts/" + emittedData.postId, {
+      id: emittedData.postId,
+      body: emittedData.body
+    }).then(function (res) {
+      commit("setPost", {
+        posts: res.data,
+        postKey: emittedData.postKey
+      });
       console.log(res.data);
-      commit("setPostStatus", "success");
     })["catch"](function (error) {});
   },
   //this action will post to the db
@@ -63317,8 +63341,8 @@ var mutations = {
   setPosts: function setPosts(state, posts) {
     state.posts = posts;
   },
-  setPost: function setPost(state, post) {
-    state.post = post;
+  setPost: function setPost(state, data) {
+    state.posts.data[data.postKey].data.attributes.body = data.posts;
   },
   setPostsStatus: function setPostsStatus(state, status) {
     state.postsStatus = status;

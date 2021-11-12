@@ -71,8 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <p>{{ post.data.attributes.body }}</p>
-                                  
+                                    <input type="text" v-model="post.data.attributes.body"  id="input" >
                                 </div>
                             </div>
                             <div
@@ -102,7 +101,8 @@
                         <button
                             class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            v-on:click="toggleModal(false)"
+                            v-on:click="toggleModal(false) ;$store.dispatch('updatePostMessage', {body: updatedPostMessage,
+                            postId: post.data.post_id} ); "
                         >
                             Save Changes
                         </button>
@@ -114,6 +114,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
     name:"PostEdit",
      props: ["post"],
@@ -121,6 +122,7 @@ export default {
         return {
             show: false,
             showModal: false,
+        
     
         };
     },
@@ -129,7 +131,19 @@ export default {
             this.$emit("toggleModal", value);
             this.show = !this.show;
         },
+        reloadPosts(){
+              this.$store.dispatch("fetchNewsPosts");
+        }
+   
        
+    },
+      computed: {
+      
+     
+
+    
+     
+        
     },
 }
 </script>

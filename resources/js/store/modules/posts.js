@@ -2,8 +2,6 @@
 
 const state = {
     posts: null,
-    post:null,
-    postsStatus: null,
     postStatus: null,
     postMessage: "",
 };
@@ -14,9 +12,7 @@ const getters = {
     posts: (state) => {
         return state.posts;
     },
-    post: (state) => {
-        return state.post;
-    },
+
     newsStatus: (state) => {
         return {
             postsStatus: state.postsStatus,
@@ -49,6 +45,7 @@ const actions = {
             .then((res) => {
                 commit("setPosts", res.data);
                 commit("setPostsStatus", "success");
+                
             })
             .catch((error) => {
                 commit("setPostsStatus", "error");
@@ -68,15 +65,19 @@ const actions = {
             })
             .catch((error) => {});
     },
-    
-    editPostMessage({ commit, state }, postId) {
-        console.log(postId);
+    updatePostMessage({ commit, state },emittedData) {
+        //console.log(emittedData);
         axios
-            .get("/api/posts/" + userId )
+            .put("/api/posts/" + emittedData.postId, {
+              
+                  id: emittedData.postId,
+                  body:emittedData.body
+                })
+               
                 .then((res) => {
-                    commit("setPost", res.data);
+                    commit("setPost", {posts:res.data,postKey: emittedData.postKey});
                     console.log(res.data);
-                    commit("setPostStatus", "success");          
+            
                 })
                 .catch((error) => {});
         },
@@ -85,7 +86,8 @@ const actions = {
     postMessage({ commit, state }) {
         commit("setPostsStatus", "loading");
         axios
-            .post("/api/posts", { body: state.postMessage })
+            .post("/api/posts", {
+                 body: state.postMessage })
             .then((res) => {
                 commit("pushPost", res.data);
                 commit("setPostsStatus", "success");
@@ -119,8 +121,8 @@ const mutations = {
     setPosts(state, posts) {
         state.posts = posts;
     },
-    setPost(state, post) {
-        state.post = post;
+    setPost(state, data) {
+        state.posts.data[data.postKey].data.attributes.body = data.posts;
     },
     setPostsStatus(state, status) {
         state.postsStatus = status;
