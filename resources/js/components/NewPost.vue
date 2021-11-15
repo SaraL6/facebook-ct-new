@@ -22,6 +22,7 @@
                     class="w-full pl-4 h-10 rounded-full bg-gray-200 focus:outline-none focus:shadow-outline text-sm"
                     placeholder="What's on your mind, User?"
                 />
+         
                 <transition name="fade">
                     <button
                         @click="postHandler"
@@ -30,15 +31,9 @@
                         Post
                     </button>
                 </transition>
+               
             </div>
-
             <div>
-                <!-- <button
-                    ref="postImage"
-                    class="dz-clickable "
-                >
-                   
-                </button> -->
                 <button id="upload_widget" class="cloudinary-button flex justify-center items-center rounded-full focus:outline-none w-10 h-10 bg-gray-300"> <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -52,24 +47,18 @@
                     </button>
 
             </div>
-            <!-- <cld-image public-id="fb-clone/userPosts/idq8oy6tlsxxtxisy3tt" /> -->
+
+           
 
         </div>
-
-        <!-- <div class="dropzone-previews">
-            <div id="dz-template" class="hidden">
-                <div class="dz-preview dz-file-preview mt-4">
-                    <div class="dz-details">
-                        <img data-dz-thumbnail class="w-32 h-32" />
-
-                        <button data-dz-remove class="text-xs">Remove</button>
-                    </div>
-                    <div class="dz-progress">
-                        <span class="dz-upload" data-dz-upload></span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+    <div class="mt-4 border-gray-300 flex justify-center">
+        <div class="rounded shadow">
+              <cld-image v-if ="post.urlImg" :public-id="post.urlImg"  height="400" width="600" class="p-2 rounded">  
+                <cld-transformation width="500" height="400" crop="fill" />
+                 </cld-image>
+        </div>
+    </div>
+        
     </div>
 </template>
 
@@ -96,10 +85,13 @@ export default {
             cloudName: 'ct-clone', 
             uploadPreset: 'fb-clone',
              cropping: true,
+              multiple: false,
              folder: 'fb-clone/userPosts',
             }, (error, result) => { 
                 if (!error && result && result.event === "success") { 
+              
                this.post.urlImg= result.info.public_id; 
+               console.log(result.info);
                 }
             }
             )
@@ -123,51 +115,13 @@ export default {
                 this.$store.commit("updateMessage", postMessage);
             }, 300)
         },
-
-        // settings() {
-        //     return {
-        //         paramName: "image",
-        //         url: "/api/posts",
-        //         acceptedFiles: "image/*",
-        //         clickabkle: ".dz-clickable",
-        //         autoProcessQueue: false,
-        //         previewsContainer: ".dropzone-previews",
-        //         previewTemplate: document.querySelector("#dz-template")
-        //             .innerHTML,
-        //         params: {
-        //             width: 1000,
-        //             height: 1000,
-        //         },
-        //         headers: {
-        //             "X-CSRF-TOKEN": document.head.querySelector(
-        //                 "meta[name=csrf-token]"
-        //             ).content,
-        //         },
-        //         sending: (file, xhr, formData) => {
-        //             formData.append("body", this.$store.getters.postMessage);
-        //         },
-
-        //         success: (e, res) => {
-        //             this.dropzone.removeAllFiles();
-
-        //             this.$store.commit("pushPost", res);
-        //         },
-        //     };
-        // },
     },
     methods: {
-        // postHandler() {
-        //     if (this.dropzone.getAcceptedFiles().length) {
-        //         this.dropzone.processQueue();
-        //     } else {
-        //         this.$store.dispatch("postMessage");
-        //     }
-        //     this.$store.commit("updateMessage", "");
-        // },
+  
         postHandler() {
             if (this.post.urlImg != null) {
                  this.$store.dispatch("postMessage",{ postImg: this.post.urlImg })
-                 console.log('test'+      postImg);
+               //  console.log('test'+      postImg);
             } else {
                 this.$store.dispatch("postMessage");
             }

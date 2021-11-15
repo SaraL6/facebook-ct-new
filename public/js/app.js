@@ -2684,17 +2684,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
  //import Dropzone from "dropzone";
 
@@ -2716,10 +2705,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cloudName: 'ct-clone',
       uploadPreset: 'fb-clone',
       cropping: true,
+      multiple: false,
       folder: 'fb-clone/userPosts'
     }, function (error, result) {
       if (!error && result && result.event === "success") {
         _this.post.urlImg = result.info.public_id;
+        console.log(result.info);
       }
     });
     document.getElementById("upload_widget").addEventListener("click", function () {
@@ -2737,51 +2728,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (postMessage) {
         this.$store.commit("updateMessage", postMessage);
       }, 300)
-    } // settings() {
-    //     return {
-    //         paramName: "image",
-    //         url: "/api/posts",
-    //         acceptedFiles: "image/*",
-    //         clickabkle: ".dz-clickable",
-    //         autoProcessQueue: false,
-    //         previewsContainer: ".dropzone-previews",
-    //         previewTemplate: document.querySelector("#dz-template")
-    //             .innerHTML,
-    //         params: {
-    //             width: 1000,
-    //             height: 1000,
-    //         },
-    //         headers: {
-    //             "X-CSRF-TOKEN": document.head.querySelector(
-    //                 "meta[name=csrf-token]"
-    //             ).content,
-    //         },
-    //         sending: (file, xhr, formData) => {
-    //             formData.append("body", this.$store.getters.postMessage);
-    //         },
-    //         success: (e, res) => {
-    //             this.dropzone.removeAllFiles();
-    //             this.$store.commit("pushPost", res);
-    //         },
-    //     };
-    // },
-
+    }
   }),
   methods: {
-    // postHandler() {
-    //     if (this.dropzone.getAcceptedFiles().length) {
-    //         this.dropzone.processQueue();
-    //     } else {
-    //         this.$store.dispatch("postMessage");
-    //     }
-    //     this.$store.commit("updateMessage", "");
-    // },
     postHandler: function postHandler() {
       if (this.post.urlImg != null) {
         this.$store.dispatch("postMessage", {
           postImg: this.post.urlImg
-        });
-        console.log('test' + postImg);
+        }); //  console.log('test'+      postImg);
       } else {
         this.$store.dispatch("postMessage");
       }
@@ -2803,6 +2757,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostMenu_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostMenu.vue */ "./resources/js/components/PostMenu.vue");
+//
 //
 //
 //
@@ -65972,6 +65927,35 @@ var render = function() {
           ]
         )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-4 border-gray-300 flex justify-center" }, [
+      _c(
+        "div",
+        { staticClass: "rounded shadow" },
+        [
+          _vm.post.urlImg
+            ? _c(
+                "cld-image",
+                {
+                  staticClass: "p-2 rounded",
+                  attrs: {
+                    "public-id": _vm.post.urlImg,
+                    height: "400",
+                    width: "600"
+                  }
+                },
+                [
+                  _c("cld-transformation", {
+                    attrs: { width: "500", height: "400", crop: "fill" }
+                  })
+                ],
+                1
+              )
+            : _vm._e()
+        ],
+        1
+      )
     ])
   ])
 }
@@ -66020,19 +66004,19 @@ var render = function() {
               _c("div", [
                 _c("div", { staticClass: "text-sm font-bold" }, [
                   _vm._v(
-                    "\n                              " +
+                    "\n                            " +
                       _vm._s(
                         _vm.post.data.attributes.posted_by.data.attributes.name
                       ) +
-                      "\n                          "
+                      "\n                        "
                   )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "text-sm text-gray-600" }, [
                   _vm._v(
-                    "\n                              " +
+                    "\n                            " +
                       _vm._s(_vm.post.data.attributes.posted_at) +
-                      "\n                          "
+                      "\n                        "
                   )
                 ])
               ])
@@ -66063,16 +66047,22 @@ var render = function() {
               attrs: { load: _vm.log(_vm.post.data.attributes.image.length) }
             },
             [
-              _c("cld-image", {
-                attrs: {
-                  "public-id": _vm.post.data.attributes.image,
-                  height: "1000",
-                  width: "1000",
-                  loading: "lazy",
-                  dpr: "auto",
-                  responsive: "width"
-                }
-              })
+              _c(
+                "cld-image",
+                {
+                  attrs: {
+                    "public-id": _vm.post.data.attributes.image,
+                    loading: "lazy",
+                    responsive: "width"
+                  }
+                },
+                [
+                  _c("cld-transformation", {
+                    attrs: { width: "1000", height: "1000", crop: "fill" }
+                  })
+                ],
+                1
+              )
             ],
             1
           )
@@ -66112,9 +66102,9 @@ var render = function() {
           _c("div", [
             _c("p", [
               _vm._v(
-                "\n                  " +
+                "\n                " +
                   _vm._s(_vm.post.data.attributes.comments.comment_count) +
-                  " comments\n              "
+                  " comments\n            "
               )
             ])
           ])
@@ -66255,7 +66245,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("\n                  Post\n              ")]
+                      [_vm._v("\n                Post\n            ")]
                     )
                   : _vm._e()
               ]),
@@ -66309,9 +66299,9 @@ var render = function() {
                     _c("div", [
                       _c("p", { staticClass: "text-xs pl-2" }, [
                         _vm._v(
-                          "\n                          " +
+                          "\n                        " +
                             _vm._s(comment.data.attributes.commented_at) +
-                            "\n                      "
+                            "\n                    "
                         )
                       ])
                     ])

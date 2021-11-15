@@ -45,8 +45,9 @@
                 alt="post image"
                 class="w-full"
             /> -->
-               <cld-image :public-id="post.data.attributes.image" height="1000" width="1000"  loading="lazy"  dpr="auto"
-  responsive="width"/>
+               <cld-image :public-id="post.data.attributes.image" loading="lazy"  responsive="width"  >
+                    <cld-transformation width="1000" height="1000" crop="fill" />
+                </cld-image>
         </div>
         <div class="px-4 pt-2 flex justify-between text-gray-700 text-sm">
             <div class="flex">
