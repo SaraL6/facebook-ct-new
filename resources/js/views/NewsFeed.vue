@@ -1,6 +1,7 @@
 <template lang="">
     <div class="flex flex-col py-4">
         <NewPost />
+        
         <p v-if="newsStatus.postsStaus === 'loading'">Loading posts...</p>
         <Post
             v-else

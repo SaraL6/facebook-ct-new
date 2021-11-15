@@ -81,13 +81,15 @@ const actions = {
         },
 
     //this action will post to the db
-    postMessage({ commit, state }) {
+    postMessage({ commit, state },data) {
+    
         commit("setPostsStatus", "loading");
         axios
             .post("/api/posts", {
-                 body: state.postMessage })
+                 body: state.postMessage ,image: data.postImg})
             .then((res) => {
                 commit("pushPost", res.data);
+               
                 commit("setPostsStatus", "success");
                 commit("updateMessage", "");
             })

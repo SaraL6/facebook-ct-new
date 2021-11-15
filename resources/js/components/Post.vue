@@ -40,11 +40,13 @@
             v-if="post.data.attributes.image.length > 29"
             :load="log(post.data.attributes.image.length)"
         >
-            <img
+            <!-- <img
                 :src="post.data.attributes.image"
                 alt="post image"
                 class="w-full"
-            />
+            /> -->
+               <cld-image :public-id="post.data.attributes.image" height="1000" width="1000"  loading="lazy"  dpr="auto"
+  responsive="width"/>
         </div>
         <div class="px-4 pt-2 flex justify-between text-gray-700 text-sm">
             <div class="flex">

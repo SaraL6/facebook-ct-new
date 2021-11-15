@@ -8,7 +8,9 @@
         <div class="flex overflow-y-hidden flex-1">
             <Sidebar />
             <div class="overflow-x-hidden w-2/3">
-                <router-view :key="$route.fullPath"></router-view>
+                <router-view :key="$route.fullPath">
+                    
+                </router-view>
             </div>
         </div>
     </div>

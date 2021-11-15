@@ -15,7 +15,6 @@ class Post extends JsonResource
      */
     public function toArray($request)
     {
-        
         return [
             'data' => [
                 'type' => 'posts',
@@ -25,7 +24,7 @@ class Post extends JsonResource
                     'likes'=> new LikeCollection($this->likes),
                     'comments'=> new CommentCollection($this->comments),
                     'body' =>$this->body,
-                    'image' =>url('storage/'.$this->image),
+                    'image' =>$this->image,
 
                     'posted_at' => $this->created_at->diffForHumans(),
                 ]

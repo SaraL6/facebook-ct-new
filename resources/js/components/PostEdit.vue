@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <input type="text" v-model="updatedPostMessage"  id="input" >
+                                    <input type="text" v-model="updatedPostMessage" class="w-full pl-4 h-10  focus:outline-none  text-sm"  id="input" >
                                 </div>
                             </div>
                             <div
@@ -133,6 +133,7 @@ export default {
         methods: {
         toggleModal: function (value) {
             this.$emit("toggleModal", value);
+            this.showModal=!this.showModal;
             this.show = !this.show;
         },
         reloadPosts(){

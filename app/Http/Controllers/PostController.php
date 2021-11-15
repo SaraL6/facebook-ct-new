@@ -39,13 +39,9 @@ class PostController extends Controller
         //if the post includes an image
 
         if (isset($data['image'])) {
-            $image = $data['image']->store('post-images', 'public');
-
-            Image::make($data['image'])
-                ->fit($data['width'], $data['height'])
-                ->save(storage_path('app/public/post-images/'.$data['image']->hashName()));
+            $image = $data['image'];
         }
-
+    
         $post = request()->user()->posts()->create([
             'body' => $data['body'],
             'image' => $image ?? null,
