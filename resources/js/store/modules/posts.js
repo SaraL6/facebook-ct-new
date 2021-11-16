@@ -82,7 +82,7 @@ const actions = {
        
     //this action will post to the db
     postMessage({ commit, state },data) {
-      console.log(data);
+    
         commit("setPostsStatus", "loading");
         axios
             .post("/api/posts", {

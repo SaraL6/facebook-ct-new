@@ -25,7 +25,7 @@
          
                 <transition name="fade">
                     <button
-                        @click="postHandler"
+                        @click="postHandler "
                         class="bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none"
                     >
                         Post
@@ -51,7 +51,7 @@
            
 
         </div>
-    <div class="mt-4 border-gray-300 flex justify-center" >
+    <div class="mt-4 border-gray-300 flex justify-center" v-if ="post.urlImg">
         <div class="rounded shadow">
               <cld-image   :public-id="post.urlImg"  height="400" width="600" class="p-2 rounded">  
                 <cld-transformation width="500" height="400" crop="fill" />
@@ -116,7 +116,7 @@ export default {
                 this.$store.commit("updateMessage", postMessage);
             }, 300)
         },
-    
+        
     },
     methods: {
   

@@ -65952,32 +65952,34 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "mt-4 border-gray-300 flex justify-center" }, [
-      _c(
-        "div",
-        { staticClass: "rounded shadow" },
-        [
+    _vm.post.urlImg
+      ? _c("div", { staticClass: "mt-4 border-gray-300 flex justify-center" }, [
           _c(
-            "cld-image",
-            {
-              staticClass: "p-2 rounded",
-              attrs: {
-                "public-id": _vm.post.urlImg,
-                height: "400",
-                width: "600"
-              }
-            },
+            "div",
+            { staticClass: "rounded shadow" },
             [
-              _c("cld-transformation", {
-                attrs: { width: "500", height: "400", crop: "fill" }
-              })
+              _c(
+                "cld-image",
+                {
+                  staticClass: "p-2 rounded",
+                  attrs: {
+                    "public-id": _vm.post.urlImg,
+                    height: "400",
+                    width: "600"
+                  }
+                },
+                [
+                  _c("cld-transformation", {
+                    attrs: { width: "500", height: "400", crop: "fill" }
+                  })
+                ],
+                1
+              )
             ],
             1
           )
-        ],
-        1
-      )
-    ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -84693,7 +84695,6 @@ var actions = {
   postMessage: function postMessage(_ref5, data) {
     var commit = _ref5.commit,
         state = _ref5.state;
-    console.log(data);
     commit("setPostsStatus", "loading");
     axios.post("/api/posts", {
       body: state.postMessage,
