@@ -61,6 +61,7 @@ class PostController extends Controller
         $data = request()->validate([
             'id'=> 'required',
             'body' => 'required',
+            'image'=>'',
         ]);
         
         Post::where('id', $data['id'])

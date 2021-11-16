@@ -177,6 +177,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import PostMenu from "./PostMenu.vue";
 export default {
     name: "Post",
@@ -187,6 +188,12 @@ export default {
             comments: false,
             commentBody: "",
         };
+    },
+     computed: {
+        ...mapGetters({
+            posts: "posts",
+           
+        }),
     },
     methods: {
         // 29 is the length when there is no image in the post so if the lenght is >29 then the image is not null

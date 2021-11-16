@@ -66,11 +66,13 @@ const actions = {
             .catch((error) => {});
     },
     updatePostMessage({ commit, state },emittedData) {
-       // console.log(emittedData);
+      
         axios
             .put("/api/posts/" + emittedData.postId, {             
                   id: emittedData.postId,
-                  body:emittedData.body
+                  body:emittedData.body,
+                  image:emittedData.postImg
+
                 })               
                 .then((res) => {
                   //  console.log('postkey'+emittedData.postKey);
@@ -127,9 +129,10 @@ const mutations = {
     },
     setPost(state, data) {
         // console.log(state);
-        // console.log(state.posts.data[data.postKey].data.attributes.body);
+         //console.log(state.posts.data[data.postKey].data.attributes);
         state.posts.data[data.postKey].data.attributes.body = data.posts.body;
-       // console.log(data.posts);
+        state.posts.data[data.postKey].data.attributes.image = data.posts.image;
+      // console.log(data.posts);
     },
     setPostsStatus(state, status) {
         state.postsStatus = status;

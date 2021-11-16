@@ -2758,7 +2758,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PostMenu_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostMenu.vue */ "./resources/js/components/PostMenu.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _PostMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PostMenu.vue */ "./resources/js/components/PostMenu.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2938,6 +2945,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Post",
   props: ["post"],
@@ -2947,13 +2955,16 @@ __webpack_require__.r(__webpack_exports__);
       commentBody: ""
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    posts: "posts"
+  })),
   methods: {
     // 29 is the length when there is no image in the post so if the lenght is >29 then the image is not null
     log: function log(item) {//  console.log(item);
     }
   },
   components: {
-    PostMenu: _PostMenu_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    PostMenu: _PostMenu_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -2968,7 +2979,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -3108,7 +3118,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostEdit",
   props: ["post", "postKey"],
@@ -3117,14 +3128,58 @@ __webpack_require__.r(__webpack_exports__);
       show: false,
       showModal: false,
       updatedPostMessage: this.post.data.attributes.body,
+      updatedPostImg: this.post.data.attributes.image,
       postkey: this.postKey
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: 'ct-clone',
+      uploadPreset: 'fb-clone',
+      cropping: true,
+      multiple: false,
+      folder: 'fb-clone/userPosts'
+    }, function (error, result) {
+      if (!error && result && result.event === "success") {
+        _this.post.urlImg = result.info.public_id;
+      }
+    });
+    document.getElementById("upload_widget").addEventListener("click", function () {
+      myWidget.open();
+    }, false);
   },
   methods: {
     toggleModal: function toggleModal(value) {
       this.$emit("toggleModal", value);
       this.showModal = !this.showModal;
       this.show = !this.show;
+    },
+    removePostImg: function removePostImg() {
+      this.updatedPostImg = '';
+      console.log('PostImg deleted');
+    },
+    updatePostHandler: function updatePostHandler() {
+      if (this.updatedPostImg != '') {
+        this.$store.dispatch("updatePostMessage", {
+          body: this.updatedPostMessage,
+          postImg: this.updatedPostImg,
+          postId: this.post.data.post_id,
+          postKey: this.postkey
+        }); //  console.log('test'+      postImg);
+      } else {
+        this.$store.dispatch("updatePostMessage", {
+          body: this.updatedPostMessage,
+          postImg: '',
+          postId: this.post.data.post_id,
+          postKey: this.postkey
+        });
+      }
+    },
+    savePost: function savePost() {
+      this.toggleModal(false);
+      this.updatePostHandler();
     },
     reloadPosts: function reloadPosts() {
       this.$store.dispatch("fetchNewsPosts");
@@ -66493,68 +66548,78 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm.post.data.attributes.image.length > 29
+                    _vm.post.data.attributes.image
                       ? _c(
                           "div",
                           { staticClass: "w-full relative" },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "absolute  top-0 right-0" },
-                              [
-                                _c(
-                                  "button",
-                                  { staticClass: "focus:outline-none" },
-                                  [
-                                    _c(
-                                      "svg",
-                                      {
-                                        staticClass:
-                                          "inline-block rounded-full bg-gray-500",
-                                        staticStyle: { fill: "#000000" },
-                                        attrs: {
-                                          xmlns: "http://www.w3.org/2000/svg",
-                                          x: "0px",
-                                          y: "0px",
-                                          width: "34",
-                                          height: "34",
-                                          viewBox: "0 0 48 48"
+                            _vm.updatedPostImg
+                              ? _c("div", {}, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "absolute  top-0 right-0 p-4 focus:outline-none",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removePostImg()
                                         }
-                                      },
-                                      [
-                                        _c("path", {
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "svg",
+                                        {
+                                          staticClass:
+                                            "edit-delete-img rounded-full bg-gray-100 hover:bg-gray-400",
+                                          staticStyle: { fill: "#000000" },
                                           attrs: {
-                                            d:
-                                              "M 15 4 C 14.476563 4 13.941406 4.183594 13.5625 4.5625 C 13.183594 4.941406 13 5.476563 13 6 L 13 7 L 7 7 L 7 9 L 8 9 L 8 25 C 8 26.644531 9.355469 28 11 28 L 23 28 C 24.644531 28 26 26.644531 26 25 L 26 9 L 27 9 L 27 7 L 21 7 L 21 6 C 21 5.476563 20.816406 4.941406 20.4375 4.5625 C 20.058594 4.183594 19.523438 4 19 4 Z M 15 6 L 19 6 L 19 7 L 15 7 Z M 10 9 L 24 9 L 24 25 C 24 25.554688 23.554688 26 23 26 L 11 26 C 10.445313 26 10 25.554688 10 25 Z M 12 12 L 12 23 L 14 23 L 14 12 Z M 16 12 L 16 23 L 18 23 L 18 12 Z M 20 12 L 20 23 L 22 23 L 22 12 Z"
+                                            xmlns: "http://www.w3.org/2000/svg",
+                                            x: "0px",
+                                            y: "0px",
+                                            width: "30",
+                                            height: "30",
+                                            viewBox: "0 0 24 24"
                                           }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
+                                        },
+                                        [
+                                          _c("path", {
+                                            attrs: {
+                                              d:
+                                                "M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z"
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e(),
                             _vm._v(" "),
-                            _c(
-                              "cld-image",
-                              {
-                                staticClass: "w-full ",
-                                attrs: {
-                                  "public-id": _vm.post.data.attributes.image,
-                                  responsive: "width"
-                                }
-                              },
-                              [
-                                _c("cld-transformation", {
-                                  attrs: {
-                                    width: "500",
-                                    height: "400",
-                                    crop: "fill"
-                                  }
-                                })
-                              ],
-                              1
-                            )
+                            _vm.updatedPostImg
+                              ? _c(
+                                  "cld-image",
+                                  {
+                                    staticClass:
+                                      "w-full rounded border-2 border-gray-300",
+                                    attrs: {
+                                      "public-id":
+                                        _vm.post.data.attributes.image,
+                                      responsive: "width"
+                                    }
+                                  },
+                                  [
+                                    _c("cld-transformation", {
+                                      attrs: {
+                                        width: "500",
+                                        height: "400",
+                                        crop: "fill"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
                           ],
                           1
                         )
@@ -66565,10 +66630,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                {
-                  staticClass:
-                    "flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
-                },
+                { staticClass: "flex items-center justify-end p-6 rounded-b" },
                 [
                   _c(
                     "button",
@@ -66595,16 +66657,7 @@ var render = function() {
                       staticClass:
                         "text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
                       attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.toggleModal(false)
-                          _vm.$store.dispatch("updatePostMessage", {
-                            body: _vm.updatedPostMessage,
-                            postId: _vm.post.data.post_id,
-                            postKey: _vm.postkey
-                          })
-                        }
-                      }
+                      on: { click: _vm.savePost }
                     },
                     [
                       _vm._v(
@@ -84679,10 +84732,10 @@ var actions = {
   updatePostMessage: function updatePostMessage(_ref4, emittedData) {
     var commit = _ref4.commit,
         state = _ref4.state;
-    // console.log(emittedData);
     axios.put("/api/posts/" + emittedData.postId, {
       id: emittedData.postId,
-      body: emittedData.body
+      body: emittedData.body,
+      image: emittedData.postImg
     }).then(function (res) {
       //  console.log('postkey'+emittedData.postKey);
       commit("setPost", {
@@ -84736,8 +84789,9 @@ var mutations = {
   },
   setPost: function setPost(state, data) {
     // console.log(state);
-    // console.log(state.posts.data[data.postKey].data.attributes.body);
-    state.posts.data[data.postKey].data.attributes.body = data.posts.body; // console.log(data.posts);
+    //console.log(state.posts.data[data.postKey].data.attributes);
+    state.posts.data[data.postKey].data.attributes.body = data.posts.body;
+    state.posts.data[data.postKey].data.attributes.image = data.posts.image; // console.log(data.posts);
   },
   setPostsStatus: function setPostsStatus(state, status) {
     state.postsStatus = status;

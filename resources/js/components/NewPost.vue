@@ -25,7 +25,7 @@
          
                 <transition name="fade">
                     <button
-                        @click="postHandler "
+                        @click="postHandler"
                         class="bg-gray-200 ml-2 px-3 py-1 rounded-full focus:outline-none"
                     >
                         Post
