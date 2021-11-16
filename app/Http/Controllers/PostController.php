@@ -41,11 +41,12 @@ class PostController extends Controller
         if (isset($data['image'])) {
             $image = $data['image'];
         }
-    
+       
         $post = request()->user()->posts()->create([
             'body' => $data['body'],
             'image' => $image ?? null,
         ]);
+      
         return new PostResource($post);
     }
 

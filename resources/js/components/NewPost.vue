@@ -119,11 +119,13 @@ export default {
     methods: {
   
         postHandler() {
+       
             if (this.post.urlImg != null) {
                  this.$store.dispatch("postMessage",{ postImg: this.post.urlImg })
                //  console.log('test'+      postImg);
             } else {
-                this.$store.dispatch("postMessage");
+               
+                this.$store.dispatch("postMessage",{ postImg: '' });
             }
             this.$store.commit("updateMessage", "");
         },

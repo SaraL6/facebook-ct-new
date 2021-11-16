@@ -79,17 +79,18 @@ const actions = {
                 })
                 .catch((error) => {});
         },
-
+       
     //this action will post to the db
     postMessage({ commit, state },data) {
-    
+      console.log(data);
         commit("setPostsStatus", "loading");
         axios
             .post("/api/posts", {
-                 body: state.postMessage ,image: data.postImg})
+                 body: state.postMessage , image: data.postImg})
+                 
             .then((res) => {
-                commit("pushPost", res.data);
-               
+                commit("pushPost", res.data);  
+                          
                 commit("setPostsStatus", "success");
                 commit("updateMessage", "");
             })
