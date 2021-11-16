@@ -51,9 +51,9 @@
            
 
         </div>
-    <div class="mt-4 border-gray-300 flex justify-center">
+    <div class="mt-4 border-gray-300 flex justify-center" >
         <div class="rounded shadow">
-              <cld-image v-if ="post.urlImg" :public-id="post.urlImg"  height="400" width="600" class="p-2 rounded">  
+              <cld-image   :public-id="post.urlImg"  height="400" width="600" class="p-2 rounded">  
                 <cld-transformation width="500" height="400" crop="fill" />
                  </cld-image>
         </div>
@@ -91,7 +91,7 @@ export default {
                 if (!error && result && result.event === "success") { 
               
                this.post.urlImg= result.info.public_id; 
-               console.log(result.info);
+               
                 }
             }
             )
@@ -110,11 +110,13 @@ export default {
             //we get  the getter postMessage in posts.js, then we set it to postMessage that's in the setter
             get() {
                 return this.$store.getters.postMessage;
+               
             },
             set: _.debounce(function (postMessage) {
                 this.$store.commit("updateMessage", postMessage);
             }, 300)
         },
+    
     },
     methods: {
   
@@ -128,8 +130,10 @@ export default {
                 this.$store.dispatch("postMessage",{ postImg: '' });
             }
             this.$store.commit("updateMessage", "");
+            this.post.urlImg=null;
         },
     },
+   
 };
 </script>
 <style scoped>

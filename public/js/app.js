@@ -2710,7 +2710,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, function (error, result) {
       if (!error && result && result.event === "success") {
         _this.post.urlImg = result.info.public_id;
-        console.log(result.info);
       }
     });
     document.getElementById("upload_widget").addEventListener("click", function () {
@@ -2743,6 +2742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.$store.commit("updateMessage", "");
+      this.post.urlImg = null;
     }
   }
 });
@@ -65957,25 +65957,23 @@ var render = function() {
         "div",
         { staticClass: "rounded shadow" },
         [
-          _vm.post.urlImg
-            ? _c(
-                "cld-image",
-                {
-                  staticClass: "p-2 rounded",
-                  attrs: {
-                    "public-id": _vm.post.urlImg,
-                    height: "400",
-                    width: "600"
-                  }
-                },
-                [
-                  _c("cld-transformation", {
-                    attrs: { width: "500", height: "400", crop: "fill" }
-                  })
-                ],
-                1
-              )
-            : _vm._e()
+          _c(
+            "cld-image",
+            {
+              staticClass: "p-2 rounded",
+              attrs: {
+                "public-id": _vm.post.urlImg,
+                height: "400",
+                width: "600"
+              }
+            },
+            [
+              _c("cld-transformation", {
+                attrs: { width: "500", height: "400", crop: "fill" }
+              })
+            ],
+            1
+          )
         ],
         1
       )
