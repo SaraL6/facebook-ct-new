@@ -1,7 +1,7 @@
 <template lang="">
     <div class="bg-white rounded shadow-md w-2/3 mt-6 overflow-hidden">
         <div class="flex flex-col px-4">
-            <div class="flex justify-between">
+            <div class="flex justify-between pt-3">
                 <div class="flex items-center">
                     <div class="w-10">
                         <img
@@ -13,7 +13,7 @@
                             class="w-10 h-10 object-cover rounded-full"
                         />
                     </div>
-                    <div class="ml-4">
+                    <div class="ml-2">
                         <div>
                             <div class="text-sm font-bold">
                                 {{
@@ -21,7 +21,7 @@
                                         .attributes.name
                                 }}
                             </div>
-                            <div class="text-sm text-gray-600">
+                            <div class="text-xs text-gray-600">
                                 {{ post.data.attributes.posted_at }}
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                     <PostMenu :post="post" :postKey="$vnode.key" />
                 </div>
             </div>
-            <div class="">
+            <div class="pl-1 my-2">
                 <p>{{ post.data.attributes.body }}</p>
             </div>
         </div>

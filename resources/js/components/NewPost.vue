@@ -65,13 +65,13 @@
 <script>
 import _ from "lodash";
 import { mapGetters } from "vuex";
-//import Dropzone from "dropzone";
+
 export default {
     name: "NewPost",
 
     data: () => {
         return {
-      //      dropzone: null,
+  
       post:{
           urlImg:null,
       }
@@ -79,7 +79,6 @@ export default {
     },
 
     mounted() {
-       // this.dropzone = new Dropzone(this.$refs.postImage, this.settings);
 
      var myWidget = cloudinary.createUploadWidget({
             cloudName: 'ct-clone', 

@@ -1,9 +1,9 @@
 <template lang="">
     <div>
-        <div class="header">
+        <div class="header__post__menu">
             <div class="header__nav">
                 <ul class="header__navbar">
-                    <li class="header__item">
+                    <li class="header__item__post__menu">
                         <a href="#" class="header__link">
                             <transition>
                                 <!-- Header Navigation Menu Icons -->
@@ -15,9 +15,9 @@
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
-                                        width="1em"
-                                        height="1em"
-                                        class="header--icon"
+                                        width="1.5em"
+                                        height="1.5em"
+                                        class="header--iconn hover:bg-gray-400 rounded-full"
                                     >
                                         <g
                                             fill-rule="evenodd"
@@ -38,9 +38,9 @@
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
-                                        width="1em"
-                                        height="1em"
-                                        class="header--icon"
+                                        width="1.5em"
+                                        height="1.5em"
+                                        class="header--iconn hover:bg-gray-400 rounded-full"
                                     >
                                         <g
                                             fill-rule="evenodd"
@@ -185,7 +185,7 @@ export default {
     methods: {
         toggleModal: function (value) {
             this.showModal = !this.showModal;
-            this.show = !this.show;
+            this.show = false;
         },
        
     }

@@ -15,7 +15,7 @@
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
-                                        class="header--icon"
+                                        class="header--icon bg-fb-icon hover:bg-fb-nav-hover rounded-full"
                                     >
                                         <title>Close</title>
                                         <path d="M0 0h24v24H0V0z" fill="none" />
@@ -34,7 +34,7 @@
                                 >
                                     <svg
                                         viewBox="0 0 28 28"
-                                        class="header--icon"
+                                        class="header--icon bg-fb-icon hover:bg-fb-icon-hover rounded-full"
                                     >
                                         <path
                                             fill="currentColor"

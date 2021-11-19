@@ -1063,6 +1063,14 @@ video {
   background-color: #1877f2;
 }
 
+.bg-fb-icon {
+  background-color: #e4e6eb;
+}
+
+.bg-fb-icon-hover {
+  background-color: #dadde1;
+}
+
 .hover\:bg-transparent:hover {
   background-color: transparent;
 }
@@ -1443,6 +1451,14 @@ video {
   background-color: #1877f2;
 }
 
+.hover\:bg-fb-icon:hover {
+  background-color: #e4e6eb;
+}
+
+.hover\:bg-fb-icon-hover:hover {
+  background-color: #dadde1;
+}
+
 .focus\:bg-transparent:focus {
   background-color: transparent;
 }
@@ -1821,6 +1837,14 @@ video {
 
 .focus\:bg-fb-blue:focus {
   background-color: #1877f2;
+}
+
+.focus\:bg-fb-icon:focus {
+  background-color: #e4e6eb;
+}
+
+.focus\:bg-fb-icon-hover:focus {
+  background-color: #dadde1;
 }
 
 .bg-bottom {
@@ -2283,6 +2307,14 @@ video {
   border-color: #1877f2;
 }
 
+.border-fb-icon {
+  border-color: #e4e6eb;
+}
+
+.border-fb-icon-hover {
+  border-color: #dadde1;
+}
+
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -2663,6 +2695,14 @@ video {
   border-color: #1877f2;
 }
 
+.hover\:border-fb-icon:hover {
+  border-color: #e4e6eb;
+}
+
+.hover\:border-fb-icon-hover:hover {
+  border-color: #dadde1;
+}
+
 .focus\:border-transparent:focus {
   border-color: transparent;
 }
@@ -3041,6 +3081,14 @@ video {
 
 .focus\:border-fb-blue:focus {
   border-color: #1877f2;
+}
+
+.focus\:border-fb-icon:focus {
+  border-color: #e4e6eb;
+}
+
+.focus\:border-fb-icon-hover:focus {
+  border-color: #dadde1;
 }
 
 .rounded-none {
@@ -7013,6 +7061,30 @@ video {
   color: #1877f2;
 }
 
+.placeholder-fb-icon::-moz-placeholder {
+  color: #e4e6eb;
+}
+
+.placeholder-fb-icon:-ms-input-placeholder {
+  color: #e4e6eb;
+}
+
+.placeholder-fb-icon::placeholder {
+  color: #e4e6eb;
+}
+
+.placeholder-fb-icon-hover::-moz-placeholder {
+  color: #dadde1;
+}
+
+.placeholder-fb-icon-hover:-ms-input-placeholder {
+  color: #dadde1;
+}
+
+.placeholder-fb-icon-hover::placeholder {
+  color: #dadde1;
+}
+
 .focus\:placeholder-transparent:focus::-moz-placeholder {
   color: transparent;
 }
@@ -8153,6 +8225,30 @@ video {
   color: #1877f2;
 }
 
+.focus\:placeholder-fb-icon:focus::-moz-placeholder {
+  color: #e4e6eb;
+}
+
+.focus\:placeholder-fb-icon:focus:-ms-input-placeholder {
+  color: #e4e6eb;
+}
+
+.focus\:placeholder-fb-icon:focus::placeholder {
+  color: #e4e6eb;
+}
+
+.focus\:placeholder-fb-icon-hover:focus::-moz-placeholder {
+  color: #dadde1;
+}
+
+.focus\:placeholder-fb-icon-hover:focus:-ms-input-placeholder {
+  color: #dadde1;
+}
+
+.focus\:placeholder-fb-icon-hover:focus::placeholder {
+  color: #dadde1;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -8771,6 +8867,14 @@ video {
   color: #1877f2;
 }
 
+.text-fb-icon {
+  color: #e4e6eb;
+}
+
+.text-fb-icon-hover {
+  color: #dadde1;
+}
+
 .hover\:text-transparent:hover {
   color: transparent;
 }
@@ -9151,6 +9255,14 @@ video {
   color: #1877f2;
 }
 
+.hover\:text-fb-icon:hover {
+  color: #e4e6eb;
+}
+
+.hover\:text-fb-icon-hover:hover {
+  color: #dadde1;
+}
+
 .focus\:text-transparent:focus {
   color: transparent;
 }
@@ -9529,6 +9641,14 @@ video {
 
 .focus\:text-fb-blue:focus {
   color: #1877f2;
+}
+
+.focus\:text-fb-icon:focus {
+  color: #e4e6eb;
+}
+
+.focus\:text-fb-icon-hover:focus {
+  color: #dadde1;
 }
 
 .text-xs {
@@ -10048,8 +10168,9 @@ hr {
 }
 
 .header--icon {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 6px;
 }
 
 .header--button {
@@ -10231,6 +10352,46 @@ hr {
 
 .main__svg:hover {
   color: #ffad1f;
+}
+
+.header__post__menu {
+  padding: 0.5rem 1rem 0rem 2rem;
+}
+
+.header__post__menu__nav {
+  position: relative;
+}
+
+.header__post__menu__navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header__post__menu__item__post__menu {
+  padding: 1rem;
+}
+
+.header__post__menu--iconn {
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 6px;
+}
+
+.header__post__menu--button {
+  top: 0;
+  right: 0;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #050505;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+
+.header__post__menu--button:focus {
+  outline: 0;
 }
 
 .dropdown__menu__post {
@@ -10719,6 +10880,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .sm\:bg-fb-icon {
+    background-color: #e4e6eb;
+  }
+
+  .sm\:bg-fb-icon-hover {
+    background-color: #dadde1;
+  }
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -11099,6 +11268,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .sm\:hover\:bg-fb-icon:hover {
+    background-color: #e4e6eb;
+  }
+
+  .sm\:hover\:bg-fb-icon-hover:hover {
+    background-color: #dadde1;
+  }
+
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -11477,6 +11654,14 @@ hr {
 
   .sm\:focus\:bg-fb-blue:focus {
     background-color: #1877f2;
+  }
+
+  .sm\:focus\:bg-fb-icon:focus {
+    background-color: #e4e6eb;
+  }
+
+  .sm\:focus\:bg-fb-icon-hover:focus {
+    background-color: #dadde1;
   }
 
   .sm\:bg-bottom {
@@ -11939,6 +12124,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .sm\:border-fb-icon {
+    border-color: #e4e6eb;
+  }
+
+  .sm\:border-fb-icon-hover {
+    border-color: #dadde1;
+  }
+
   .sm\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -12319,6 +12512,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .sm\:hover\:border-fb-icon:hover {
+    border-color: #e4e6eb;
+  }
+
+  .sm\:hover\:border-fb-icon-hover:hover {
+    border-color: #dadde1;
+  }
+
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -12697,6 +12898,14 @@ hr {
 
   .sm\:focus\:border-fb-blue:focus {
     border-color: #1877f2;
+  }
+
+  .sm\:focus\:border-fb-icon:focus {
+    border-color: #e4e6eb;
+  }
+
+  .sm\:focus\:border-fb-icon-hover:focus {
+    border-color: #dadde1;
   }
 
   .sm\:rounded-none {
@@ -16669,6 +16878,30 @@ hr {
     color: #1877f2;
   }
 
+  .sm\:placeholder-fb-icon::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:placeholder-fb-icon:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:placeholder-fb-icon::placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:placeholder-fb-icon-hover::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .sm\:placeholder-fb-icon-hover:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .sm\:placeholder-fb-icon-hover::placeholder {
+    color: #dadde1;
+  }
+
   .sm\:focus\:placeholder-transparent:focus::-moz-placeholder {
     color: transparent;
   }
@@ -17809,6 +18042,30 @@ hr {
     color: #1877f2;
   }
 
+  .sm\:focus\:placeholder-fb-icon:focus::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:focus\:placeholder-fb-icon:focus:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:focus\:placeholder-fb-icon:focus::placeholder {
+    color: #e4e6eb;
+  }
+
+  .sm\:focus\:placeholder-fb-icon-hover:focus::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .sm\:focus\:placeholder-fb-icon-hover:focus:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .sm\:focus\:placeholder-fb-icon-hover:focus::placeholder {
+    color: #dadde1;
+  }
+
   .sm\:pointer-events-none {
     pointer-events: none;
   }
@@ -18427,6 +18684,14 @@ hr {
     color: #1877f2;
   }
 
+  .sm\:text-fb-icon {
+    color: #e4e6eb;
+  }
+
+  .sm\:text-fb-icon-hover {
+    color: #dadde1;
+  }
+
   .sm\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -18807,6 +19072,14 @@ hr {
     color: #1877f2;
   }
 
+  .sm\:hover\:text-fb-icon:hover {
+    color: #e4e6eb;
+  }
+
+  .sm\:hover\:text-fb-icon-hover:hover {
+    color: #dadde1;
+  }
+
   .sm\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -19185,6 +19458,14 @@ hr {
 
   .sm\:focus\:text-fb-blue:focus {
     color: #1877f2;
+  }
+
+  .sm\:focus\:text-fb-icon:focus {
+    color: #e4e6eb;
+  }
+
+  .sm\:focus\:text-fb-icon-hover:focus {
+    color: #dadde1;
   }
 
   .sm\:text-xs {
@@ -20086,6 +20367,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .md\:bg-fb-icon {
+    background-color: #e4e6eb;
+  }
+
+  .md\:bg-fb-icon-hover {
+    background-color: #dadde1;
+  }
+
   .md\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -20466,6 +20755,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .md\:hover\:bg-fb-icon:hover {
+    background-color: #e4e6eb;
+  }
+
+  .md\:hover\:bg-fb-icon-hover:hover {
+    background-color: #dadde1;
+  }
+
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -20844,6 +21141,14 @@ hr {
 
   .md\:focus\:bg-fb-blue:focus {
     background-color: #1877f2;
+  }
+
+  .md\:focus\:bg-fb-icon:focus {
+    background-color: #e4e6eb;
+  }
+
+  .md\:focus\:bg-fb-icon-hover:focus {
+    background-color: #dadde1;
   }
 
   .md\:bg-bottom {
@@ -21306,6 +21611,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .md\:border-fb-icon {
+    border-color: #e4e6eb;
+  }
+
+  .md\:border-fb-icon-hover {
+    border-color: #dadde1;
+  }
+
   .md\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -21686,6 +21999,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .md\:hover\:border-fb-icon:hover {
+    border-color: #e4e6eb;
+  }
+
+  .md\:hover\:border-fb-icon-hover:hover {
+    border-color: #dadde1;
+  }
+
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -22064,6 +22385,14 @@ hr {
 
   .md\:focus\:border-fb-blue:focus {
     border-color: #1877f2;
+  }
+
+  .md\:focus\:border-fb-icon:focus {
+    border-color: #e4e6eb;
+  }
+
+  .md\:focus\:border-fb-icon-hover:focus {
+    border-color: #dadde1;
   }
 
   .md\:rounded-none {
@@ -26036,6 +26365,30 @@ hr {
     color: #1877f2;
   }
 
+  .md\:placeholder-fb-icon::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:placeholder-fb-icon:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:placeholder-fb-icon::placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:placeholder-fb-icon-hover::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .md\:placeholder-fb-icon-hover:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .md\:placeholder-fb-icon-hover::placeholder {
+    color: #dadde1;
+  }
+
   .md\:focus\:placeholder-transparent:focus::-moz-placeholder {
     color: transparent;
   }
@@ -27176,6 +27529,30 @@ hr {
     color: #1877f2;
   }
 
+  .md\:focus\:placeholder-fb-icon:focus::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:focus\:placeholder-fb-icon:focus:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:focus\:placeholder-fb-icon:focus::placeholder {
+    color: #e4e6eb;
+  }
+
+  .md\:focus\:placeholder-fb-icon-hover:focus::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .md\:focus\:placeholder-fb-icon-hover:focus:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .md\:focus\:placeholder-fb-icon-hover:focus::placeholder {
+    color: #dadde1;
+  }
+
   .md\:pointer-events-none {
     pointer-events: none;
   }
@@ -27794,6 +28171,14 @@ hr {
     color: #1877f2;
   }
 
+  .md\:text-fb-icon {
+    color: #e4e6eb;
+  }
+
+  .md\:text-fb-icon-hover {
+    color: #dadde1;
+  }
+
   .md\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -28174,6 +28559,14 @@ hr {
     color: #1877f2;
   }
 
+  .md\:hover\:text-fb-icon:hover {
+    color: #e4e6eb;
+  }
+
+  .md\:hover\:text-fb-icon-hover:hover {
+    color: #dadde1;
+  }
+
   .md\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -28552,6 +28945,14 @@ hr {
 
   .md\:focus\:text-fb-blue:focus {
     color: #1877f2;
+  }
+
+  .md\:focus\:text-fb-icon:focus {
+    color: #e4e6eb;
+  }
+
+  .md\:focus\:text-fb-icon-hover:focus {
+    color: #dadde1;
   }
 
   .md\:text-xs {
@@ -29453,6 +29854,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .lg\:bg-fb-icon {
+    background-color: #e4e6eb;
+  }
+
+  .lg\:bg-fb-icon-hover {
+    background-color: #dadde1;
+  }
+
   .lg\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -29833,6 +30242,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .lg\:hover\:bg-fb-icon:hover {
+    background-color: #e4e6eb;
+  }
+
+  .lg\:hover\:bg-fb-icon-hover:hover {
+    background-color: #dadde1;
+  }
+
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -30211,6 +30628,14 @@ hr {
 
   .lg\:focus\:bg-fb-blue:focus {
     background-color: #1877f2;
+  }
+
+  .lg\:focus\:bg-fb-icon:focus {
+    background-color: #e4e6eb;
+  }
+
+  .lg\:focus\:bg-fb-icon-hover:focus {
+    background-color: #dadde1;
   }
 
   .lg\:bg-bottom {
@@ -30673,6 +31098,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .lg\:border-fb-icon {
+    border-color: #e4e6eb;
+  }
+
+  .lg\:border-fb-icon-hover {
+    border-color: #dadde1;
+  }
+
   .lg\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -31053,6 +31486,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .lg\:hover\:border-fb-icon:hover {
+    border-color: #e4e6eb;
+  }
+
+  .lg\:hover\:border-fb-icon-hover:hover {
+    border-color: #dadde1;
+  }
+
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -31431,6 +31872,14 @@ hr {
 
   .lg\:focus\:border-fb-blue:focus {
     border-color: #1877f2;
+  }
+
+  .lg\:focus\:border-fb-icon:focus {
+    border-color: #e4e6eb;
+  }
+
+  .lg\:focus\:border-fb-icon-hover:focus {
+    border-color: #dadde1;
   }
 
   .lg\:rounded-none {
@@ -35403,6 +35852,30 @@ hr {
     color: #1877f2;
   }
 
+  .lg\:placeholder-fb-icon::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:placeholder-fb-icon:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:placeholder-fb-icon::placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:placeholder-fb-icon-hover::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .lg\:placeholder-fb-icon-hover:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .lg\:placeholder-fb-icon-hover::placeholder {
+    color: #dadde1;
+  }
+
   .lg\:focus\:placeholder-transparent:focus::-moz-placeholder {
     color: transparent;
   }
@@ -36543,6 +37016,30 @@ hr {
     color: #1877f2;
   }
 
+  .lg\:focus\:placeholder-fb-icon:focus::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:focus\:placeholder-fb-icon:focus:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:focus\:placeholder-fb-icon:focus::placeholder {
+    color: #e4e6eb;
+  }
+
+  .lg\:focus\:placeholder-fb-icon-hover:focus::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .lg\:focus\:placeholder-fb-icon-hover:focus:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .lg\:focus\:placeholder-fb-icon-hover:focus::placeholder {
+    color: #dadde1;
+  }
+
   .lg\:pointer-events-none {
     pointer-events: none;
   }
@@ -37161,6 +37658,14 @@ hr {
     color: #1877f2;
   }
 
+  .lg\:text-fb-icon {
+    color: #e4e6eb;
+  }
+
+  .lg\:text-fb-icon-hover {
+    color: #dadde1;
+  }
+
   .lg\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -37541,6 +38046,14 @@ hr {
     color: #1877f2;
   }
 
+  .lg\:hover\:text-fb-icon:hover {
+    color: #e4e6eb;
+  }
+
+  .lg\:hover\:text-fb-icon-hover:hover {
+    color: #dadde1;
+  }
+
   .lg\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -37919,6 +38432,14 @@ hr {
 
   .lg\:focus\:text-fb-blue:focus {
     color: #1877f2;
+  }
+
+  .lg\:focus\:text-fb-icon:focus {
+    color: #e4e6eb;
+  }
+
+  .lg\:focus\:text-fb-icon-hover:focus {
+    color: #dadde1;
   }
 
   .lg\:text-xs {
@@ -38820,6 +39341,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .xl\:bg-fb-icon {
+    background-color: #e4e6eb;
+  }
+
+  .xl\:bg-fb-icon-hover {
+    background-color: #dadde1;
+  }
+
   .xl\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -39200,6 +39729,14 @@ hr {
     background-color: #1877f2;
   }
 
+  .xl\:hover\:bg-fb-icon:hover {
+    background-color: #e4e6eb;
+  }
+
+  .xl\:hover\:bg-fb-icon-hover:hover {
+    background-color: #dadde1;
+  }
+
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -39578,6 +40115,14 @@ hr {
 
   .xl\:focus\:bg-fb-blue:focus {
     background-color: #1877f2;
+  }
+
+  .xl\:focus\:bg-fb-icon:focus {
+    background-color: #e4e6eb;
+  }
+
+  .xl\:focus\:bg-fb-icon-hover:focus {
+    background-color: #dadde1;
   }
 
   .xl\:bg-bottom {
@@ -40040,6 +40585,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .xl\:border-fb-icon {
+    border-color: #e4e6eb;
+  }
+
+  .xl\:border-fb-icon-hover {
+    border-color: #dadde1;
+  }
+
   .xl\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -40420,6 +40973,14 @@ hr {
     border-color: #1877f2;
   }
 
+  .xl\:hover\:border-fb-icon:hover {
+    border-color: #e4e6eb;
+  }
+
+  .xl\:hover\:border-fb-icon-hover:hover {
+    border-color: #dadde1;
+  }
+
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -40798,6 +41359,14 @@ hr {
 
   .xl\:focus\:border-fb-blue:focus {
     border-color: #1877f2;
+  }
+
+  .xl\:focus\:border-fb-icon:focus {
+    border-color: #e4e6eb;
+  }
+
+  .xl\:focus\:border-fb-icon-hover:focus {
+    border-color: #dadde1;
   }
 
   .xl\:rounded-none {
@@ -44770,6 +45339,30 @@ hr {
     color: #1877f2;
   }
 
+  .xl\:placeholder-fb-icon::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:placeholder-fb-icon:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:placeholder-fb-icon::placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:placeholder-fb-icon-hover::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .xl\:placeholder-fb-icon-hover:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .xl\:placeholder-fb-icon-hover::placeholder {
+    color: #dadde1;
+  }
+
   .xl\:focus\:placeholder-transparent:focus::-moz-placeholder {
     color: transparent;
   }
@@ -45910,6 +46503,30 @@ hr {
     color: #1877f2;
   }
 
+  .xl\:focus\:placeholder-fb-icon:focus::-moz-placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:focus\:placeholder-fb-icon:focus:-ms-input-placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:focus\:placeholder-fb-icon:focus::placeholder {
+    color: #e4e6eb;
+  }
+
+  .xl\:focus\:placeholder-fb-icon-hover:focus::-moz-placeholder {
+    color: #dadde1;
+  }
+
+  .xl\:focus\:placeholder-fb-icon-hover:focus:-ms-input-placeholder {
+    color: #dadde1;
+  }
+
+  .xl\:focus\:placeholder-fb-icon-hover:focus::placeholder {
+    color: #dadde1;
+  }
+
   .xl\:pointer-events-none {
     pointer-events: none;
   }
@@ -46528,6 +47145,14 @@ hr {
     color: #1877f2;
   }
 
+  .xl\:text-fb-icon {
+    color: #e4e6eb;
+  }
+
+  .xl\:text-fb-icon-hover {
+    color: #dadde1;
+  }
+
   .xl\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -46908,6 +47533,14 @@ hr {
     color: #1877f2;
   }
 
+  .xl\:hover\:text-fb-icon:hover {
+    color: #e4e6eb;
+  }
+
+  .xl\:hover\:text-fb-icon-hover:hover {
+    color: #dadde1;
+  }
+
   .xl\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -47286,6 +47919,14 @@ hr {
 
   .xl\:focus\:text-fb-blue:focus {
     color: #1877f2;
+  }
+
+  .xl\:focus\:text-fb-icon:focus {
+    color: #e4e6eb;
+  }
+
+  .xl\:focus\:text-fb-icon-hover:focus {
+    color: #dadde1;
   }
 
   .xl\:text-xs {

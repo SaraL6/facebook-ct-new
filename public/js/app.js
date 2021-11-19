@@ -2685,13 +2685,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
- //import Dropzone from "dropzone";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewPost",
   data: function data() {
     return {
-      //      dropzone: null,
       post: {
         urlImg: null
       }
@@ -2700,7 +2698,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    // this.dropzone = new Dropzone(this.$refs.postImage, this.settings);
     var myWidget = cloudinary.createUploadWidget({
       cloudName: 'ct-clone',
       uploadPreset: 'fb-clone',
@@ -3116,10 +3113,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostEdit",
   props: ["post", "postKey"],
@@ -3135,7 +3128,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    var myWidget = cloudinary.createUploadWidget({
+    console.log(this.updatedPostImg);
+    var myEditWidget = cloudinary.createUploadWidget({
       cloudName: 'ct-clone',
       uploadPreset: 'fb-clone',
       cropping: true,
@@ -3143,22 +3137,68 @@ __webpack_require__.r(__webpack_exports__);
       folder: 'fb-clone/userPosts'
     }, function (error, result) {
       if (!error && result && result.event === "success") {
-        _this.post.urlImg = result.info.public_id;
+        if (_this.updatedPostImg === null) {
+          _this.updatedPostImg = result.info.public_id;
+          console.log(_this.updatedPostImg);
+        } else if (_this.updatedPostImg != null) {
+          _this.updatedPostImg = result.info.public_id;
+          console.log(_this.updatedPostImg);
+        }
       }
     });
-    document.getElementById("upload_widget").addEventListener("click", function () {
-      myWidget.open();
-    }, false);
+    var el = document.getElementById('upload_widget_edit');
+
+    if (el) {
+      el.addEventListener("click", function () {
+        myEditWidget.open();
+      }, false);
+    } // document.getElementById("upload_widget_edit").addEventListener("click", function(){
+    //    console.log('open');
+    //     myEditWidget.open();
+    // }, false);
+
   },
   methods: {
     toggleModal: function toggleModal(value) {
       this.$emit("toggleModal", value);
       this.showModal = !this.showModal;
-      this.show = !this.show;
+      this.show = false;
+    },
+    editUploadImg: function editUploadImg() {
+      var _this2 = this;
+
+      var myEditWidget = cloudinary.createUploadWidget({
+        cloudName: 'ct-clone',
+        uploadPreset: 'fb-clone',
+        cropping: true,
+        multiple: false,
+        folder: 'fb-clone/userPosts'
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          if (_this2.updatedPostImg === null) {
+            _this2.updatedPostImg = result.info.public_id;
+            console.log(_this2.updatedPostImg);
+          } else if (_this2.updatedPostImg != null) {
+            _this2.updatedPostImg = result.info.public_id;
+            console.log(_this2.updatedPostImg);
+          }
+        }
+      });
+      var el = document.getElementById('upload_widget_edit');
+
+      if (el) {
+        el.addEventListener("click", function () {
+          myEditWidget.open();
+        }, false);
+      }
     },
     removePostImg: function removePostImg() {
+      var _this3 = this;
+
       this.updatedPostImg = '';
-      console.log('PostImg deleted');
+      setTimeout(function () {
+        _this3.editUploadImg();
+      }, 300);
     },
     updatePostHandler: function updatePostHandler() {
       if (this.updatedPostImg != '') {
@@ -3385,7 +3425,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     toggleModal: function toggleModal(value) {
       this.showModal = !this.showModal;
-      this.show = !this.show;
+      this.show = false;
     }
   }
 });
@@ -65116,7 +65156,8 @@ var render = function() {
                             _c(
                               "svg",
                               {
-                                staticClass: "header--icon",
+                                staticClass:
+                                  "header--icon bg-fb-icon hover:bg-fb-nav-hover rounded-full",
                                 attrs: { viewBox: "0 0 24 24" }
                               },
                               [
@@ -65153,7 +65194,8 @@ var render = function() {
                             _c(
                               "svg",
                               {
-                                staticClass: "header--icon",
+                                staticClass:
+                                  "header--icon bg-fb-icon hover:bg-fb-icon-hover rounded-full",
                                 attrs: { viewBox: "0 0 28 28" }
                               },
                               [
@@ -65268,7 +65310,8 @@ var render = function() {
                             _c(
                               "svg",
                               {
-                                staticClass: "header--icon",
+                                staticClass:
+                                  "header--icon bg-fb-icon hover:bg-fb-icon-hover rounded-full",
                                 attrs: { viewBox: "0 0 24 24" }
                               },
                               [
@@ -65305,7 +65348,8 @@ var render = function() {
                             _c(
                               "svg",
                               {
-                                staticClass: "header--icon",
+                                staticClass:
+                                  "header--icon bg-fb-icon hover:bg-fb-icon-hover rounded-full",
                                 attrs: { viewBox: "0 0 24 24" }
                               },
                               [
@@ -66064,7 +66108,7 @@ var render = function() {
     { staticClass: "bg-white rounded shadow-md w-2/3 mt-6 overflow-hidden" },
     [
       _c("div", { staticClass: "flex flex-col px-4" }, [
-        _c("div", { staticClass: "flex justify-between" }, [
+        _c("div", { staticClass: "flex justify-between pt-3" }, [
           _c("div", { staticClass: "flex items-center" }, [
             _c("div", { staticClass: "w-10" }, [
               _c("img", {
@@ -66078,7 +66122,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "ml-4" }, [
+            _c("div", { staticClass: "ml-2" }, [
               _c("div", [
                 _c("div", { staticClass: "text-sm font-bold" }, [
                   _vm._v(
@@ -66090,7 +66134,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "text-sm text-gray-600" }, [
+                _c("div", { staticClass: "text-xs text-gray-600" }, [
                   _vm._v(
                     "\n                            " +
                       _vm._s(_vm.post.data.attributes.posted_at) +
@@ -66112,7 +66156,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", {}, [
+        _c("div", { staticClass: "pl-1 my-2" }, [
           _c("p", [_vm._v(_vm._s(_vm.post.data.attributes.body))])
         ])
       ]),
@@ -66491,7 +66535,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "ml-4" }, [
+                          _c("div", { staticClass: "ml-2" }, [
                             _c("div", [
                               _c("div", { staticClass: "text-sm font-bold" }, [
                                 _vm._v(
@@ -66506,7 +66550,7 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "div",
-                                { staticClass: "text-sm text-gray-600" },
+                                { staticClass: "text-xs text-gray-600" },
                                 [
                                   _vm._v(
                                     "\n                                                " +
@@ -66522,7 +66566,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "mt-4" }, [
+                      _c("div", { staticClass: "pl-1 my-2" }, [
                         _c("input", {
                           directives: [
                             {
@@ -66533,7 +66577,7 @@ var render = function() {
                             }
                           ],
                           staticClass:
-                            "w-full pl-4 h-10  focus:outline-none  text-sm",
+                            "w-full pl-1 h-10  focus:outline-none  text-sm",
                           attrs: { type: "text", id: "input" },
                           domProps: { value: _vm.updatedPostMessage },
                           on: {
@@ -66623,6 +66667,55 @@ var render = function() {
                           ],
                           1
                         )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.updatedPostImg
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "edit_add_post_img flex justify-between items-center rounded px-3 py-2"
+                          },
+                          [
+                            _c("div", [
+                              _vm._v(
+                                "\n                                 Add to your post \n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "cloudinary-button flex justify-center items-center rounded-full focus:outline-none w-10 h-10 bg-gray-300",
+                                  attrs: { id: "upload_widget_edit" }
+                                },
+                                [
+                                  _c(
+                                    "svg",
+                                    {
+                                      ref: "postImage",
+                                      staticClass: " w-10 h-10",
+                                      attrs: {
+                                        xmlns: "http://www.w3.org/2000/svg",
+                                        viewBox: "0 0 24 24"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "M21.8 4H2.2c-.2 0-.3.2-.3.3v15.3c0 .3.1.4.3.4h19.6c.2 0 .3-.1.3-.3V4.3c0-.1-.1-.3-.3-.3zm-1.6 13.4l-4.4-4.6c0-.1-.1-.1-.2 0l-3.1 2.7-3.9-4.8h-.1s-.1 0-.1.1L3.8 17V6h16.4v11.4zm-4.9-6.8c.9 0 1.6-.7 1.6-1.6 0-.9-.7-1.6-1.6-1.6-.9 0-1.6.7-1.6 1.6.1.9.8 1.6 1.6 1.6z"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
                       : _vm._e()
                   ]
                 )
@@ -66630,38 +66723,21 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "flex items-center justify-end p-6 rounded-b" },
+                {
+                  staticClass: "flex items-center justify-center p-6 rounded-b"
+                },
                 [
                   _c(
                     "button",
                     {
                       staticClass:
-                        "text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.toggleModal(false)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Close\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
+                        "bg-fb-blue hover:bg-fb-blue text-white font-bold py-2 px-4 w-full rounded utline-none focus:outline-none",
                       attrs: { type: "button" },
                       on: { click: _vm.savePost }
                     },
                     [
                       _vm._v(
-                        "\n                        Save Changes\n                    "
+                        "\n                        Save \n                    "
                       )
                     ]
                   )
@@ -66712,12 +66788,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "header" }, [
+      _c("div", { staticClass: "header__post__menu" }, [
         _c("div", { staticClass: "header__nav" }, [
           _c("ul", { staticClass: "header__navbar" }, [
             _c(
               "li",
-              { staticClass: "header__item" },
+              { staticClass: "header__item__post__menu" },
               [
                 _c(
                   "a",
@@ -66740,11 +66816,12 @@ var render = function() {
                               _c(
                                 "svg",
                                 {
-                                  staticClass: "header--icon",
+                                  staticClass:
+                                    "header--iconn hover:bg-gray-400 rounded-full",
                                   attrs: {
                                     viewBox: "0 0 24 24",
-                                    width: "1em",
-                                    height: "1em"
+                                    width: "1.5em",
+                                    height: "1.5em"
                                   }
                                 },
                                 [
@@ -66786,11 +66863,12 @@ var render = function() {
                               _c(
                                 "svg",
                                 {
-                                  staticClass: "header--icon",
+                                  staticClass:
+                                    "header--iconn hover:bg-gray-400 rounded-full",
                                   attrs: {
                                     viewBox: "0 0 24 24",
-                                    width: "1em",
-                                    height: "1em"
+                                    width: "1.5em",
+                                    height: "1.5em"
                                   }
                                 },
                                 [
