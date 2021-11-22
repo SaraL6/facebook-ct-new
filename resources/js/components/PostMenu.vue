@@ -141,7 +141,7 @@
                                                 >
                                                     <button
                                                         class="focus:outline-none"
-                                                        @click="$store.dispatch('deletePost',post.data.post_id)">
+                                                        @click="$store.dispatch('deletePost',post.data.post_id);toggleMenu()">
                                                         Delete post
                                                     </button>
                                                 </div>
@@ -187,6 +187,11 @@ export default {
             this.showModal = !this.showModal;
             this.show = false;
         },
+        toggleMenu(){
+            this.$store.dispatch("fetchNewsPosts");
+             this.show = false;
+        }
+      
        
     }
     

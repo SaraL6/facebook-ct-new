@@ -58,8 +58,8 @@ const actions = {
                 data: {id: postId },
             })
             .then((res) => {
-                commit("deletePost", res.data);
-               // console.log(res.data);
+             //  commit("deletePost", res.data);
+              //  console.log(res);
                 commit("setPostsStatus", "success");
           
             })
@@ -149,11 +149,11 @@ const mutations = {
     },
     deletePost(state, post) {
         state.posts.data.shift(post);
+       
+
     },
-    pushLikes(state, data) {
-       
-        state.posts.data[data.postKey].data.attributes.likes = data.likes;
-       
+    pushLikes(state, data) {       
+        state.posts.data[data.postKey].data.attributes.likes = data.likes;       
     },
     pushComments(state, data) {
         state.posts.data[data.postKey].data.attributes.comments = data.comments;

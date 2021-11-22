@@ -3393,6 +3393,10 @@ __webpack_require__.r(__webpack_exports__);
     toggleModal: function toggleModal(value) {
       this.showModal = !this.showModal;
       this.show = false;
+    },
+    toggleMenu: function toggleMenu() {
+      this.$store.dispatch("fetchNewsPosts");
+      this.show = false;
     }
   }
 });
@@ -67031,10 +67035,11 @@ var render = function() {
                                                   "focus:outline-none",
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.$store.dispatch(
+                                                    _vm.$store.dispatch(
                                                       "deletePost",
                                                       _vm.post.data.post_id
                                                     )
+                                                    _vm.toggleMenu()
                                                   }
                                                 }
                                               },
@@ -84768,8 +84773,8 @@ var actions = {
         id: postId
       }
     }).then(function (res) {
-      commit("deletePost", res.data); // console.log(res.data);
-
+      //  commit("deletePost", res.data);
+      //  console.log(res);
       commit("setPostsStatus", "success");
     })["catch"](function (error) {});
   },
