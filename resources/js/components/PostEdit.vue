@@ -80,7 +80,7 @@
                                 
                             >
                                
-                                    <div class="" v-if="updatedPostImg">
+                                    <div class="" v-if="imgExists">
                                         <button class="absolute  top-0 right-0 p-4 focus:outline-none" @click="removePostImg()">
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                 width="30" height="30"
@@ -92,11 +92,11 @@
                                              </button>
                                     </div>
                                 
-                                 <cld-image v-if="updatedPostImg" :public-id="post.data.attributes.image"   responsive="width"   class="w-full rounded border-2 border-gray-300" >
+                                 <cld-image v-if="imgExists" :public-id="imgPath"   responsive="width"   class="w-full rounded border-2 border-gray-300" >
                                     <cld-transformation width="500" height="400" crop="fill" />
                                 </cld-image>
                             </div>
-                            <div v-if="!updatedPostImg" class="edit_add_post_img flex justify-between items-center rounded px-3 py-2">
+                            <div v-if="!imgExists" class="edit_add_post_img flex justify-between items-center rounded px-3 py-2">
                                 <div>
                                      Add to your post 
                                 </div>
@@ -145,48 +145,23 @@ export default {
             show: false,
             showModal: false,
             updatedPostMessage: this.post.data.attributes.body,
-            updatedPostImg:this.post.data.attributes.image,
+            imgExists:false,
             postkey:this.postKey,
+            imgPath:this.post.data.attributes.image,
+            publicId:null,
 
               
     
         };
     },
     mounted() {
-        console.log(this.updatedPostImg);
-     var myEditWidget = cloudinary.createUploadWidget({
-            cloudName: 'ct-clone', 
-            uploadPreset: 'fb-clone',
-             cropping: true,
-              multiple: false,
-             folder: 'fb-clone/userPosts',
-            }, (error, result) => { 
-                if (!error && result && result.event === "success") { 
-                    if(this.updatedPostImg === null){
-                             this.updatedPostImg= result.info.public_id; 
-                             console.log(this.updatedPostImg)       ;      
-                    }
-                    else if(this.updatedPostImg != null){
-                        this.updatedPostImg = result.info.public_id;
-                        console.log(this.updatedPostImg);
-                    }              
-                }
-            }
-        );
+       
+         if(this.imgPath)
+         this.imgExists=true;
+        
+       
+        this.editUploadImg();
 
-            var el = document.getElementById('upload_widget_edit');
-            if(el){
-            el.addEventListener("click", function(){
-    
-                myEditWidget.open();
-            }, false);
-            }
-
-            // document.getElementById("upload_widget_edit").addEventListener("click", function(){
-            //    console.log('open');
-            //     myEditWidget.open();
-            // }, false);
-   
     },
         methods: {
         toggleModal: function (value) {
@@ -194,23 +169,23 @@ export default {
             this.showModal=!this.showModal;
             this.show = false;
         },
+
         editUploadImg(){
+         
+         
+                console.log('before '  +   this.publicId);
                 var myEditWidget = cloudinary.createUploadWidget({
                         cloudName: 'ct-clone', 
                         uploadPreset: 'fb-clone',
                         cropping: true,
                         multiple: false,
+                    
                         folder: 'fb-clone/userPosts',
                     }, (error, result) => { 
-                        if (!error && result && result.event === "success") { 
-                            if(this.updatedPostImg === null){
-                                    this.updatedPostImg= result.info.public_id; 
-                                    console.log(this.updatedPostImg)       ;      
-                            }
-                            else if(this.updatedPostImg != null){
-                                this.updatedPostImg = result.info.public_id;
-                                console.log(this.updatedPostImg);
-                            }              
+                      
+                        if (!error && result && result.event === "success") {        
+                            this.imgPath= result.info.public_id;         
+                            this.imgExists= true; 
                         }
                     }
             );
@@ -224,31 +199,32 @@ export default {
                     }
         },
         removePostImg(){
-            this.updatedPostImg= '';
-      
+       
+         
+             this.imgExists=false;
             setTimeout(() => {
-              this.editUploadImg();
-            }, 300);
+
+                  
+                 this.editUploadImg();
+            }, 1000);
           
         },
+        deleteImg(){
+
+        },
          updatePostHandler() {
-       
-            if (this.updatedPostImg != '') {
-                 this.$store.dispatch("updatePostMessage",{  
-                                body: this.updatedPostMessage,
-                                postImg: this.updatedPostImg,
-                                postId: this.post.data.post_id,
-                                postKey: this.postkey,
-                                 })
-               //  console.log('test'+      postImg);
-            } else {     
-                      
-                this.$store.dispatch("updatePostMessage",{  
-                                body: this.updatedPostMessage,
-                                postImg: '',
-                                postId: this.post.data.post_id,
-                                postKey: this.postkey });
-            }
+             let imagePath="";
+             if (this.imgExists) {
+                imagePath= this.imgPath;
+                 
+             }
+            this.$store.dispatch("updatePostMessage",{  
+                body: this.updatedPostMessage,
+                postImg: imagePath,
+                postId: this.post.data.post_id,
+                postKey: this.postkey,
+            })
+               
         },
         savePost(){
             this.toggleModal(false);

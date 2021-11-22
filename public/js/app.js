@@ -3121,42 +3121,15 @@ __webpack_require__.r(__webpack_exports__);
       show: false,
       showModal: false,
       updatedPostMessage: this.post.data.attributes.body,
-      updatedPostImg: this.post.data.attributes.image,
-      postkey: this.postKey
+      imgExists: false,
+      postkey: this.postKey,
+      imgPath: this.post.data.attributes.image,
+      publicId: null
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    console.log(this.updatedPostImg);
-    var myEditWidget = cloudinary.createUploadWidget({
-      cloudName: 'ct-clone',
-      uploadPreset: 'fb-clone',
-      cropping: true,
-      multiple: false,
-      folder: 'fb-clone/userPosts'
-    }, function (error, result) {
-      if (!error && result && result.event === "success") {
-        if (_this.updatedPostImg === null) {
-          _this.updatedPostImg = result.info.public_id;
-          console.log(_this.updatedPostImg);
-        } else if (_this.updatedPostImg != null) {
-          _this.updatedPostImg = result.info.public_id;
-          console.log(_this.updatedPostImg);
-        }
-      }
-    });
-    var el = document.getElementById('upload_widget_edit');
-
-    if (el) {
-      el.addEventListener("click", function () {
-        myEditWidget.open();
-      }, false);
-    } // document.getElementById("upload_widget_edit").addEventListener("click", function(){
-    //    console.log('open');
-    //     myEditWidget.open();
-    // }, false);
-
+    if (this.imgPath) this.imgExists = true;
+    this.editUploadImg();
   },
   methods: {
     toggleModal: function toggleModal(value) {
@@ -3165,8 +3138,9 @@ __webpack_require__.r(__webpack_exports__);
       this.show = false;
     },
     editUploadImg: function editUploadImg() {
-      var _this2 = this;
+      var _this = this;
 
+      console.log('before ' + this.publicId);
       var myEditWidget = cloudinary.createUploadWidget({
         cloudName: 'ct-clone',
         uploadPreset: 'fb-clone',
@@ -3175,13 +3149,8 @@ __webpack_require__.r(__webpack_exports__);
         folder: 'fb-clone/userPosts'
       }, function (error, result) {
         if (!error && result && result.event === "success") {
-          if (_this2.updatedPostImg === null) {
-            _this2.updatedPostImg = result.info.public_id;
-            console.log(_this2.updatedPostImg);
-          } else if (_this2.updatedPostImg != null) {
-            _this2.updatedPostImg = result.info.public_id;
-            console.log(_this2.updatedPostImg);
-          }
+          _this.imgPath = result.info.public_id;
+          _this.imgExists = true;
         }
       });
       var el = document.getElementById('upload_widget_edit');
@@ -3193,29 +3162,27 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     removePostImg: function removePostImg() {
-      var _this3 = this;
+      var _this2 = this;
 
-      this.updatedPostImg = '';
+      this.imgExists = false;
       setTimeout(function () {
-        _this3.editUploadImg();
-      }, 300);
+        _this2.editUploadImg();
+      }, 1000);
     },
+    deleteImg: function deleteImg() {},
     updatePostHandler: function updatePostHandler() {
-      if (this.updatedPostImg != '') {
-        this.$store.dispatch("updatePostMessage", {
-          body: this.updatedPostMessage,
-          postImg: this.updatedPostImg,
-          postId: this.post.data.post_id,
-          postKey: this.postkey
-        }); //  console.log('test'+      postImg);
-      } else {
-        this.$store.dispatch("updatePostMessage", {
-          body: this.updatedPostMessage,
-          postImg: '',
-          postId: this.post.data.post_id,
-          postKey: this.postkey
-        });
+      var imagePath = "";
+
+      if (this.imgExists) {
+        imagePath = this.imgPath;
       }
+
+      this.$store.dispatch("updatePostMessage", {
+        body: this.updatedPostMessage,
+        postImg: imagePath,
+        postId: this.post.data.post_id,
+        postKey: this.postkey
+      });
     },
     savePost: function savePost() {
       this.toggleModal(false);
@@ -66597,7 +66564,7 @@ var render = function() {
                           "div",
                           { staticClass: "w-full relative" },
                           [
-                            _vm.updatedPostImg
+                            _vm.imgExists
                               ? _c("div", {}, [
                                   _c(
                                     "button",
@@ -66640,15 +66607,14 @@ var render = function() {
                                 ])
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.updatedPostImg
+                            _vm.imgExists
                               ? _c(
                                   "cld-image",
                                   {
                                     staticClass:
                                       "w-full rounded border-2 border-gray-300",
                                     attrs: {
-                                      "public-id":
-                                        _vm.post.data.attributes.image,
+                                      "public-id": _vm.imgPath,
                                       responsive: "width"
                                     }
                                   },
@@ -66669,7 +66635,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    !_vm.updatedPostImg
+                    !_vm.imgExists
                       ? _c(
                           "div",
                           {
