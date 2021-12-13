@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="bg-white rounded shadow-md w-2/3 mt-6 overflow-hidden">
+    <div class="bg-white rounded shadow-md w-7/12 mt-6 overflow-hidden">
         <div class="flex flex-col px-4">
             <div class="flex justify-between pt-3">
                 <div class="flex items-center">
@@ -15,12 +15,15 @@
                     </div>
                     <div class="ml-2">
                         <div>
+                              <router-link
+                                          :to="'/users/' + post.data.attributes.posted_by.data.user_id">
                             <div class="text-sm font-bold">
                                 {{
                                     post.data.attributes.posted_by.data
                                         .attributes.name
                                 }}
                             </div>
+                             </router-link>
                             <div class="text-xs text-gray-600">
                                 {{ post.data.attributes.posted_at }}
                             </div>
@@ -35,6 +38,7 @@
                 <p>{{ post.data.attributes.body }}</p>
             </div>
         </div>
+    <router-link  :to="'/posts/' + post.data.post_id ">
         <div
             class="w-full"
             v-if="post.data.attributes.image "
@@ -45,10 +49,12 @@
                 alt="post image"
                 class="w-full"
             /> -->
-               <cld-image :public-id="post.data.attributes.image" loading="lazy"  responsive="width"  >
-                    <cld-transformation width="1000" height="1000" crop="fill" />
-                    </cld-image>
+               <cld-image :public-id="post.data.attributes.image" loading="lazy"   responsive="width"  >
+                    <cld-transformation width="500" height="400"    quality="100" crop="fill"/>
+                    
+               </cld-image>
         </div>
+      </router-link>
         <div class="px-4 pt-2 flex justify-between text-gray-700 text-sm">
             <div class="flex">
                 <svg

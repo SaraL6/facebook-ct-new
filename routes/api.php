@@ -8,7 +8,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('auth-user', 'AuthUserController@show');
     Route::apiResources([
         '/posts' =>'PostController',
-        '/posts/' =>'PostController',
+//        '/posts/{post}' =>'PostController',
         '/posts/{post}/like' =>'PostLikeController',
         '/posts/{post}/comment' =>'PostCommentController',
         '/users' => 'UserController',

@@ -95,6 +95,7 @@ export default {
     },
 
     mounted() {
+   
         this.$store.dispatch("fetchUser", this.$route.params.userId);
         this.$store.dispatch("fetchUserPosts", this.$route.params.userId);
     },

@@ -50,10 +50,9 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        return response()->json($post);
+        return new PostResource($post);
     }
     
     public function update(Request $request, Post $post)

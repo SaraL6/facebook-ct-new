@@ -2,6 +2,7 @@
 
 const state = {
     posts: null,
+    post:null,
     postStatus: null,
     postMessage: "",
 };
@@ -12,7 +13,15 @@ const getters = {
     posts: (state) => {
         return state.posts;
     },
-
+    post: (state) => {
+        return state.post;
+    },
+    
+    postStatus: (state) => {
+        return {
+            postStatus: state.postStatus,
+        };
+    },
     newsStatus: (state) => {
         return {
             postsStatus: state.postsStatus,
@@ -36,6 +45,18 @@ const actions = {
             })
             .catch((error) => {
                 commit("setPostsStatus", "error");
+            });
+    },
+    fetchPost({ commit, state }, postId) {
+        commit("setPostStatus", "loading");
+        axios
+            .get("/api/posts/" + postId )
+            .then((res) => {
+                commit("setShowPost", res.data);
+                commit("setPostStatus", "success");
+            })
+            .catch((error) => {
+                commit("setPostStatus", "error");
             });
     },
     fetchUserPosts({ commit, dispatch }, userId) {
@@ -127,6 +148,9 @@ const mutations = {
     setPosts(state, posts) {
         state.posts = posts;
     },
+    setShowPost(state, post) {
+        state.post = post;
+    },
     setPost(state, data) {
         // console.log(state);
          //console.log(state.posts.data[data.postKey].data.attributes);
@@ -137,8 +161,8 @@ const mutations = {
     setPostsStatus(state, status) {
         state.postsStatus = status;
     },
-    setPostStatus(state, status) {
-        state.postStatus = status;
+    setPostStatus(state, poststatus) {
+        state.postStatus = poststatus;
     },
     //message = postMessage in the get computed property in NewPost.vue
     updateMessage(state, message) {

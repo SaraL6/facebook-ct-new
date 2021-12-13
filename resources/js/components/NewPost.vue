@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="bg-white rounded shadow w-2/3 p-4">
+    <div class="bg-white rounded shadow w-7/12 p-4">
         <div class="flex justify-between items-center">
             <div>
                 <div class="w-10">
